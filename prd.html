@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRD – Tolstoy Shoppable Influencer Platform</title>
+  <meta name="description" content="Product Requirements Document for Tolstoy's Shoppable Influencer Content Platform — bridging creator content with instant commerce.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Hebrew:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #111111;
+      --text-secondary: #555555;
+      --text-muted: #888888;
+      --border: #e8e8e8;
+      --accent: #6366f1;
+      --accent2: #a855f7;
+      --gradient: linear-gradient(135deg, var(--accent), var(--accent2));
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --max-width: 800px;
+      --font: 'Inter', -apple-system, sans-serif;
+      --font-he: 'Noto Sans Hebrew', 'Inter', -apple-system, sans-serif;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ── Nav ── */
+    .prd-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .prd-nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .prd-nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 800; font-size: 1rem; letter-spacing: -0.02em;
+    }
+    .prd-nav-logo svg { width: 24px; height: 24px; }
+    .prd-nav-links { display: flex; align-items: center; gap: 16px; }
+    .prd-nav-links a {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);
+      transition: var(--transition); padding: 6px 12px; border-radius: 8px;
+    }
+    .prd-nav-links a:hover { color: var(--text); background: var(--bg); }
+    .prd-nav-links .nav-primary {
+      background: var(--gradient); color: #fff; padding: 8px 18px; border-radius: 999px;
+    }
+    .prd-nav-links .nav-primary:hover { background: var(--gradient); opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── Language Toggle ── */
+    .lang-toggle {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--bg); border-radius: 999px; padding: 3px;
+      border: 1px solid var(--border);
+    }
+    .lang-btn {
+      padding: 5px 14px; border-radius: 999px; font-size: 0.78rem;
+      font-weight: 600; color: var(--text-muted); transition: var(--transition);
+    }
+    .lang-btn.active { background: #fff; color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .lang-btn:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .prd-hero {
+      text-align: center; padding: 80px 24px 56px;
+      max-width: var(--max-width); margin: 0 auto;
+    }
+    .prd-hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(99,102,241,0.08); color: var(--accent);
+      padding: 6px 14px; border-radius: 999px; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.03em; margin-bottom: 20px;
+    }
+    .prd-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900;
+      line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 16px;
+    }
+    .prd-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .prd-hero p {
+      font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;
+    }
+    .prd-hero-meta {
+      display: flex; justify-content: center; gap: 24px; margin-top: 24px;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .prd-hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Section ── */
+    section { max-width: var(--max-width); margin: 0 auto; padding: 0 24px 64px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--border);
+    }
+    .section-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gradient); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; flex-shrink: 0;
+    }
+    .section-header h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; }
+    .section-sub {
+      font-size: 0.85rem; color: var(--text-secondary); margin-top: -12px; margin-bottom: 24px;
+    }
+
+    /* ── Bilingual Box ── */
+    .bilingual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px; margin-bottom: 20px;
+    }
+    .bilingual-col { }
+    .bilingual-lang {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .bilingual.hebrew .bilingual-col:first-child { order: 2; direction: rtl; }
+    .bilingual.hebrew .bilingual-col:last-child { order: 1; direction: ltr; }
+    .bilingual.hebrew .bilingual-lang { text-align: right; }
+    .bilingual p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Cards ── */
+    .card-grid { display: grid; gap: 16px; }
+    .card-grid-2 { grid-template-columns: 1fr 1fr; }
+    .card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; transition: var(--transition);
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(99,102,241,0.08); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 14px;
+    }
+    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .card ul { list-style: none; padding: 0; }
+    .card ul li {
+      font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+      padding: 4px 0; padding-left: 18px; position: relative;
+    }
+    .card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* ── Architecture Layers ── */
+    .layers { display: flex; flex-direction: column; gap: 12px; }
+    .layer {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px 24px; display: flex; align-items: flex-start; gap: 16px;
+      transition: var(--transition);
+    }
+    .layer:hover { border-color: #c4b5fd; box-shadow: 0 4px 12px rgba(99,102,241,0.06); }
+    .layer-num {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem; color: #fff; margin-top: 2px;
+    }
+    .layer-num.l1 { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .layer-num.l2 { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+    .layer-num.l3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .layer-info { flex: 1; }
+    .layer-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+    .layer-info .layer-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+    .layer-info p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.6; }
+
+    /* ── Match Levels ── */
+    .match-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .match-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 20px; text-align: center;
+    }
+    .match-card .match-badge {
+      display: inline-flex; padding: 4px 12px; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em; margin-bottom: 10px;
+    }
+    .match-card .match-badge.strict { background: rgba(34,197,94,0.1); color: var(--green); }
+    .match-card .match-badge.soft { background: rgba(245,158,11,0.1); color: var(--amber); }
+    .match-card .match-badge.fail { background: rgba(239,68,68,0.1); color: var(--red); }
+    .match-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .match-card p { font-size: 0.82rem; color: var(--text-secondary); }
+    .match-card .match-example {
+      margin-top: 10px; padding: 8px; background: var(--bg); border-radius: 6px;
+      font-size: 0.75rem; font-family: monospace; color: var(--text-muted);
+    }
+
+    /* ── Business Model ── */
+    .biz-table-wrap {
+      overflow-x: auto; background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .biz-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .biz-table th {
+      background: var(--bg); font-weight: 700; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);
+      padding: 14px 18px; text-align: left; border-bottom: 2px solid var(--border);
+    }
+    .biz-table td { padding: 14px 18px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .biz-table tr:last-child td { border-bottom: none; }
+    .biz-table td:first-child { font-weight: 600; color: var(--text); }
+
+    /* ── Numbers / Stats ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; text-align: center;
+    }
+    .stat-card .stat-val {
+      font-size: 1.6rem; font-weight: 900; background: var(--gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-card .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+
+    /* ── Phase Timeline ── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 15px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 28px; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -25px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--gradient); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .tl-item .tl-duration {
+      font-size: 0.75rem; color: var(--accent); font-weight: 600; margin-bottom: 6px;
+    }
+    .tl-item p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .tl-item ul { list-style: none; padding: 0; margin-top: 6px; }
+    .tl-item ul li {
+      font-size: 0.82rem; color: var(--text-secondary); padding: 2px 0 2px 16px;
+      position: relative;
+    }
+    .tl-item ul li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* ── Risk Table ── */
+    .risk-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; margin-bottom: 14px;
+    }
+    .risk-card:last-child { margin-bottom: 0; }
+    .risk-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .risk-severity {
+      display: inline-flex; padding: 3px 10px; border-radius: 999px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .risk-severity.high { background: rgba(239,68,68,0.1); color: var(--red); }
+    .risk-severity.med { background: rgba(245,158,11,0.1); color: var(--amber); }
+    .risk-severity.low { background: rgba(34,197,94,0.1); color: var(--green); }
+    .risk-card h4 { font-size: 0.92rem; font-weight: 700; flex: 1; }
+    .risk-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .risk-card .risk-mitigation {
+      margin-top: 8px; padding: 10px 14px; background: rgba(99,102,241,0.04);
+      border-radius: 8px; border-left: 3px solid var(--accent);
+    }
+    .risk-card .risk-mitigation strong { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+
+    /* ── Edge Cases ── */
+    .edge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .edge-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 16px 18px;
+    }
+    .edge-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .edge-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── Tweet Mock ── */
+    .tweet-card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; max-width: 520px; margin: 0 auto;
+    }
+    .tweet-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .tweet-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gradient); display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 1rem;
+    }
+    .tweet-name { font-weight: 700; font-size: 0.9rem; }
+    .tweet-handle { font-size: 0.78rem; color: var(--text-muted); }
+    .tweet-body { font-size: 0.92rem; line-height: 1.6; margin-bottom: 12px; }
+    .tweet-body .hashtag { color: var(--accent); }
+    .tweet-actions {
+      display: flex; gap: 40px; padding-top: 12px; border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--text-muted);
+    }
+
+    /* ── Hebrew ── */
+    .he { direction: rtl; font-family: var(--font-he); }
+    .he .section-header h2 { font-family: var(--font-he); }
+    .he p, .he li, .he .card p, .he .layer p, .he h3, .he h4 { font-family: var(--font-he); }
+    .section-he { display: none; }
+    .section-he.active { display: block; }
+    .section-en { display: block; }
+    .section-en.hidden { display: none; }
+
+    /* ── Divider ── */
+    .lang-divider {
+      text-align: center; padding: 32px 0; position: relative;
+      color: var(--text-muted); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .lang-divider::before, .lang-divider::after {
+      content: ''; position: absolute; top: 50%; width: 35%;
+      height: 1px; background: var(--border);
+    }
+    .lang-divider::before { left: 0; }
+    .lang-divider::after { right: 0; }
+
+    /* ── Footer ── */
+    .prd-footer {
+      text-align: center; padding: 40px 24px;
+      border-top: 1px solid var(--border); color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    .prd-footer a { font-weight: 700; color: var(--text); }
+    .prd-footer a:hover { color: var(--accent); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+    .animate-d1 { animation-delay: 0.1s; }
+    .animate-d2 { animation-delay: 0.2s; }
+    .animate-d3 { animation-delay: 0.3s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .bilingual { grid-template-columns: 1fr; }
+      .card-grid-2, .card-grid-3, .match-grid, .stat-row, .edge-grid { grid-template-columns: 1fr; }
+      .prd-hero-meta { flex-direction: column; gap: 8px; align-items: center; }
+      .prd-nav-links .nav-label { display: none; }
+      .prd-hero { padding: 48px 20px 32px; }
+      section { padding: 0 20px 40px; }
+      .biz-table-wrap { font-size: 0.78rem; }
+    }
+    @media (max-width: 480px) {
+      .prd-nav-links a { font-size: 0.75rem; padding: 4px 8px; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      .prd-nav { display: none; }
+      .prd-hero { padding-top: 20px; }
+      .card, .layer, .risk-card, .biz-table-wrap { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Nav ═══ -->
+  <nav class="prd-nav">
+    <div class="prd-nav-inner">
+      <a href="index.html" class="prd-nav-logo">
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#111" stroke-width="2"/><polygon points="11,9 21,14 11,19" fill="#111"/></svg>
+        Tolstoy PRD
+      </a>
+      <div class="prd-nav-links">
+        <div class="lang-toggle" id="lang-toggle">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="he">עבר</button>
+        </div>
+        <a href="index.html" class="nav-label">← Product</a>
+        <a href="#" class="nav-primary nav-label">Download PDF</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════ ENGLISH ════════════ -->
+  <div class="section-en" id="content-en">
+
+    <!-- Hero -->
+    <header class="prd-hero animate">
+      <div class="prd-hero-badge">📄 PRODUCT REQUIREMENTS DOCUMENT v1.0</div>
+      <h1>Shoppable <span>Influencer</span> Content Platform</h1>
+      <p>Bridging the gap between creator content and instant commerce — a TikTok-native shopping experience powered by AI-driven product matching.</p>
+      <div class="prd-hero-meta">
+        <span>📅 May 2026</span>
+        <span>✍️ Jack Amichai</span>
+        <span>🎯 Status: Pre-MVP / POC</span>
+      </div>
+    </header>
+
+    <!-- 1. Executive Summary -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Executive Summary</h2>
+      </div>
+      <div class="card" style="background:#fff;">
+        <p style="font-size:0.95rem;color:var(--text-secondary);line-height:1.8;">
+          Tolstoy's Shoppable Influencer Platform transforms passive content consumption into instant purchasing. When a user watches an influencer's video, every visible product is identified, matched against live inventory, and presented as a one-click purchase — without leaving the video experience. The platform serves three stakeholders: <strong>shoppers</strong> who get friction-free discovery-to-purchase, <strong>influencers</strong> who earn commission on every item sold through their content, and <strong>brands</strong> who gain a performance-driven marketing channel with measurable ROI.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. The Problem -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>The Problem</h2>
+      </div>
+      <div class="bilingual" id="problem-box">
+        <div class="bilingual-col">
+          <div class="bilingual-lang">English</div>
+          <p style="margin-bottom:12px;">Fashion consumers today face a fragmented purchase journey. They discover looks on Instagram, TikTok, and YouTube across dozens of creators, each linking to different retailers. The manual "where is that from?" hunt is exhausting — and most users abandon the purchase because the <strong>friction cost</strong> (time, effort, switching contexts) exceeds the impulse to buy.</p>
+          <p><strong>The opportunity:</strong> A platform that fuses influencer content with live inventory eliminates every step between "I want that" and "I bought it."</p>
+        </div>
+        <div class="bilingual-col">
+          <div class="bilingual-lang">עברית</div>
+          <p style="margin-bottom:12px;">חוויית הצרכן בענף האופנה מקוטעת. הם צופים בעשרות משפיענים באינסטגרם, טיקטוק ויוטיוב — כל אחד מקשר לחנות אחרת. החיפוש הידני "מאיפה השמלה הזו?" מתיש, ורוב המשתמשים נוטשים כי <strong>עלות החיכוך</strong> (זמן, מאמץ, מעבר בין הקשרים) גבוהה מהדחף לקנות.</p>
+          <p><strong>ההזדמנות:</strong> פלטפורמה שממזגת תוכן משפיענים עם מלאי זמין מבטלת כל צעד בין "אני רוצה את זה" ל"קניתי".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Target Users -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Target Users</h2>
+      </div>
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <div class="card-icon">👤</div>
+          <h3>Shoppers</h3>
+          <p>Fashion-conscious consumers who follow influencers and want to buy what they see — without manual searching.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⭐</div>
+          <h3>Influencers</h3>
+          <p>Content creators who want to monetize their style authentically through commission on sales generated by their videos.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏪</div>
+          <h3>Brands / Retailers</h3>
+          <p>Ecommerce merchants who want a performance-based channel that converts engaged audiences at 2-3x traditional social rates.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Solution Architecture -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Solution Architecture</h2>
+      </div>
+      <p class="section-sub">Three filtering layers transform raw influencer content into shoppable, inventory-verified product moments.</p>
+      <div class="layers">
+        <div class="layer">
+          <div class="layer-num l1">1</div>
+          <div class="layer-info">
+            <h3>Initial Curation</h3>
+            <div class="layer-label">Difficulty: Low · Rule-based</div>
+            <p>Identify influencers relevant to the brand's aesthetic. Filter content to only videos featuring visible clothing/apparel (exclude vlogs, travel, food content). Uses metadata tags, description analysis, and basic computer vision pre-screening.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num l2">2</div>
+          <div class="layer-info">
+            <h3>AI Product Detection</h3>
+            <div class="layer-label">Difficulty: High · Computer Vision + OCR</div>
+            <p>Deep learning model scans each video frame-by-frame to identify garments, accessories, and footwear. OCR extracts visible brand labels, care tags, and text on clothing. Detected items are matched against the product catalog using a three-tier SKU matching system (Strict / Soft / Fail).</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num l3">3</div>
+          <div class="layer-info">
+            <h3>Human-in-the-Loop Moderation</h3>
+            <div class="layer-label">Difficulty: Medium · Operational</div>
+            <p>Every video with a confidence score ≥70% is reviewed by a sales/operations team member before publication. The moderator confirms all detected products exist in inventory and are purchasable. Rejected items are logged for model retraining. Target: 15-20 hrs/week of moderation at MVP scale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Product Features -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Product Features</h2>
+      </div>
+      <div class="card-grid card-grid-2">
+        <div class="card">
+          <div class="card-icon">🎬</div>
+          <h3>Shoppable Video Feed</h3>
+          <ul>
+            <li>TikTok-style vertical video feed with product tags</li>
+            <li>One-tap "Shop the Look" overlay on each video</li>
+            <li>Auto-pause on product interaction; resume playback</li>
+            <li>Size selection, color variants, and add-to-cart inline</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>AI Style Match</h3>
+          <ul>
+            <li>Upload a photo → find visually similar influencers</li>
+            <li>Conversational Q&A: describe your style, get matched</li>
+            <li>Multi-criteria matching: vibe, colors, fit, occasion</li>
+            <li>Influencer discovery by aesthetic, not just name</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛒</div>
+          <h3>Unified Cart & Checkout</h3>
+          <ul>
+            <li>Cart aggregates items across multiple influencer videos</li>
+            <li>Single checkout regardless of original product sources</li>
+            <li>Wishlist, size memory, and purchase history</li>
+            <li>Commission attribution per influencer per item</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Creator Dashboard</h3>
+          <ul>
+            <li>Real-time earnings: "Your content earned $X today"</li>
+            <li>Video performance: views, clicks, conversions</li>
+            <li>Transparency: why a video was hidden or rejected</li>
+            <li>Opt-in content sharing controls and privacy settings</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Data Model: SKU Matching -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>SKU Matching Logic</h2>
+      </div>
+      <p class="section-sub">Products detected in videos are matched against live inventory using a three-tier system. Only Strict and Soft matches are shown to users.</p>
+      <div class="match-grid">
+        <div class="match-card">
+          <div class="match-badge strict">STRICT MATCH</div>
+          <h4>✅ Shown to user</h4>
+          <p>Brand + Category + Color + Size all match exactly.</p>
+          <div class="match-example">Video: Acne Studios White T-shirt, M<br>→ Stock: Acne Studios White T-shirt, M ✓</div>
+        </div>
+        <div class="match-card">
+          <div class="match-badge soft">SOFT MATCH</div>
+          <h4>✅ Shown to user</h4>
+          <p>Brand + Category + Color match; size differs. User sees closest available size.</p>
+          <div class="match-example">Video: Acne Studios White T-shirt, M<br>→ Stock: Acne Studios White T-shirt, L ✓</div>
+        </div>
+        <div class="match-card">
+          <div class="match-badge fail">FAIL</div>
+          <h4>❌ Video not shown</h4>
+          <p>Brand or category mismatches, or color is different. Video is hidden from feed.</p>
+          <div class="match-example">Video: Acne Studios White T-shirt<br>→ Stock: Acne Studios Gray T-shirt ✗</div>
+        </div>
+      </div>
+      <div class="card" style="background:#fff;margin-top:16px;">
+        <p style="font-size:0.85rem;color:var(--text-muted);"><strong>Expected rejection rate:</strong> 15-20% of videos will fail SKU matching due to inventory gaps. This is an accepted constraint of the model — showing unavailable products destroys trust.</p>
+      </div>
+    </section>
+
+    <!-- 7. AI Pipeline -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <h2>AI Pipeline</h2>
+      </div>
+      <div class="card" style="background:#fff;">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">1</span>
+            <div><strong style="font-size:0.9rem;">Frame Extraction</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">Extract keyframes at 1fps from influencer video. Filter blurry or duplicate frames.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">2</span>
+            <div><strong style="font-size:0.9rem;">Object Detection</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">YOLO-based model detects garments, accessories, shoes. Bounding boxes are cropped for analysis.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">3</span>
+            <div><strong style="font-size:0.9rem;">Feature Extraction</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">CLIP-based embedding for visual similarity. Color histogram analysis. OCR for brand labels and text.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">4</span>
+            <div><strong style="font-size:0.9rem;">SKU Matching</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">Cross-reference detected attributes against product catalog. Apply Strict/Soft/Fail logic.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">5</span>
+            <div><strong style="font-size:0.9rem;">Moderation Queue</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">Videos above 70% confidence enter human review queue. Moderator approves/rejects in bulk.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Business Model -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <h2>Business Model</h2>
+      </div>
+
+      <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;">Revenue: Performance Commission</h3>
+      <div class="biz-table-wrap" style="margin-bottom:24px;">
+        <table class="biz-table">
+          <thead>
+            <tr><th>Tier</th><th>Follower Count</th><th>Commission Rate</th><th>Example Payout (200₪ AOV)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Micro</td><td>1K – 10K</td><td>8%</td><td>16₪ per sale</td></tr>
+            <tr><td>Mid-Tier</td><td>10K – 100K</td><td>10%</td><td>20₪ per sale</td></tr>
+            <tr><td>Macro</td><td>100K – 1M</td><td>12%</td><td>24₪ per sale</td></tr>
+            <tr><td>Mega</td><td>1M+</td><td>15% + bonus</td><td>30₪ per sale + rev share</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;">Cost Structure (Monthly)</h3>
+      <div class="biz-table-wrap">
+        <table class="biz-table">
+          <thead>
+            <tr><th>Category</th><th>Estimated Cost</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AI / Computer Vision</td><td>5,000 – 10,000₪</td><td>NVIDIA API or self-hosted model inference</td></tr>
+            <tr><td>Content Ingestion</td><td>2,000 – 5,000₪</td><td>Social platform API access + webhook infrastructure</td></tr>
+            <tr><td>Human Moderation</td><td>3,000 – 5,000₪</td><td>15-20 hrs/week at ~50₪/hr</td></tr>
+            <tr><td>Infrastructure</td><td>2,000 – 4,000₪</td><td>Cloud hosting, CDN, database, queue workers</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>12,000 – 24,000₪/mo</strong></td><td>Scales with video volume; AI cost dominates</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 9. Key Metrics -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <h2>Success Metrics</h2>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-val">2-3%</div>
+          <div class="stat-label">Conversion Rate (video → purchase)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">60+</div>
+          <div class="stat-label">Avg Video Lifespan (days)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">85%+</div>
+          <div class="stat-label">AI Match Accuracy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">8-12%</div>
+          <div class="stat-label">Commission as % of Revenue</div>
+        </div>
+      </div>
+      <div class="biz-table-wrap" style="margin-top:20px;">
+        <table class="biz-table">
+          <thead>
+            <tr><th>Metric</th><th>Target</th><th>Why It Matters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Conversion Rate</td><td>2-3%</td><td>Industry benchmark for video commerce is 0.5-1%. Our advantage: intent-driven discovery.</td></tr>
+            <tr><td>Average Video Lifespan</td><td>60+ days</td><td>Evergreen content keeps earning. If videos die in days, unit economics break.</td></tr>
+            <tr><td>AI Accuracy</td><td>≥85%</td><td>Below 85%, moderator trust erodes and influencer confidence drops.</td></tr>
+            <tr><td>Influencer Retention</td><td>≥60% YoY</td><td>Churn signals commission misalignment or engagement issues.</td></tr>
+            <tr><td>Commission Cost</td><td>8-12% of GMV</td><td>Must be profitable for retailer while attractive to creators.</td></tr>
+            <tr><td>Moderation Turnaround</td><td>&lt;24 hours</td><td>Fresh content drives purchase urgency. Delays kill relevance.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10. Risks & Mitigations -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <h2>Key Risks & Mitigations</h2>
+      </div>
+      <div class="risk-card">
+        <div class="risk-header">
+          <span class="risk-severity high">HIGH</span>
+          <h4>Influencer willingness to participate</h4>
+        </div>
+        <p>Creators may resist having their content analyzed and products linked — concerns about privacy, doxxing, or brand association.</p>
+        <div class="risk-mitigation"><strong>🛡 Mitigation:</strong> Transparent opt-in model with clear privacy policy, content controls, and attractive economics. Creators can review and approve videos before publication. Commission transparency dashboard.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-header">
+          <span class="risk-severity high">HIGH</span>
+          <h4>AI detection accuracy</h4>
+        </div>
+        <p>False positives (detecting products that don't exist) and false negatives (missing matchable products) both degrade trust and conversion.</p>
+        <div class="risk-mitigation"><strong>🛡 Mitigation:</strong> Human-in-the-loop for the first 1,000 videos. Continuous model retraining on rejection data. Periodic re-scanning of all active videos. Creator-facing "why was my video hidden?" explainability.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-header">
+          <span class="risk-severity med">MEDIUM</span>
+          <h4>Unit economics at low conversion</h4>
+        </div>
+        <p>If most creators convert at 0.5% instead of 3%, commission payouts barely cover costs. The platform needs a minimum creator quality threshold.</p>
+        <div class="risk-mitigation"><strong>🛡 Mitigation:</strong> Launch alpha with 20-30 high-engagement creators only (engagement rate >5%). Prove conversion floor before expanding. Commission tiering protects margin.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-header">
+          <span class="risk-severity med">MEDIUM</span>
+          <h4>Content copyright and platform TOS</h4>
+        </div>
+        <p>Re-publishing influencer content from Instagram/TikTok may violate platform terms or intellectual property rights.</p>
+        <div class="risk-mitigation"><strong>🛡 Mitigation:</strong> Creator-owned upload model — influencers submit their own content via a direct upload tool or whitelisted API access. Platform TOS review before launch.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-header">
+          <span class="risk-severity low">LOW</span>
+          <h4>Inventory volatility</h4>
+        </div>
+        <p>Products go out of stock between video moderation and user purchase. Showing an unavailable item damages trust.</p>
+        <div class="risk-mitigation"><strong>🛡 Mitigation:</strong> Real-time inventory check on every product impression. "Low stock" badges. Auto-hide videos when all products are OOS. Re-check inventory on a 24-hour cadence.</div>
+      </div>
+    </section>
+
+    <!-- 11. Edge Cases -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <h2>Edge Cases & Failure States</h2>
+      </div>
+      <div class="edge-grid">
+        <div class="edge-card">
+          <h4>🕒 Video deleted by creator</h4>
+          <p>Auto-detect deletion via webhook or daily check. Remove from feed within 1 hour. Notify users who saved/liked the video.</p>
+        </div>
+        <div class="edge-card">
+          <h4>🔄 Influencer changes style</h4>
+          <p>If a creator shifts aesthetic, existing matched videos may become irrelevant. Periodic re-evaluation of creator-brand fit every 90 days.</p>
+        </div>
+        <div class="edge-card">
+          <h4>📦 Product discontinued</h4>
+          <p>SKU deactivation triggers automatic re-moderation of all videos featuring that product. If no alternatives exist, video is hidden.</p>
+        </div>
+        <div class="edge-card">
+          <h4>💰 Commission dispute</h4>
+          <p>Clear attribution chain: every purchase is tagged with the influencer ID, video ID, and timestamp. Dispute dashboard with 90-day lookback.</p>
+        </div>
+        <div class="edge-card">
+          <h4>🔗 Broken affiliate link</h4>
+          <p>Daily link health check. If a product URL returns 404, the video is downgraded from Shoppable to Watch-Only until link is fixed.</p>
+        </div>
+        <div class="edge-card">
+          <h4>⚖️ Inappropriate content</h4>
+          <p>Moderation layer screens for brand-safety violations. Automated NSFW/toxicity classifier before human review. Zero-tolerance policy.</p>
+        </div>
+        <div class="edge-card">
+          <h4>📉 Low-performing content</h4>
+          <p>Videos with zero conversions after 30 days are flagged for performance review. Automatically removed from feed after 60 days with no sales.</p>
+        </div>
+        <div class="edge-card">
+          <h4>🌐 Geographic restrictions</h4>
+          <p>Some products may not ship to certain regions. Geo-aware inventory filtering per user IP. Clear shipping messaging before checkout.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Build Phases -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <h2>Build Phases</h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <h3>Phase 1: Proof of Concept</h3>
+          <div class="tl-duration">⏱ 4 weeks · 1 influencer · 5 videos · manual SKU mapping</div>
+          <p>Validate the core thesis: will users buy when products are instantly identifiable? Manual operation to prove conversion floor.</p>
+          <ul>
+            <li>Select 1 high-fit influencer with clear, shoppable content</li>
+            <li>Hand-curate SKU-to-video product mapping</li>
+            <li>Ship a basic video feed with buy buttons</li>
+            <li>Measure conversion rate, AOV, repeat purchase</li>
+            <li><strong>Gate:</strong> ≥2% conversion rate to proceed to Phase 2</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <h3>Phase 2: Automation</h3>
+          <div class="tl-duration">⏱ 8 weeks · 5-10 influencers · AI pipeline · creator dashboard</div>
+          <p>Build the computer vision pipeline and creator onboarding flow. Replace manual SKU mapping with automated detection.</p>
+          <ul>
+            <li>Calibrate YOLO + CLIP models on fashion data</li>
+            <li>Build content ingestion from creator uploads or API</li>
+            <li>Human-in-the-loop moderation dashboard</li>
+            <li>Creator commission dashboard ("Your content earned ₪120 today")</li>
+            <li><strong>Gate:</strong> AI accuracy ≥70%, moderator throughput ≥50 videos/hr</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <h3>Phase 3: Scale</h3>
+          <div class="tl-duration">⏱ 12+ weeks · 30-50 influencers · optimize unit economics</div>
+          <p>Expand creator network, optimize commission structure based on real conversion data, and explore geographic expansion.</p>
+          <ul>
+            <li>Onboard 30-50 creators across diverse aesthetics</li>
+            <li>A/B test commission tiers and find optimal rates</li>
+            <li>Launch creator referral program for organic growth</li>
+            <li>Analyze geographic expansion opportunities</li>
+            <li>Build self-serve creator onboarding portal</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. GTM & Launch -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <h2>Go-to-Market</h2>
+      </div>
+      <div class="card-grid card-grid-2">
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3>Launch Strategy</h3>
+          <ul>
+            <li>Start with 1 anchor influencer + 1 brand partner for POC</li>
+            <li>Soft launch via creator's existing audience (IG story, TikTok)</li>
+            <li>Target: fashion-forward early adopters who already follow the creator</li>
+            <li>GTM channels: creator social, Tolstoy email list, direct outreach</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">📢</div>
+          <h3>Launch Tweet</h3>
+          <div class="tweet-card" style="padding:0;border:none;max-width:100%;">
+            <div class="tweet-header" style="padding:0 0 12px;">
+              <div class="tweet-avatar" style="width:36px;height:36px;font-size:0.8rem;">T</div>
+              <div>
+                <div class="tweet-name" style="font-size:0.82rem;">Tolstoy</div>
+                <div class="tweet-handle" style="font-size:0.72rem;">@gotolstoy</div>
+              </div>
+            </div>
+            <div class="tweet-body" style="font-size:0.85rem;">
+              See it on your favorite creator. Buy it in one tap.<br><br>
+              Introducing <span class="hashtag">#TolstoyShoppable</span> — the first AI-powered platform that makes every influencer video instantly shoppable.<br><br>
+              No more "where is that from?" Just watch, tap, and own the look.<br><br>
+              Try it now → tolstoy.com/shoppable <span class="hashtag">#fashiontech</span> <span class="hashtag">#influencercommerce</span>
+            </div>
+            <div class="tweet-actions" style="padding:10px 0 0;">
+              <span>♻️ 142</span>
+              <span>💬 23</span>
+              <span>❤️ 892</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Defensibility -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <h2>Why This Wins</h2>
+      </div>
+      <div class="card-grid card-grid-3">
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <h3>Low Switching Cost</h3>
+          <p>Users don't create an account to browse. Purchase is 2 taps from discovery. No new behavior to learn — it's TikTok with a buy button.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h3>Data Moat</h3>
+          <p>Every matched video trains the model. Every conversion signal improves recommendations. The network of creator-content-product relationships compounds over time.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h3>Creator Lock-In</h3>
+          <p>Influencers earning meaningful commission won't multi-home. The top-performing creators become exclusive by economics, not contract. Stable supply-side advantage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. Interview Q&A -->
+    <section>
+      <div class="section-header">
+        <div class="section-num">15</div>
+        <h2>Interview Q&amp;A</h2>
+      </div>
+      <p class="section-sub">Questions a stakeholder might ask — and the answers.</p>
+
+      <details class="qa-item" open>
+        <summary class="qa-q">Why this product? Why now?</summary>
+        <div class="qa-a">
+          <p><strong>Why now:</strong> Three trends converge. First, TikTok and Instagram Reels have trained every consumer to expect video-native shopping — but the infrastructure to connect "what I see" to "what I can buy" hasn't caught up. Second, computer vision models (YOLOv8, CLIP) have crossed the accuracy threshold needed for fashion product detection in the last 18 months. Third, Shopify and other ecommerce platforms have standardized catalog APIs, making real-time SKU matching feasible without custom integrations per merchant.</p>
+          <p><strong>Why this product:</strong> Existing solutions are either creator-managed affiliate links (low coverage, manual, fragile) or brand-produced shoppable content (inauthentic, expensive to produce). Neither approach bridges the gap between organic creator content and inventory. This product is the first to automate that bridge at scale — making every influencer video a potential revenue driver without manual tagging.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">Who is this for? Are there multiple customer segments?</summary>
+        <div class="qa-a">
+          <p>Three distinct segments, each with different jobs-to-be-done:</p>
+          <ul>
+            <li><strong>Shoppers (end users):</strong> Fashion-conscious consumers ages 18-35 who follow 10-50 influencers across platforms. Their JTBD is "Help me buy what I see without wasting time hunting for it." They will not create an account to browse — engagement must be zero-friction.</li>
+            <li><strong>Influencers (supply side):</strong> Creators with 5K-500K followers who already produce fashion/lifestyle content. Their JTBD is "Monetize my content authentically without damaging my brand or annoying my audience." They need control, transparency, and reliable payouts.</li>
+            <li><strong>Brands / Retailers (paying customers):</strong> Ecommerce merchants with catalog APIs and existing influencer marketing budgets. Their JTBD is "Get predictable, measurable ROI from influencer content without managing 100 individual affiliate relationships."</li>
+          </ul>
+          <p><strong>Who this is NOT for:</strong> General lifestyle creators who don't feature identifiable products. Brands without catalog APIs or real-time inventory systems. Shoppers who prefer static product galleries over video content.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">What's the differentiation? How is this not just affiliate links with extra steps?</summary>
+        <div class="qa-a">
+          <p>The difference is structural, not cosmetic:</p>
+          <ul>
+            <li><strong>Scale:</strong> Affiliate links require creators to manually tag every product in every video. This product auto-detects products — one creator with 100 videos generates 300+ product links without lifting a finger.</li>
+            <li><strong>Accuracy:</strong> Traditional affiliate links break when products go out of stock. Our SKU matching checks inventory in real-time and hides unavailable items automatically.</li>
+            <li><strong>Experience:</strong> Shoppers see products overlaid on the exact moment in the video where they appear — not a separate link-in-bio. This is contextual commerce, not directory listing.</li>
+            <li><strong>Attribution:</strong> Every purchase is tagged with creator ID, video ID, and timestamp. No more "which link got the sale?" ambiguity.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">What's the scope? What does the MVP include and exclude?</summary>
+        <div class="qa-a">
+          <p><strong>MVP includes:</strong></p>
+          <ul>
+            <li>Shoppable video feed with inline product tags and buy buttons</li>
+            <li>AI product detection pipeline (YOLO + CLIP + OCR)</li>
+            <li>Three-tier SKU matching (Strict / Soft / Fail)</li>
+            <li>Human-in-the-loop moderation dashboard</li>
+            <li>Creator upload tool (self-submit content)</li>
+            <li>Basic cart and checkout (single merchant at launch)</li>
+          </ul>
+          <p><strong>MVP explicitly excludes:</strong></p>
+          <ul>
+            <li>Multi-merchant cart aggregation (Phase 2)</li>
+            <li>Creator-facing analytics dashboard (Phase 2)</li>
+            <li>Mobile native apps (web-only at MVP)</li>
+            <li>Self-serve brand onboarding portal (Phase 3)</li>
+            <li>Automated video ingestion from social APIs (manual creator upload at MVP)</li>
+            <li>Internationalization beyond English + Hebrew</li>
+          </ul>
+          <p>Scope decisions are driven by the POC gate: if conversion doesn't hit 2% with manual operations, automation won't fix it.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">How is success measured? What are the leading indicators vs. lagging indicators?</summary>
+        <div class="qa-a">
+          <p><strong>Leading indicators (predict future success):</strong></p>
+          <ul>
+            <li>Moderation throughput (videos reviewed per hour) — if moderators can't keep up, feed freshness dies</li>
+            <li>Creator upload rate (videos submitted per creator per week) — indicates creator engagement</li>
+            <li>AI detection precision (true positives / total detections) — if precision drops below 80%, trust erodes</li>
+            <li>Click-to-impression ratio on product tags — measures whether shoppers find products relevant</li>
+          </ul>
+          <p><strong>Lagging indicators (measure actual outcomes):</strong></p>
+          <ul>
+            <li>Conversion rate (purchases / video views) — target 2-3%</li>
+            <li>Commission as % of GMV — target 8-12%</li>
+            <li>Influencer retention — target ≥60% YoY</li>
+            <li>Average video lifespan — target 60+ days of earning</li>
+            <li>Revenue per creator — determines whether the model is sustainable for high-value creators</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">What could go wrong? What are the single points of failure?</summary>
+        <div class="qa-a">
+          <ol>
+            <li><strong>AI accuracy is too low:</strong> If detection precision is below 70%, moderators spend more time rejecting than approving, and feed volume collapses. <em>Mitigation:</em> Human-in-the-loop gate; invest in model training before scaling creator count.</li>
+            <li><strong>Top creators churn:</strong> If a top-5 creator leaves, feed quality drops visibly. <em>Mitigation:</em> Commission transparency, contractual lock-in for top creators, diversify creator base to avoid single-creator dependency.</li>
+            <li><strong>Inventory API goes down:</strong> If the merchant's catalog API is unavailable, every video becomes un-shoppable. <em>Mitigation:</em> Graceful degradation — show videos as "Watch Only" without buy buttons, with a banner explaining temporary unavailability.</li>
+            <li><strong>Moderation becomes the bottleneck:</strong> If video submissions outpace moderation capacity, feed freshness drops and users stop returning. <em>Mitigation:</em> Queue prioritization by creator engagement score; automatic rejection of low-confidence videos to reduce manual load.</li>
+            <li><strong>Creator uploads low-quality content:</strong> Without quality gates, the feed fills with blurry or irrelevant videos. <em>Mitigation:</em> Automated pre-screening (resolution check, clothing detection confidence) before human review.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">How do you handle data quality? What happens when the AI misidentifies a product?</summary>
+        <div class="qa-a">
+          <p><strong>Data quality architecture:</strong></p>
+          <ul>
+            <li><strong>At ingestion:</strong> Minimum resolution, frame clarity, and clothing-detection confidence thresholds. Videos below threshold are rejected without consuming human reviewer time.</li>
+            <li><strong>At inference:</strong> Ensemble approach — YOLO for object detection, CLIP for visual similarity embedding, OCR for text-based brand confirmation. A product is matched only when at least two signals agree.</li>
+            <li><strong>At moderation:</strong> Every detection decision is logged (model confidence, which signals agreed, moderator action). Rejected detections are fed back into the training pipeline with a 24-hour turnaround.</li>
+            <li><strong>In production:</strong> Periodic re-scanning of active videos (every 72 hours) catches model improvements retroactively. If a product was misidentified and shown, we log the error and retrain. Users can report "this product doesn't match" via a feedback button.</li>
+          </ul>
+          <p><strong>When AI misidentifies:</strong> The human moderator catches it (the gate). If it slips through, the product mismatch is flagged via user feedback or return data. Model is retrained on the corrected label. We accept a small number of false positives in exchange for high recall — but the moderator gate keeps display errors below 1%.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">What about trust and permissions? Can you legally use influencer content for commerce?</summary>
+        <div class="qa-a">
+          <p>This is a first-order risk, not an afterthought.</p>
+          <ul>
+            <li><strong>Creator-owned upload model:</strong> Influencers submit their own content via a direct upload tool. Tolstoy never scrapes or republishes content from social platforms without explicit creator action. This completely avoids platform TOS issues (Instagram, TikTok prohibit scraping).</li>
+            <li><strong>Opt-in, not opt-out:</strong> Creators must explicitly agree to Tolstoy's content license, which covers product detection, display on the Tolstoy storefront, and commission attribution. They can withdraw content at any time with 30-day notice.</li>
+            <li><strong>Approval before publication:</strong> Every video goes through moderation before appearing on the storefront. Creators receive a notification when their video is live, along with a link to preview how it appears.</li>
+            <li><strong>Privacy controls:</strong> Creators can set geographic restrictions (e.g., "don't show my content in Europe"), brand blacklists ("don't match my content with competitor X"), and minimum price thresholds on matched products.</li>
+          </ul>
+          <p><strong>Edge case — influencer wants the video removed:</strong> Immediate takedown with 24-hour SLA. All active sessions see a "this video is no longer available" placeholder. Commission on pre-existing purchases is honored.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">How does this ship? What's the launch sequence?</summary>
+        <div class="qa-a">
+          <p><strong>Launch sequence (10-week critical path):</strong></p>
+          <ol>
+            <li><strong>Week 1-2:</strong> Recruit 1 anchor influencer + 1 brand partner. Sign content license and commission agreement. Hand-curate 5 videos with manual SKU mapping. Build basic video feed UI.</li>
+            <li><strong>Week 3-4:</strong> Soft launch to influencer's existing audience (IG story, TikTok). Measure conversion rate. <strong>Gate:</strong> ≥2% CVR or kill. This is the POC.</li>
+            <li><strong>Week 5-8:</strong> Train YOLO + CLIP pipeline on the curated video set. Build moderation dashboard. Integrate real-time inventory API. Replace manual SKU mapping with AI detection. Onboard 3-5 additional creators.</li>
+            <li><strong>Week 9-10:</strong> Public launch with 5-10 creators and 50+ videos. Creator commission dashboard live. Begin measuring retention and unit economics.</li>
+          </ol>
+          <p><strong>Launch mechanics:</strong></p>
+          <ul>
+            <li>No paid acquisition at launch — leverage creator audiences organically</li>
+            <li>Single merchant checkout (no multi-brand cart at MVP)</li>
+            <li>Web-only; mobile-responsive rather than native apps</li>
+            <li>Launch tweet + creator IG stories as primary channels</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q">What does success look like in 12 months?</summary>
+        <div class="qa-a">
+          <p><strong>If everything goes right, 12-month targets:</strong></p>
+          <ul>
+            <li><strong>50+ active creators</strong> with consistent upload cadence (≥2 videos/week each)</li>
+            <li><strong>2,000+ shoppable videos</strong> in the catalog</li>
+            <li><strong>3% conversion rate</strong> (video view → purchase)</li>
+            <li><strong>200,000₪+ monthly GMV</strong></li>
+            <li><strong>Creator retention ≥70%</strong> (top performers retained at 90%+)</li>
+            <li><strong>AI accuracy ≥90%</strong> on product detection (precision + recall)</li>
+            <li><strong>Moderation turnaround &lt;4 hours</strong> (from submission to publication)</li>
+            <li><strong>Commission cost ≤10% of GMV</strong> (optimized through tiering)</li>
+          </ul>
+          <p><strong>If it doesn't work, the leading indicators will show it by Month 3:</strong> conversion below 1.5%, creator upload rate declining after Week 6, or moderation throughput below 30 videos/hour. At that point, pivot to a more curated model (fewer creators, higher-touch moderation) or explore brand-produced content as an alternative supply source.</p>
+        </div>
+      </details>
+
+      <style>
+        .qa-item {
+          background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+          margin-bottom: 10px; overflow: hidden; transition: var(--transition);
+        }
+        .qa-item:hover { border-color: #c4b5fd; }
+        .qa-q {
+          padding: 18px 22px; cursor: pointer; font-weight: 700; font-size: 0.92rem;
+          position: relative; display: flex; align-items: center; gap: 10px;
+          user-select: none; list-style: none;
+        }
+        .qa-q::-webkit-details-marker { display: none; }
+        .qa-q::before {
+          content: 'Q'; width: 24px; height: 24px; border-radius: 50%;
+          background: var(--gradient); color: #fff; display: inline-flex;
+          align-items: center; justify-content: center; font-size: 0.7rem;
+          font-weight: 800; flex-shrink: 0;
+        }
+        .qa-q::after {
+          content: '+'; margin-left: auto; font-size: 1.2rem; font-weight: 300;
+          color: var(--text-muted); transition: transform 0.3s ease;
+        }
+        details[open] .qa-q::after { transform: rotate(135deg); }
+        .qa-a {
+          padding: 0 22px 18px 56px; font-size: 0.85rem; color: var(--text-secondary);
+          line-height: 1.7;
+        }
+        .qa-a p { margin-bottom: 10px; }
+        .qa-a p:last-child { margin-bottom: 0; }
+        .qa-a ul, .qa-a ol { margin: 8px 0; padding-left: 20px; }
+        .qa-a li { margin-bottom: 6px; }
+        .qa-a strong { color: var(--text); }
+      </style>
+    </section>
+
+    <!-- Footer -->
+    <footer class="prd-footer">
+      Tolstoy — <a href="index.html">Shoppable Video Platform</a> · PRD v1.0 · May 2026
+    </footer>
+  </div>
+
+  <!-- ════════════ HEBREW ════════════ -->
+  <div class="section-he" id="content-he">
+
+    <header class="prd-hero animate">
+      <div class="prd-hero-badge">📄 מסמך דרישות מוצר v1.0</div>
+      <h1 dir="rtl">פלטפורמת <span>מסחר מבוססת</span> משפיענים</h1>
+      <p dir="rtl">גשר בין תוכן יוצרים לקנייה מיידית — חוויית קניות בטיקטוק המונעת על ידי AI להתאמת מוצרים.</p>
+      <div class="prd-hero-meta" dir="rtl">
+        <span>📅 מאי 2026</span>
+        <span>✍️ ג'ק עמיחי</span>
+        <span>🎯 סטטוס: Pre-MVP / POC</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">1</div>
+        <h2>תקציר מנהלים</h2>
+      </div>
+      <div class="card" style="background:#fff;">
+        <p style="font-size:0.95rem;color:var(--text-secondary);line-height:1.8;" dir="rtl">
+          פלטפורמת המשפיענים של Tolstoy הופכת צפייה פסיבית בתוכן לקנייה מיידית. כשמשתמש צופה בסרטון של משפיע, כל מוצר נראה מזוהה, מותאם למלאי זמין, ומוצג כרכישה בלחיצה אחת — מבלי לעזוב את חוויית הווידאו. הפלטפורמה משרתת שלושה צדדים: <strong>צרכנים</strong> שנהנים מגילוי-לרכישה ללא חיכוך, <strong>משפיענים</strong> שמרוויחים עמלה על כל פריט שנמכר דרך התוכן שלהם, ו<strong>מותגים</strong> שמקבלים ערוץ שיווק מבוסס ביצועים עם ROI מדיד.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">2</div>
+        <h2>הבעיה</h2>
+      </div>
+      <div class="bilingual hebrew" id="problem-box-he">
+        <div class="bilingual-col">
+          <div class="bilingual-lang">עברית</div>
+          <p style="margin-bottom:12px;">חוויית הצרכן בענף האופנה מקוטעת. הם צופים בעשרות משפיענים באינסטגרם, טיקטוק ויוטיוב — כל אחד מקשר לחנות אחרת. החיפוש הידני "מאיפה השמלה הזו?" מתיש, ורוב המשתמשים נוטשים כי <strong>עלות החיכוך</strong> (זמן, מאמץ, מעבר בין הקשרים) גבוהה מהדחף לקנות.</p>
+          <p><strong>ההזדמנות:</strong> פלטפורמה שממזגת תוכן משפיענים עם מלאי זמין מבטלת כל צעד בין "אני רוצה את זה" ל"קניתי".</p>
+        </div>
+        <div class="bilingual-col">
+          <div class="bilingual-lang">English</div>
+          <p style="margin-bottom:12px;">Fashion consumers face a fragmented journey across Instagram, TikTok, and YouTube. The manual "where is that from?" hunt is exhausting — most abandon the purchase because <strong>friction cost</strong> exceeds impulse.</p>
+          <p><strong>The opportunity:</strong> A platform fusing influencer content with live inventory eliminates every step between "I want that" and "I bought it."</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">3</div>
+        <h2>משתמשי היעד</h2>
+      </div>
+      <div class="card-grid card-grid-3" dir="rtl">
+        <div class="card">
+          <div class="card-icon">👤</div>
+          <h3>צרכנים</h3>
+          <p>חובבי אופנה שעוקבים אחרי משפיענים ורוצים לקנות מה שהם רואים — ללא חיפוש ידני.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⭐</div>
+          <h3>משפיענים</h3>
+          <p>יוצרי תוכן שרוצים להרוויח מהסטייל שלהם באופן אותנטי דרך עמלות על מכירות מהסרטונים שלהם.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏪</div>
+          <h3>מותגים / קמעונאים</h3>
+          <p>סוחרי איקומרס שרוצים ערוץ מבוסס ביצועים שממיר קהלים מעורבים בקצב גבוה פי 2-3 ממדיה חברתית מסורתית.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">4</div>
+        <h2>ארכיטקטורת הפתרון</h2>
+      </div>
+      <p class="section-sub" dir="rtl">שלוש שכבות סינון הופכות תוכן משפיענים גולמי לרגעי קנייה מאומתי מלאי.</p>
+      <div class="layers" dir="rtl">
+        <div class="layer">
+          <div class="layer-num l1">1</div>
+          <div class="layer-info">
+            <h3>סינון ראשוני</h3>
+            <div class="layer-label">קושי: נמוך · מבוסס חוקיות</div>
+            <p>זיהוי משפיענים רלוונטיים לאסתטיקת המותג. סינון תכנים שמציגים פריטי לבוש לעומת סרטונים כלליים (ולוגים, טיולים, אוכל). שימוש במטא-דאטה, ניתוח תיאורים וזיהוי תמונה בסיסי.</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num l2">2</div>
+          <div class="layer-info">
+            <h3>זיהוי מוצרים ב-AI</h3>
+            <div class="layer-label">קושי: גבוה · ראייה ממוחשבת + OCR</div>
+            <p>מודל למידה עמוקה סורק כל סרטון ומזהה בגדים, אביזרים ונעליים. OCR מחלץ תוויות מותג ותגי טיפול. פריטים מזוהים מותאמים לקטלוג המוצרים במערכת דירוג תלת-שכבתית (התאמה מלאה / חלקית / כישלון).</p>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="layer-num l3">3</div>
+          <div class="layer-info">
+            <h3>בקרה אנושית (Human-in-the-Loop)</h3>
+            <div class="layer-label">קושי: בינוני · תפעולי</div>
+            <p>כל סרטון עם ציון ביטחון ≥70% נבדק על ידי איש צוות מכירות לפני פרסום. המאשר מאמת שכל המוצרים שזוהו קיימים במלאי וניתנים לרכישה. פריטים שנדחו מתועדים לאימון מחודש של המודל.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">5</div>
+        <h2>תכונות המוצר</h2>
+      </div>
+      <div class="card-grid card-grid-2" dir="rtl">
+        <div class="card">
+          <div class="card-icon">🎬</div>
+          <h3>פיד וידאו עם קנייה</h3>
+          <ul>
+            <li>פיד וידאו בסגנון טיקטוק עם תגי מוצר</li>
+            <li>הקשה אחת ל"קנה את הלוק" על כל סרטון</li>
+            <li>השהייה אוטומטית בעת אינטראקציה עם מוצר</li>
+            <li>בחירת מידה, צבע והוספה לעגלה מתוך הווידאו</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>התאמת סטייל ב-AI</h3>
+          <ul>
+            <li>העלאת תמונה → מציאת משפיענים דומים ויזואלית</li>
+            <li>שיחה: תאר את הסטייל שלך, קבל התאמות</li>
+            <li>התאמה לפי: וייב, צבעים, גזרה, אירוע</li>
+            <li>גילוי משפיענים לפי אסתטיקה, לא רק שם</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛒</div>
+          <h3>עגלה מאוחדת</h3>
+          <ul>
+            <li>עגלה שאוספת מוצרים מסרטוני משפיענים שונים</li>
+            <li>תשלום אחד ללא קשר למקור המוצר</li>
+            <li>רשימת משאלות, זכרון מידות, היסטוריית קניות</li>
+            <li>ייחוס עמלה לכל משפיע על כל פריט</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>דשבורד יוצר</h3>
+          <ul>
+            <li>הכנסות בזמן אמת: "התוכן שלך הרוויח X ש"ח היום"</li>
+            <li>ביצועי סרטון: צפיות, קליקים, המרות</li>
+            <li>שקיפות: למה סרטון הוסתר או נדחה</li>
+            <li>הגדרות פרטיות ושליטה בתכנים</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">6</div>
+        <h2>לוגיקת התאמת מק"טים</h2>
+      </div>
+      <p class="section-sub" dir="rtl">מוצרים שזוהו בסרטונים מותאמים למלאי במערכת תלת-שכבתית. רק התאמה מלאה או חלקית מוצגות למשתמש.</p>
+      <div class="match-grid" dir="rtl">
+        <div class="match-card">
+          <div class="match-badge strict">התאמה מלאה</div>
+          <h4>✅ מוצג למשתמש</h4>
+          <p>מותג + קטגוריה + צבע + מידה — כולם תואמים בדיוק.</p>
+          <div class="match-example">סרטון: Acne Studios חולצה לבנה, M<br>→ במלאי: Acne Studios חולצה לבנה, M ✓</div>
+        </div>
+        <div class="match-card">
+          <div class="match-badge soft">התאמה חלקית</div>
+          <h4>✅ מוצג למשתמש</h4>
+          <p>מותג + קטגוריה + צבע תואמים; מידה שונה. המשתמש רואה את המידה הזמינה הקרובה ביותר.</p>
+          <div class="match-example">סרטון: Acne Studios חולצה לבנה, M<br>→ במלאי: Acne Studios חולצה לבנה, L ✓</div>
+        </div>
+        <div class="match-card">
+          <div class="match-badge fail">כישלון</div>
+          <h4>❌ סרטון לא מוצג</h4>
+          <p>מותג או קטגוריה לא תואמים, או צבע שונה. הסרטון מוסתר מהפיד.</p>
+          <div class="match-example">סרטון: Acne Studios חולצה לבנה<br>→ במלאי: Acne Studios חולצה אפורה ✗</div>
+        </div>
+      </div>
+      <div class="card" style="background:#fff;margin-top:16px;">
+        <p style="font-size:0.85rem;color:var(--text-muted);" dir="rtl"><strong>שיעור דחייה צפוי:</strong> 15-20% מהסרטונים ייכשלו בהתאמת מק"ט עקב פערי מלאי. זהו אילוץ מקובל של המודל — הצגת מוצרים לא זמינים הורסת אמון.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">7</div>
+        <h2>צינור ה-AI</h2>
+      </div>
+      <div class="card" style="background:#fff;">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);" dir="rtl">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">1</span>
+            <div><strong style="font-size:0.9rem;">חילוץ פריימים</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">חילוץ תמונות מפתח בקצב של 1 תמונה בשנייה. סינון תמונות מטושטשות או כפולות.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);" dir="rtl">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">2</span>
+            <div><strong style="font-size:0.9rem;">זיהוי אובייקטים</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">מודל YOLO מזהה בגדים, אביזרים, נעליים. תיבות תחימה נחתכות לניתוח.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);" dir="rtl">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">3</span>
+            <div><strong style="font-size:0.9rem;">חילוץ מאפיינים</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">Embedding מבוסס CLIP לדמיון ויזואלי. ניתוח היסטוגרמת צבעים. OCR לזיהוי תוויות מותג.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);" dir="rtl">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">4</span>
+            <div><strong style="font-size:0.9rem;">התאמת מק"ט</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">הצלבה של מאפיינים שזוהו מול קטלוג המוצרים. הפעלת לוגיקת התאמה מלאה/חלקית/כישלון.</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 0;" dir="rtl">
+            <span style="background:var(--gradient);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;">5</span>
+            <div><strong style="font-size:0.9rem;">תור בקרה</strong><br><span style="font-size:0.82rem;color:var(--text-secondary);">סרטונים מעל 70% ביטחון נכנסים לתור בדיקה אנושית. המאשר מאשר/דוחה בכמות.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">8</div>
+        <h2>מודל עסקי</h2>
+      </div>
+      <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;" dir="rtl">הכנסות: עמלת ביצועים</h3>
+      <div class="biz-table-wrap" style="margin-bottom:24px;">
+        <table class="biz-table" dir="rtl">
+          <thead>
+            <tr><th>רמה</th><th>כמות עוקבים</th><th>אחוז עמלה</th><th>דוגמה (200ש"ח לעסקה)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>מיקרו</td><td>1K – 10K</td><td>8%</td><td>16₪ למכירה</td></tr>
+            <tr><td>בינוני</td><td>10K – 100K</td><td>10%</td><td>20₪ למכירה</td></tr>
+            <tr><td>מאקרו</td><td>100K – 1M</td><td>12%</td><td>24₪ למכירה</td></tr>
+            <tr><td>על</td><td>1M+</td><td>15% + בונוס</td><td>30₪ למכירה + חלק ברווחים</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;" dir="rtl">מבנה עלויות (חודשי)</h3>
+      <div class="biz-table-wrap">
+        <table class="biz-table" dir="rtl">
+          <thead>
+            <tr><th>קטגוריה</th><th>עלות מוערכת</th><th>הערות</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>AI / ראייה ממוחשבת</td><td>5,000 – 10,000₪</td><td>NVIDIA API או אחסון מודל עצמי</td></tr>
+            <tr><td>הזנת תוכן</td><td>2,000 – 5,000₪</td><td>גישה ל-API של רשתות חברתיות + תשתית Webhook</td></tr>
+            <tr><td>בקרה אנושית</td><td>3,000 – 5,000₪</td><td>15-20 שעות/שבוע ב~50₪ לשעה</td></tr>
+            <tr><td>תשתית</td><td>2,000 – 4,000₪</td><td>אחסון ענן, CDN, מסד נתונים, תורי עיבוד</td></tr>
+            <tr><td><strong>סה"כ</strong></td><td><strong>12,000 – 24,000₪/חודש</strong></td><td>קנה מידה לפי כמות סרטונים; עלות AI דומיננטית</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">9</div>
+        <h2>מדדי הצלחה</h2>
+      </div>
+      <div class="stat-row" dir="rtl">
+        <div class="stat-card">
+          <div class="stat-val">2-3%</div>
+          <div class="stat-label">אחוז המרה (סרטון → רכישה)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">60+</div>
+          <div class="stat-label">תוחלת חיים ממוצעת של סרטון (ימים)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">85%+</div>
+          <div class="stat-label">דיוק התאמת AI</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">8-12%</div>
+          <div class="stat-label">עמלה כאחוז מההכנסה</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">10</div>
+        <h2>סיכונים עיקריים</h2>
+      </div>
+      <div class="risk-card" dir="rtl">
+        <div class="risk-header">
+          <span class="risk-severity high">גבוה</span>
+          <h4>נכונות משפיענים לשתף פעולה</h4>
+        </div>
+        <p>יוצרים עלולים להתנגד לניתוח התוכן שלהם — חששות פרטיות, חשיפת מידע, או שיוך מותגי.</p>
+        <div class="risk-mitigation"><strong>🛡 פתרון:</strong> מודל הסכמה שקוף עם מדיניות פרטיות ברורה, בקרת תוכן ותמריצים כלכליים אטרקטיביים. משפיענים יוכלו לסקור ולאשר סרטונים לפני פרסום.</div>
+      </div>
+      <div class="risk-card" dir="rtl">
+        <div class="risk-header">
+          <span class="risk-severity high">גבוה</span>
+          <h4>דיוק זיהוי ה-AI</h4>
+        </div>
+        <p>זיהויים שגויים (זיהוי מוצרים שלא קיימים) ואי-זיהוי (החמצת מוצרים תואמים) פוגעים באמון ובהמרה.</p>
+        <div class="risk-mitigation"><strong>🛡 פתרון:</strong> בקרה אנושית ל-1,000 הסרטונים הראשונים. אימון מחודש רציף על נתוני דחייה. סריקה חוזרת תקופתית של כל הסרטונים הפעילים.</div>
+      </div>
+      <div class="risk-card" dir="rtl">
+        <div class="risk-header">
+          <span class="risk-severity med">בינוני</span>
+          <h4>כדאיות כלכלית בהמרה נמוכה</h4>
+        </div>
+        <p>אם רוב היוצרים ממירים ב-0.5% במקום 3% תשלומי העמלות בקושי מכסים עלויות.</p>
+        <div class="risk-mitigation"><strong>🛡 פתרון:</strong> השקת אלפא עם 20-30 משפיענים בעלי מעורבות גבוהה בלבד (engagement rate >5%). הוכחת רצפת המרה לפני התרחבות.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">11</div>
+        <h2>שלבי בנייה</h2>
+      </div>
+      <div class="timeline" dir="rtl" style="padding-left:0;padding-right:32px;">
+        <div style="position:absolute;right:15px;top:0;bottom:0;width:2px;background:var(--border);"></div>
+        <div class="tl-item">
+          <div class="tl-dot" style="left:auto;right:-25px;"></div>
+          <h3>שלב 1: הוכחת היתכנות</h3>
+          <div class="tl-duration">⏱ 4 שבועות · משפיע 1 · 5 סרטונים · מיפוי מק"ט ידני</div>
+          <p>אימות התזה המרכזית: האם משתמשים יקנו כשמוצרים מזוהים מיידית? פעולה ידנית להוכחת רצפת המרה.</p>
+          <ul>
+            <li>בחירת משפיע אחד בעל תוכן קנייתי ברור</li>
+            <li>מיפוי ידני של מוצרים בסרטונים</li>
+            <li>פיד וידאו בסיסי עם כפתורי קנייה</li>
+            <li><strong>סף מעבר:</strong> ≥2% המרה להמשך לשלב 2</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="left:auto;right:-25px;"></div>
+          <h3>שלב 2: אוטומציה</h3>
+          <div class="tl-duration">⏱ 8 שבועות · 5-10 משפיענים · צינור AI · דשבורד יוצר</div>
+          <p>בניית צינור הראייה הממוחשבת ותהליך הצטרפות היוצרים. החלפת מיפוי מק"ט ידני בזיהוי אוטומטי.</p>
+          <ul>
+            <li>כיול מודלי YOLO + CLIP על נתוני אופנה</li>
+            <li>בניית הזנת תוכן מהעלאות יוצרים או API</li>
+            <li>דשבורד בקרה אנושית</li>
+            <li>דשבורד עמלות יוצר ("התוכן שלך הרוויח 120 ש"ח היום")</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="left:auto;right:-25px;"></div>
+          <h3>שלב 3: קנה מידה</h3>
+          <div class="tl-duration">⏱ 12+ שבועות · 30-50 משפיענים · אופטימיזציה כלכלית</div>
+          <p>הרחבת רשת היוצרים, אופטימיזציית מבנה העמלות לפי נתוני המרה אמיתיים, ובחינת התרחבות גאוגרפית.</p>
+          <ul>
+            <li>גיוס 30-50 יוצרים במגוון אסתטיקות</li>
+            <li>בדיקות A/B לרמות עמלה לאיתור התמהיל האופטימלי</li>
+            <li>השקת תוכנית הפנות ליוצרים לצמיחה אורגנית</li>
+            <li>פורטל הצטרפות יוצרים בשירות עצמי</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header" dir="rtl">
+        <div class="section-num">12</div>
+        <h2>שאלות ותשובות</h2>
+      </div>
+      <p class="section-sub" dir="rtl">שאלות שבעל עניין עשוי לשאול — והתשובות.</p>
+
+      <details class="qa-item" open>
+        <summary class="qa-q" dir="rtl">למה המוצר הזה? למה דווקא עכשיו?</summary>
+        <div class="qa-a" dir="rtl">
+          <p><strong>למה עכשיו:</strong> שלושה מגמות מתכנסות. ראשית, טיקטוק ורילס אימנו כל צרכן לצפות לקנייה מתוך וידאו — אבל התשתית לחבר בין "מה שאני רואה" ל"מה שאני יכול לקנות" עדיין לא קיימת. שנית, מודלי ראייה ממוחשבת (YOLOv8, CLIP) חצו את סף הדיוק הדרוש לזיהוי מוצרי אופנה ב-18 החודשים האחרונים. שלישית, שופיפיי ופלטפורמות איקומרס אחרות סטנדרטו קטלוגי API, מה שהופך התאמת מק"ט בזמן אמת לאפשרית ללא אינטגרציות מותאמות אישית.</p>
+          <p><strong>למה המוצר הזה:</strong> פתרונות קיימים הם או קישורי אפיליאט בניהול יוצר (כיסוי נמוך, ידני, שביר) או תוכן קנייתי בהפקת מותג (לא אותנטי, יקר להפקה). אף גישה לא מגשרת על הפער בין תוכן אורגני של יוצרים למלאי. המוצר הזה הוא הראשון שמאפשר את הגשר הזה בקנה מידה — והופך כל סרטון משפיען למנוע הכנסה פוטנציאלי ללא תיוג ידני.</p>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q" dir="rtl">למי זה מיועד? יש פלחי לקוחות מרובים?</summary>
+        <div class="qa-a" dir="rtl">
+          <p>שלושה פלחים נפרדים, עם מטרות שונות:</p>
+          <ul>
+            <li><strong>צרכנים (משתמשי קצה):</strong> חובבי אופנה בגילאי 18-35 שעוקבים אחרי 10-50 משפיענים. המטרה שלהם: "תעזור לי לקנות מה שאני רואה מבלי לבזבז זמן בחיפוש." הם לא ייצרו חשבון רק כדי לגלוש — המעורבות חייבת להיות ללא חיכוך.</li>
+            <li><strong>משפיענים (צד ההיצע):</strong> יוצרים עם 5K-500K עוקבים שכבר מייצרים תוכן אופנה. המטרה: "תמצה את התוכן שלי באופן אותנטי בלי לפגוע במותג שלי." הם צריכים שליטה, שקיפות ותשלומים אמינים.</li>
+            <li><strong>מותגים / קמעונאים (לקוחות משלמים):</strong> סוחרי איקומרס עם API קטלוגי ותקציב שיווק משפיענים קיים. המטרה: "קבל ROI צפוי ומדיד מתוכן משפיענים בלי לנהל 100 קשרי אפיליאט אישיים."</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q" dir="rtl">מה המייחד? איך זה לא סתם קישורי אפיליאט עם צעדים נוספים?</summary>
+        <div class="qa-a" dir="rtl">
+          <p>ההבדל הוא מבני, לא קוסמטי:</p>
+          <ul>
+            <li><strong>קנה מידה:</strong> קישורי אפיליאט דורשים מהיוצר לתייג ידנית כל מוצר בכל סרטון. המוצר שלנו מזהה אוטומטית — יוצר אחד עם 100 סרטונים מייצר 300+ קישורי מוצר בלי להרים אצבע.</li>
+            <li><strong>דיוק:</strong> קישורי אפיליאט מסורתיים נשברים כשמוצרים נגמרים מהמלאי. התאמת המק"ט שלנו בודקת מלאי בזמן אמת ומסתירה מוצרים לא זמינים אוטומטית.</li>
+            <li><strong>חוויה:</strong> צרכנים רואים מוצרים מוצגים בדיוק על הרגע בסרטון שבו הם מופיעים — לא קישור נפרד בביו. זה מסחר קונטקסטואלי, לא רישום ספרייה.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q" dir="rtl">מה כלול ב-MVP? מה לא?</summary>
+        <div class="qa-a" dir="rtl">
+          <p><strong>MVP כולל:</strong></p>
+          <ul>
+            <li>פיד וידאו קנייתי עם תגי מוצר וכפתורי קנייה</li>
+            <li>צינור זיהוי מוצרים ב-AI (YOLO + CLIP + OCR)</li>
+            <li>התאמת מק"ט תלת-שכבתית (מלא / חלקי / כישלון)</li>
+            <li>דשבורד בקרה אנושית</li>
+            <li>כלי העלאת תוכן ליוצרים</li>
+            <li>עגלה ותשלום בסיסיים (סוחר יחיד בהשקה)</li>
+          </ul>
+          <p><strong>MVP לא כולל:</strong></p>
+          <ul>
+            <li>איגום עגלה בין מספר סוחרים (שלב 2)</li>
+            <li>דשבורד אנליטיקה ליוצרים (שלב 2)</li>
+            <li>אפליקציות מובייל (רשת בלבד ב-MVP)</li>
+            <li>פורטל הצטרפות מותגים בשירות עצמי (שלב 3)</li>
+            <li>הזנה אוטומטית מ-API של רשתות חברתיות (העלאה ידנית ב-MVP)</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q" dir="rtl">איך מודדים הצלחה? מהם המדדים המובילים מול המדדים המפגרים?</summary>
+        <div class="qa-a" dir="rtl">
+          <p><strong>מדדים מובילים (מנבאים הצלחה עתידית):</strong></p>
+          <ul>
+            <li>תפוקת בקרה (סרטונים שנבדקו לשעה) — אם הבקרים לא עומדים בקצב, רעננות הפיד מתה</li>
+            <li>קצב העלאת יוצרים (סרטונים ליוצר לשבוע) — מעיד על מעורבות יוצרים</li>
+            <li>דיוק זיהוי AI (חיוביים אמיתיים / סה"כ זיהויים) — אם הדיוק יורד מתחת ל-80%, האמון נשחק</li>
+          </ul>
+          <p><strong>מדדים מפגרים (מודדים תוצאות בפועל):</strong></p>
+          <ul>
+            <li>אחוז המרה (רכישות / צפיות בסרטון) — יעד 2-3%</li>
+            <li>עמלה כאחוז מ-GMV — יעד 8-12%</li>
+            <li>שימור משפיענים — יעד ≥60% שנתי</li>
+            <li>תוחלת חיים ממוצעת של סרטון — יעד 60+ ימים של הכנסה</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="qa-item">
+        <summary class="qa-q" dir="rtl">מה יכול להשתבש? נקודות כשל בודדות?</summary>
+        <div class="qa-a" dir="rtl">
+          <ol>
+            <li><strong>דיוק AI נמוך מדי:</strong> אם דיוק הזיהוי מתחת ל-70%, הבקרים מבזבזים יותר זמן בדחייה מאשר באישור, ונפח הפיד קורס.</li>
+            <li><strong>יוצרים מובילים עוזבים:</strong> אם יוצר מוביל עוזב, איכות הפיד יורדת באופן נראה לעין. גיוון בסיס היוצרים מונע תלות ביוצר יחיד.</li>
+            <li><strong>API מלאי נופל:</strong> אם API הקטלוג לא זמין, כל סרטון הופך לבלתי-קנייתי. השפלה הדרגתית — סרטונים כ"צפייה בלבד" עם הסבר.</li>
+            <li><strong>בקרה הופכת לצוואר בקבוק:</strong> עדיפות בתור לפי ציון מעורבות יוצר; דחייה אוטומטית של סרטונים בביטחון נמוך.</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+    <footer class="prd-footer" dir="rtl">
+      Tolstoy — <a href="index.html">פלטפורמת וידאו קנייתית</a> · PRD v1.0 · מאי 2026
+    </footer>
+  </div>
+
+  <script>
+    // ── Language Toggle ──
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const enContent = document.getElementById('content-en');
+    const heContent = document.getElementById('content-he');
+    const problemBox = document.getElementById('problem-box');
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        langBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const lang = btn.dataset.lang;
+        if (lang === 'en') {
+          enContent.style.display = 'block';
+          heContent.style.display = 'none';
+          document.documentElement.lang = 'en';
+          document.documentElement.dir = 'ltr';
+        } else {
+          enContent.style.display = 'none';
+          heContent.style.display = 'block';
+          document.documentElement.lang = 'he';
+          document.documentElement.dir = 'rtl';
+        }
+      });
+    });
+
+    // ── Download PDF (print-to-PDF) ──
+    document.querySelector('.nav-primary').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.print();
+    });
+
+    // ── Animations on scroll ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card, .layer, .risk-card, .stat-card, .match-card, .edge-card, .tl-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
