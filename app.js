@@ -12,27 +12,156 @@ const influencers = [
 
 const videos = [
   // Ayiah
-  { id: 'a1', influencer: 'ayiah', thumb: 'assets/thumbnails/ayiah_1.png', product: 'Cream Cable-Knit Sweater', price: 59.99, desc: 'Cozy oversized cable-knit in soft cream. Perfect for layering over your favorite basics this season.', social: '3.2k customers dressed like Ayiah this week', tag: 'trending' },
-  { id: 'a2', influencer: 'ayiah', thumb: 'assets/thumbnails/ayiah_2.png', product: 'Camel Leather Blazer', price: 129.99, desc: 'Structured camel leather blazer. Elevate any outfit from casual to chic in seconds.', social: '1.8k styled this look', tag: 'trending' },
-  { id: 'a3', influencer: 'ayiah', thumb: 'assets/thumbnails/ayiah_3.png', product: 'White Ribbed Crop Top', price: 34.99, desc: 'Fitted ribbed crop top in crisp white. The foundation piece for every influencer wardrobe.', social: '4.1k saved this item', tag: 'new' },
+  {
+    id: 'a1', influencer: 'ayiah',
+    thumb: 'assets/thumbnails/ayiah_1.png',
+    video: 'https://videos.pexels.com/video-files/6567735/6567735-uhd_1440_2560_30fps.mp4',
+    social: '3.2k customers dressed like Ayiah this week', tag: 'trending',
+    items: [
+      { name: 'Cream Cable-Knit Sweater', type: 'Sweater', price: 59.99, desc: 'Cozy oversized cable-knit in soft cream. Perfect for layering.' },
+      { name: 'White Wide-Leg Pants', type: 'Pants', price: 44.99, desc: 'High-waisted wide-leg trousers in crisp white cotton.' },
+      { name: 'White Leather Sneakers', type: 'Shoes', price: 89.99, desc: 'Clean minimal leather sneakers. Goes with everything.' },
+    ]
+  },
+  {
+    id: 'a2', influencer: 'ayiah',
+    thumb: 'assets/thumbnails/ayiah_2.png',
+    video: 'https://videos.pexels.com/video-files/6567491/6567491-uhd_1440_2560_30fps.mp4',
+    social: '1.8k styled this look', tag: 'trending',
+    items: [
+      { name: 'Camel Leather Blazer', type: 'Blazer', price: 129.99, desc: 'Structured camel leather blazer. Elevate any outfit.' },
+      { name: 'Cream Ribbed Top', type: 'Top', price: 34.99, desc: 'Fitted ribbed knit top in cream. A wardrobe essential.' },
+      { name: 'Classic Blue Jeans', type: 'Jeans', price: 64.99, desc: 'High-waisted straight-leg jeans in medium wash.' },
+      { name: 'Black Crossbody Bag', type: 'Bag', price: 79.99, desc: 'Compact crossbody in pebbled black leather.' },
+    ]
+  },
+  {
+    id: 'a3', influencer: 'ayiah',
+    thumb: 'assets/thumbnails/ayiah_3.png',
+    video: 'https://videos.pexels.com/video-files/6568057/6568057-uhd_1440_2560_30fps.mp4',
+    social: '4.1k saved this item', tag: 'new',
+    items: [
+      { name: 'White Ribbed Crop Top', type: 'Top', price: 34.99, desc: 'Fitted ribbed crop top in crisp white.' },
+      { name: 'Beige Linen Trousers', type: 'Pants', price: 54.99, desc: 'Relaxed linen trousers with pleated front detail.' },
+      { name: 'Cream Leather Mules', type: 'Shoes', price: 74.99, desc: 'Minimal pointed-toe mules in cream leather.' },
+    ]
+  },
   // Jack
-  { id: 'j1', influencer: 'jack', thumb: 'assets/thumbnails/jack_1.png', product: 'Navy Fitted Blazer', price: 149.99, desc: 'Sharp navy blazer with modern slim fit. Dress it up or down — Jack\'s go-to piece.', social: '2.5k guys bought this look', tag: 'trending' },
-  { id: 'j2', influencer: 'jack', thumb: 'assets/thumbnails/jack_2.png', product: 'Olive Bomber Jacket', price: 119.99, desc: 'Military-inspired olive bomber with premium hardware. Street-to-studio versatility.', social: '1.4k styled this week', tag: 'new' },
-  { id: 'j3', influencer: 'jack', thumb: 'assets/thumbnails/jack_3.png', product: 'Cream Cable Knit Sweater', price: 79.99, desc: 'Heritage cable knit in warm cream. Effortless weekend style with refined detail.', social: '980 saved this look', tag: 'new' },
+  {
+    id: 'j1', influencer: 'jack',
+    thumb: 'assets/thumbnails/jack_1.png',
+    video: 'https://videos.pexels.com/video-files/5538319/5538319-uhd_1440_2560_25fps.mp4',
+    social: '2.5k guys bought this look', tag: 'trending',
+    items: [
+      { name: 'Navy Fitted Blazer', type: 'Blazer', price: 149.99, desc: 'Sharp navy blazer with modern slim fit.' },
+      { name: 'White Crew-Neck Tee', type: 'T-Shirt', price: 29.99, desc: 'Premium cotton crew-neck in crisp white.' },
+      { name: 'Dark Indigo Jeans', type: 'Jeans', price: 79.99, desc: 'Slim-fit dark wash jeans with stretch.' },
+      { name: 'White Leather Sneakers', type: 'Shoes', price: 99.99, desc: 'Minimalist white leather court sneakers.' },
+    ]
+  },
+  {
+    id: 'j2', influencer: 'jack',
+    thumb: 'assets/thumbnails/jack_2.png',
+    video: 'https://videos.pexels.com/video-files/4926944/4926944-uhd_1440_2560_25fps.mp4',
+    social: '1.4k styled this week', tag: 'new',
+    items: [
+      { name: 'Olive Bomber Jacket', type: 'Jacket', price: 119.99, desc: 'Military-inspired olive bomber with premium hardware.' },
+      { name: 'Black Turtleneck', type: 'Top', price: 49.99, desc: 'Slim merino wool turtleneck in jet black.' },
+      { name: 'Charcoal Slim Jeans', type: 'Jeans', price: 69.99, desc: 'Faded charcoal jeans with a modern taper.' },
+      { name: 'Black Chelsea Boots', type: 'Shoes', price: 139.99, desc: 'Sleek leather Chelsea boots with elastic gore.' },
+    ]
+  },
+  {
+    id: 'j3', influencer: 'jack',
+    thumb: 'assets/thumbnails/jack_3.png',
+    video: 'https://videos.pexels.com/video-files/5538296/5538296-uhd_1440_2560_25fps.mp4',
+    social: '980 saved this look', tag: 'new',
+    items: [
+      { name: 'Cream Cable Knit Sweater', type: 'Sweater', price: 79.99, desc: 'Heritage cable knit in warm cream.' },
+      { name: 'Olive Chinos', type: 'Pants', price: 59.99, desc: 'Slim-fit chinos in deep olive green.' },
+      { name: 'White Canvas Sneakers', type: 'Shoes', price: 69.99, desc: 'Classic low-profile canvas sneakers.' },
+    ]
+  },
   // Michal
-  { id: 'm1', influencer: 'michal', thumb: 'assets/thumbnails/michal_1.png', product: 'Lavender Chunky Cardigan', price: 69.99, desc: 'Statement lavender cardigan in ultra-soft yarn. Cozy meets color for the perfect lounge look.', social: '5.6k hearts this week', tag: 'trending' },
-  { id: 'm2', influencer: 'michal', thumb: 'assets/thumbnails/michal_2.png', product: 'Black Power Blazer', price: 159.99, desc: 'Double-breasted blazer with gold hardware. Michal\'s boardroom-to-bar essential.', social: '2.3k power dressed this week', tag: 'trending' },
-  { id: 'm3', influencer: 'michal', thumb: 'assets/thumbnails/michal_3.png', product: 'Sage Satin Slip Dress', price: 89.99, desc: 'Elegant sage green satin slip dress. Minimalist luxury for evenings out.', social: '3.9k added to wishlists', tag: 'new' },
+  {
+    id: 'm1', influencer: 'michal',
+    thumb: 'assets/thumbnails/michal_1.png',
+    video: 'https://videos.pexels.com/video-files/6567579/6567579-uhd_1440_2560_30fps.mp4',
+    social: '5.6k hearts this week', tag: 'trending',
+    items: [
+      { name: 'Lavender Chunky Cardigan', type: 'Cardigan', price: 69.99, desc: 'Statement lavender cardigan in ultra-soft yarn.' },
+      { name: 'White Lace Camisole', type: 'Top', price: 24.99, desc: 'Delicate lace-trimmed cami in bright white.' },
+      { name: 'Distressed Light Jeans', type: 'Jeans', price: 54.99, desc: 'Relaxed-fit jeans with knee distressing.' },
+    ]
+  },
+  {
+    id: 'm2', influencer: 'michal',
+    thumb: 'assets/thumbnails/michal_2.png',
+    video: 'https://videos.pexels.com/video-files/6568199/6568199-uhd_1440_2560_30fps.mp4',
+    social: '2.3k power dressed this week', tag: 'trending',
+    items: [
+      { name: 'Black Power Blazer', type: 'Blazer', price: 159.99, desc: 'Double-breasted blazer with gold hardware.' },
+      { name: 'White Satin Blouse', type: 'Blouse', price: 59.99, desc: 'Draped cowl-neck blouse in luxe satin.' },
+      { name: 'Black Tailored Trousers', type: 'Pants', price: 74.99, desc: 'High-rise slim trousers with pressed crease.' },
+      { name: 'Black Suede Ankle Boots', type: 'Shoes', price: 129.99, desc: 'Pointed-toe suede boots with stiletto heel.' },
+      { name: 'Black Structured Bag', type: 'Bag', price: 189.99, desc: 'Flap-front structured bag with gold clasp.' },
+    ]
+  },
+  {
+    id: 'm3', influencer: 'michal',
+    thumb: 'assets/thumbnails/michal_3.png',
+    video: 'https://videos.pexels.com/video-files/6394054/6394054-uhd_1440_2560_30fps.mp4',
+    social: '3.9k added to wishlists', tag: 'new',
+    items: [
+      { name: 'Sage Satin Slip Dress', type: 'Dress', price: 89.99, desc: 'Elegant sage green satin slip dress.' },
+      { name: 'Gold Chain Necklace', type: 'Jewelry', price: 39.99, desc: 'Delicate layered chain necklace in gold.' },
+      { name: 'Gold Clutch', type: 'Bag', price: 49.99, desc: 'Textured metallic clutch for evening occasions.' },
+    ]
+  },
   // Jacob
-  { id: 'jb1', influencer: 'jacob', thumb: 'assets/thumbnails/jacob_1.png', product: 'Tan Suede Bomber', price: 139.99, desc: 'Premium suede bomber jacket in warm tan. Jacob\'s signature street-style piece.', social: '1.7k rocked this look', tag: 'new' },
-  { id: 'jb2', influencer: 'jacob', thumb: 'assets/thumbnails/jacob_2.png', product: 'Charcoal Overcoat', price: 199.99, desc: 'Tailored charcoal wool overcoat. Sophisticated layering for the modern gentleman.', social: '2.1k elevated their wardrobe', tag: 'trending' },
-  { id: 'jb3', influencer: 'jacob', thumb: 'assets/thumbnails/jacob_3.png', product: 'Rust Linen Shirt', price: 54.99, desc: 'Relaxed rust-orange linen shirt. Resort-ready style with effortless vibes.', social: '3.4k vacation-ready', tag: 'new' },
+  {
+    id: 'jb1', influencer: 'jacob',
+    thumb: 'assets/thumbnails/jacob_1.png',
+    video: 'https://videos.pexels.com/video-files/5538319/5538319-uhd_1440_2560_25fps.mp4',
+    social: '1.7k rocked this look', tag: 'new',
+    items: [
+      { name: 'Tan Suede Bomber', type: 'Jacket', price: 139.99, desc: 'Premium suede bomber jacket in warm tan.' },
+      { name: 'Black Henley Shirt', type: 'Top', price: 39.99, desc: 'Slim-fit henley with 3-button placket.' },
+      { name: 'Dark Wash Jeans', type: 'Jeans', price: 69.99, desc: 'Slim-tapered jeans in dark indigo wash.' },
+      { name: 'Black Athletic Sneakers', type: 'Shoes', price: 119.99, desc: 'Lightweight knit sneakers in matte black.' },
+    ]
+  },
+  {
+    id: 'jb2', influencer: 'jacob',
+    thumb: 'assets/thumbnails/jacob_2.png',
+    video: 'https://videos.pexels.com/video-files/4926944/4926944-uhd_1440_2560_25fps.mp4',
+    social: '2.1k elevated their wardrobe', tag: 'trending',
+    items: [
+      { name: 'Charcoal Overcoat', type: 'Coat', price: 199.99, desc: 'Tailored charcoal wool overcoat.' },
+      { name: 'White Oxford Shirt', type: 'Shirt', price: 54.99, desc: 'Classic button-down oxford in bright white.' },
+      { name: 'Navy Chinos', type: 'Pants', price: 64.99, desc: 'Slim-fit chinos in dark navy.' },
+      { name: 'Brown Chelsea Boots', type: 'Shoes', price: 149.99, desc: 'Full-grain leather Chelsea boots in rich brown.' },
+    ]
+  },
+  {
+    id: 'jb3', influencer: 'jacob',
+    thumb: 'assets/thumbnails/jacob_3.png',
+    video: 'https://videos.pexels.com/video-files/5538296/5538296-uhd_1440_2560_25fps.mp4',
+    social: '3.4k vacation-ready', tag: 'new',
+    items: [
+      { name: 'Rust Linen Shirt', type: 'Shirt', price: 54.99, desc: 'Relaxed rust-orange linen button-down.' },
+      { name: 'White Cotton Tee', type: 'T-Shirt', price: 24.99, desc: 'Soft slub cotton tee in clean white.' },
+      { name: 'Khaki Linen Shorts', type: 'Shorts', price: 44.99, desc: 'Relaxed-fit linen shorts in sand khaki.' },
+      { name: 'Tan Leather Sandals', type: 'Shoes', price: 59.99, desc: 'Classic slide sandals in natural tan leather.' },
+    ]
+  },
 ];
 
 // ── State ──
 let selectedInfluencers = new Set();
 let cart = [];
 let currentVideo = null;
+let selectedItemIdx = 0;
 let selectedSize = 'S';
 let activeFilter = 'all';
 
@@ -70,39 +199,36 @@ function renderInfluencers(filter = '') {
       </div>
     </div>
   `).join('');
-
-  // Bind clicks
   document.querySelectorAll('.influencer-card').forEach(card => {
     card.addEventListener('click', () => toggleInfluencer(card.dataset.id));
   });
 }
 
-// ── Toggle Influencer Selection ──
 function toggleInfluencer(id) {
-  if (selectedInfluencers.has(id)) {
-    selectedInfluencers.delete(id);
-  } else {
-    selectedInfluencers.add(id);
-  }
+  if (selectedInfluencers.has(id)) selectedInfluencers.delete(id);
+  else selectedInfluencers.add(id);
   renderInfluencers(searchInput.value);
   renderVideos();
+}
+
+// ── Type Icon Helper ──
+function getTypeIcon(type) {
+  const icons = {
+    Sweater:'🧶', Pants:'👖', Shoes:'👟', Blazer:'🧥', Top:'👚', Jeans:'👖',
+    Bag:'👜', Jacket:'🧥', Shirt:'👔', Cardigan:'🧶', Blouse:'👚', Dress:'👗',
+    Jewelry:'💎', Coat:'🧥', Shorts:'🩳', 'T-Shirt':'👕',
+  };
+  return icons[type] || '👕';
 }
 
 // ── Render Video Cards ──
 function renderVideos() {
   let filtered = videos;
-
-  // Filter by selected influencers
-  if (selectedInfluencers.size > 0) {
+  if (selectedInfluencers.size > 0)
     filtered = filtered.filter(v => selectedInfluencers.has(v.influencer));
-  }
-
-  // Filter by tab
-  if (activeFilter !== 'all') {
+  if (activeFilter !== 'all')
     filtered = filtered.filter(v => v.tag === activeFilter);
-  }
 
-  // Update title
   if (selectedInfluencers.size === 1) {
     const inf = influencers.find(i => i.id === [...selectedInfluencers][0]);
     feedTitle.textContent = `${inf.name}'s Looks`;
@@ -117,18 +243,26 @@ function renderVideos() {
     emptyFeed.style.display = 'block';
     return;
   }
-
   videoGrid.style.display = 'grid';
   emptyFeed.style.display = 'none';
 
+  const inf_map = {};
+  influencers.forEach(i => inf_map[i.id] = i);
+
   videoGrid.innerHTML = filtered.map((v, idx) => {
-    const inf = influencers.find(i => i.id === v.influencer);
+    const inf = inf_map[v.influencer];
+    const outfitTotal = v.items.reduce((s, it) => s + it.price, 0).toFixed(2);
     return `
     <div class="video-card fade-in-up" data-video-id="${v.id}" style="animation-delay: ${idx * 0.07}s">
-      <img src="${v.thumb}" alt="${v.product}" loading="lazy">
-      <div class="price-tags">
-        <span class="price-tag">$${v.price.toFixed(2)} for ${v.product.split(' ').pop().toLowerCase()}</span>
+      <video src="${v.video}" poster="${v.thumb}" muted loop playsinline preload="metadata" class="video-card-vid"></video>
+      <div class="video-card-creator">
+        <img src="${inf.avatar}" alt="${inf.name}" class="video-card-creator-avatar">
+        <span class="video-card-creator-name">${inf.name}</span>
       </div>
+      <div class="price-tags">
+        ${v.items.map((item, i) => `<span class="price-tag" style="animation-delay:${i * 0.15}s"><span class="price-tag-emoji">${getTypeIcon(item.type)}</span> ${item.type} · $${item.price.toFixed(2)}</span>`).join('')}
+      </div>
+      <div class="video-card-outfit-badge">${v.items.length} items · $${outfitTotal}</div>
       <div class="play-btn">
         <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
       </div>
@@ -138,26 +272,39 @@ function renderVideos() {
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
             ${v.social}
           </span>
-          <button class="btn-shop ${idx % 3 === 1 ? 'btn-shop--primary' : ''}" data-shop-id="${v.id}">${idx % 3 === 1 ? 'Buy Now' : 'Shop the Look'}</button>
+          <button class="btn-shop btn-shop--primary" data-shop-id="${v.id}">Shop the Look</button>
         </div>
       </div>
     </div>`;
   }).join('');
 
-  // Bind video card clicks
+  // Click handlers
   document.querySelectorAll('.video-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openModal(card.dataset.videoId);
-    });
+    card.addEventListener('click', (e) => { e.stopPropagation(); openModal(card.dataset.videoId); });
   });
-  // Bind shop buttons explicitly
   document.querySelectorAll('.btn-shop').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openModal(btn.dataset.shopId);
-    });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); openModal(btn.dataset.shopId); });
   });
+
+  // Hover-to-play on video cards
+  document.querySelectorAll('.video-card').forEach(card => {
+    const vid = card.querySelector('.video-card-vid');
+    if (!vid) return;
+    card.addEventListener('mouseenter', () => { vid.play().catch(() => {}); });
+    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+  });
+
+  // IntersectionObserver: pause off-screen videos for performance
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const vid = entry.target.querySelector('.video-card-vid');
+        if (!vid) return;
+        if (!entry.isIntersecting) { vid.pause(); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.video-card').forEach(card => observer.observe(card));
+  }
 }
 
 // ── Modal ──
@@ -165,90 +312,141 @@ function openModal(videoId) {
   const v = videos.find(x => x.id === videoId);
   if (!v) return;
   currentVideo = v;
+  selectedItemIdx = 0;
+  selectedSize = 'S';
   const inf = influencers.find(i => i.id === v.influencer);
 
-  document.getElementById('modal-img').src = v.thumb;
-  document.getElementById('modal-img').alt = v.product;
+  // Set video or image
+  const mediaEl = document.getElementById('modal-media-container');
+  mediaEl.innerHTML = `
+    <button class="modal-close" id="modal-close-inner">✕</button>
+    <video src="${v.video}" poster="${v.thumb}" autoplay loop muted playsinline id="modal-video"></video>
+    <div class="modal-play-overlay" id="modal-play-overlay">
+      <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg></div>
+    </div>`;
+  const vid = document.getElementById('modal-video');
+  const playOverlay = document.getElementById('modal-play-overlay');
+  vid.addEventListener('click', () => { if (vid.paused) { vid.play(); playOverlay.style.opacity='0'; } else { vid.pause(); playOverlay.style.opacity='1'; } });
+  playOverlay.addEventListener('click', () => { vid.play(); playOverlay.style.opacity='0'; });
+  vid.play().then(() => { playOverlay.style.opacity = '0'; }).catch(() => { playOverlay.style.opacity = '1'; });
+  document.getElementById('modal-close-inner').addEventListener('click', closeModal);
+
   document.getElementById('modal-avatar').src = inf.avatar;
   document.getElementById('modal-inf-name').textContent = inf.name;
-  document.getElementById('modal-product-title').textContent = v.product;
-  document.getElementById('modal-product-price').textContent = `$${v.price.toFixed(2)}`;
-  document.getElementById('modal-product-desc').textContent = v.desc;
 
-  // Reset size
-  selectedSize = 'S';
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.size === 'S');
-  });
-
+  renderModalItems(v);
   modalBackdrop.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
+function renderModalItems(v) {
+  const item = v.items[selectedItemIdx];
+  // Item list
+  const listEl = document.getElementById('modal-item-list');
+  listEl.innerHTML = v.items.map((it, i) => `
+    <div class="modal-item ${i === selectedItemIdx ? 'active' : ''}" data-idx="${i}">
+      <div class="modal-item-icon">${getTypeIcon(it.type)}</div>
+      <div class="modal-item-info">
+        <span class="modal-item-name">${it.name}</span>
+        <span class="modal-item-type">${it.type}</span>
+      </div>
+      <span class="modal-item-price">$${it.price.toFixed(2)}</span>
+    </div>
+  `).join('');
+
+  listEl.querySelectorAll('.modal-item').forEach(el => {
+    el.addEventListener('click', () => {
+      selectedItemIdx = parseInt(el.dataset.idx);
+      renderModalItems(v);
+    });
+  });
+
+  // Details
+  document.getElementById('modal-product-title').textContent = item.name;
+  document.getElementById('modal-product-price').textContent = `$${item.price.toFixed(2)}`;
+  document.getElementById('modal-product-desc').textContent = item.desc;
+
+  // Outfit total
+  const total = v.items.reduce((s, it) => s + it.price, 0);
+  document.getElementById('modal-outfit-total').textContent = `Full outfit: $${total.toFixed(2)}`;
+
+  // Size buttons
+  document.querySelectorAll('#modal-sizes .size-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size === selectedSize);
+  });
+}
+
+// (getTypeIcon moved above renderVideos)
+
 function closeModal() {
   modalBackdrop.classList.remove('active');
   document.body.style.overflow = '';
+  const vid = document.getElementById('modal-video');
+  if (vid) vid.pause();
   currentVideo = null;
 }
 
-document.getElementById('modal-close').addEventListener('click', closeModal);
-modalBackdrop.addEventListener('click', (e) => {
-  if (e.target === modalBackdrop) closeModal();
+modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+
+// Size selection (delegated)
+document.getElementById('modal-sizes').addEventListener('click', (e) => {
+  const btn = e.target.closest('.size-btn');
+  if (!btn) return;
+  selectedSize = btn.dataset.size;
+  document.querySelectorAll('#modal-sizes .size-btn').forEach(b => b.classList.toggle('active', b.dataset.size === selectedSize));
 });
 
-// Size selection
-document.querySelectorAll('.size-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedSize = btn.dataset.size;
-  });
-});
-
-// ── Cart Logic ──
+// ── Add to Cart ──
 document.getElementById('btn-add-cart').addEventListener('click', () => {
   if (!currentVideo) return;
+  const item = currentVideo.items[selectedItemIdx];
   const inf = influencers.find(i => i.id === currentVideo.influencer);
   cart.push({
-    id: currentVideo.id + '_' + selectedSize + '_' + Date.now(),
-    videoId: currentVideo.id,
-    product: currentVideo.product,
-    price: currentVideo.price,
-    size: selectedSize,
-    thumb: currentVideo.thumb,
-    influencer: inf.name,
+    id: currentVideo.id + '_' + selectedItemIdx + '_' + selectedSize + '_' + Date.now(),
+    product: item.name, price: item.price, type: item.type,
+    size: selectedSize, thumb: currentVideo.thumb, influencer: inf.name,
+  });
+  updateCart();
+  showToast(`${item.name} added to your bag!`);
+});
+
+document.getElementById('btn-add-all').addEventListener('click', () => {
+  if (!currentVideo) return;
+  const inf = influencers.find(i => i.id === currentVideo.influencer);
+  currentVideo.items.forEach((item, i) => {
+    cart.push({
+      id: currentVideo.id + '_' + i + '_' + selectedSize + '_' + Date.now(),
+      product: item.name, price: item.price, type: item.type,
+      size: selectedSize, thumb: currentVideo.thumb, influencer: inf.name,
+    });
   });
   updateCart();
   closeModal();
-  showToast(`${currentVideo.product} added to your bag!`);
+  showToast(`Full outfit (${currentVideo.items.length} items) added to your bag!`);
 });
 
 document.getElementById('btn-wishlist').addEventListener('click', () => {
   const btn = document.getElementById('btn-wishlist');
-  btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
-  btn.style.color = btn.textContent === '♥' ? '#ef4444' : '';
-  btn.style.borderColor = btn.textContent === '♥' ? '#ef4444' : '';
-  showToast(btn.textContent === '♥' ? 'Added to wishlist ♥' : 'Removed from wishlist');
+  const isLiked = btn.textContent.trim() === '♥';
+  btn.textContent = isLiked ? '♡' : '♥';
+  btn.style.color = isLiked ? '' : '#ef4444';
+  btn.style.borderColor = isLiked ? '' : '#ef4444';
+  showToast(isLiked ? 'Removed from wishlist' : 'Added to wishlist ♥');
 });
 
+// ── Cart ──
 function updateCart() {
   cartCountEl.textContent = cart.length;
   cartCountEl.classList.toggle('visible', cart.length > 0);
-
   if (cart.length === 0) {
     cartEmpty.style.display = 'block';
     cartFooter.style.display = 'none';
     cartBody.querySelectorAll('.cart-item').forEach(el => el.remove());
     return;
   }
-
   cartEmpty.style.display = 'none';
   cartFooter.style.display = 'block';
-
-  // Re-render items
-  const existingItems = cartBody.querySelectorAll('.cart-item');
-  existingItems.forEach(el => el.remove());
-
+  cartBody.querySelectorAll('.cart-item').forEach(el => el.remove());
   cart.forEach(item => {
     const div = document.createElement('div');
     div.className = 'cart-item';
@@ -256,52 +454,30 @@ function updateCart() {
       <img src="${item.thumb}" alt="${item.product}">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.product}</div>
-        <div class="cart-item-size">Size: ${item.size} · by ${item.influencer}</div>
+        <div class="cart-item-size">${item.type} · Size: ${item.size} · by ${item.influencer}</div>
         <div class="cart-item-price">$${item.price.toFixed(2)}</div>
         <button class="cart-item-remove" data-cart-id="${item.id}">Remove</button>
-      </div>
-    `;
+      </div>`;
     cartBody.appendChild(div);
   });
-
-  // Bind remove
   cartBody.querySelectorAll('.cart-item-remove').forEach(btn => {
-    btn.addEventListener('click', () => {
-      cart = cart.filter(c => c.id !== btn.dataset.cartId);
-      updateCart();
-    });
+    btn.addEventListener('click', () => { cart = cart.filter(c => c.id !== btn.dataset.cartId); updateCart(); });
   });
-
-  const total = cart.reduce((sum, c) => sum + c.price, 0);
-  cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+  cartTotalPrice.textContent = `$${cart.reduce((s, c) => s + c.price, 0).toFixed(2)}`;
 }
 
-// Cart drawer open/close
 document.getElementById('cart-btn').addEventListener('click', () => {
-  cartBackdrop.classList.add('active');
-  cartDrawer.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  cartBackdrop.classList.add('active'); cartDrawer.classList.add('open'); document.body.style.overflow = 'hidden';
 });
-
 function closeCart() {
-  cartBackdrop.classList.remove('active');
-  cartDrawer.classList.remove('open');
-  document.body.style.overflow = '';
+  cartBackdrop.classList.remove('active'); cartDrawer.classList.remove('open'); document.body.style.overflow = '';
 }
-
 document.getElementById('cart-close').addEventListener('click', closeCart);
-cartBackdrop.addEventListener('click', (e) => {
-  if (e.target === cartBackdrop) closeCart();
-});
-
-document.getElementById('btn-checkout').addEventListener('click', () => {
-  showToast('🎉 Checkout coming soon!');
-});
+cartBackdrop.addEventListener('click', (e) => { if (e.target === cartBackdrop) closeCart(); });
+document.getElementById('btn-checkout').addEventListener('click', () => showToast('🎉 Checkout coming soon!'));
 
 // ── Search ──
-searchInput.addEventListener('input', () => {
-  renderInfluencers(searchInput.value);
-});
+searchInput.addEventListener('input', () => renderInfluencers(searchInput.value));
 
 // ── Feed Tabs ──
 document.querySelectorAll('.feed-tab').forEach(tab => {
@@ -327,352 +503,6 @@ document.addEventListener('keydown', (e) => {
     if (cartBackdrop.classList.contains('active')) closeCart();
   }
 });
-
-// ═══════════════════════════════════════════
-//   AI SHOPPER – Conversational Style Agent
-//   ═══════════════════════════════════════════
-
-const NVIDIA_MODEL = 'meta/llama-3.2-90b-vision-instruct';
-
-const STYLE_PROFILES = {
-  ayiah: { name: 'Ayiah Soufi', vibe: 'Feminine · Cozy Chic · Warm Neutrals', emoji: '🧣', keywords: ['feminine', 'cozy', 'cream', 'camel', 'white', 'chic', 'classic', 'sweater', 'warm', 'soft', 'romantic', 'elegant', 'neutral', 'cable-knit'] },
-  jack: { name: 'Jack Scalise', vibe: 'Modern · Tailored · Street-Style Edge', emoji: '🧥', keywords: ['modern', 'tailored', 'navy', 'olive', 'street', 'sharp', 'blazer', 'masculine', 'clean', 'fitted', 'urban', 'bomber', 'minimalist'] },
-  michal: { name: 'Michal Blank', vibe: 'Bold · Power · Statement Luxury', emoji: '✨', keywords: ['bold', 'power', 'statement', 'lavender', 'black', 'sage', 'satin', 'luxury', 'sophisticated', 'dramatic', 'confident', 'high-end', 'double-breasted'] },
-  jacob: { name: 'Jacob Arabo', vibe: 'Rugged · Earth Tones · Gentleman', emoji: '🏔️', keywords: ['rugged', 'earth', 'tan', 'suede', 'charcoal', 'rust', 'linen', 'gentleman', 'warm', 'natural', 'outdoor', 'refined', 'overcoat'] },
-};
-
-const AI_SYSTEM_PROMPT = `You are a conversational AI style advisor for a fashion platform called Tolstoy. Your job is to help users discover influencers whose style matches their taste through friendly conversation.
-
-Available influencers:
-- Ayiah Soufi (id: ayiah) — Feminine, cozy chic, warm neutrals (cream, camel, white). Classic elegant with soft textures.
-- Jack Scalise (id: jack) — Modern, tailored street-style (navy, olive). Sharp, clean, urban masculine.
-- Michal Blank (id: michal) — Bold, power-dressing, statement luxury (lavender, black, sage). Sophisticated and dramatic.
-- Jacob Arabo (id: jacob) — Rugged earth tones, gentleman style (tan, suede, charcoal, rust). Warm, natural, refined.
-
-Rules:
-1. Have a natural conversation. Ask ONE question at a time about the user's style preferences.
-2. Start by asking about their general vibe/aesthetic. Then follow up on colors, fit preferences, occasion, etc.
-3. After 2-3 rounds of Q&A (once you have enough info), recommend the best matching influencers.
-4. Your response must end with JSON: {"phase":"questioning","question":"..."} or {"phase":"recommending","matches":["id1","id2","id3"]}
-5. Keep your conversational text under 3 sentences per turn.
-6. Be warm, enthusiastic, and fashion-savvy. Use emojis sparingly.
-7. When recommending, explain WHY each influencer matches the user's preferences.
-8. If the user uploads a photo, analyze their style from the image and recommend matches based on what you see.`;
-
-const aiDOM = {
-  toggle: document.getElementById('ai-toggle'),
-  chat: document.getElementById('ai-chat'),
-  overlay: document.getElementById('ai-chat-overlay'),
-  close: document.getElementById('ai-chat-close'),
-  clear: document.getElementById('ai-chat-clear'),
-  body: document.getElementById('ai-chat-body'),
-  input: document.getElementById('ai-chat-input'),
-  send: document.getElementById('ai-send-btn'),
-  fileInput: document.getElementById('ai-file-input'),
-};
-
-const ai = {
-  conversation: [{ role: 'system', content: AI_SYSTEM_PROMPT }],
-  phase: 'greeting',
-  preferences: {},
-  matches: [],
-  processing: false,
-  photoBase64: null,
-};
-
-aiDOM.toggle.addEventListener('click', () => {
-  aiDOM.chat.classList.toggle('open');
-  aiDOM.overlay.classList.toggle('active');
-  aiDOM.toggle.classList.add('hidden');
-  if (aiDOM.chat.classList.contains('open')) aiDOM.input.focus();
-});
-
-function closeAIChat() {
-  aiDOM.chat.classList.remove('open');
-  aiDOM.overlay.classList.remove('active');
-  aiDOM.toggle.classList.remove('hidden');
-}
-aiDOM.close.addEventListener('click', closeAIChat);
-aiDOM.overlay.addEventListener('click', closeAIChat);
-
-aiDOM.clear.addEventListener('click', resetAI);
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (aiDOM.chat.classList.contains('open')) closeAIChat();
-    if (modalBackdrop.classList.contains('active')) closeModal();
-    if (cartBackdrop.classList.contains('active')) closeCart();
-  }
-});
-
-function resetAI() {
-  const msgs = aiDOM.body.querySelectorAll('.ai-message');
-  for (let i = 1; i < msgs.length; i++) msgs[i].remove();
-  const extra = aiDOM.body.querySelectorAll('.ai-quick-replies, .ai-typing');
-  extra.forEach(e => e.remove());
-  ai.conversation = [{ role: 'system', content: AI_SYSTEM_PROMPT }];
-  ai.phase = 'greeting';
-  ai.preferences = {};
-  ai.matches = [];
-  ai.photoBase64 = null;
-  ai.processing = false;
-}
-
-function sendAIMessage(text) {
-  if (!text.trim() || ai.processing) return;
-  addUserMsg(text);
-  aiDOM.input.value = '';
-  processAIInput(text, null);
-}
-aiDOM.send.addEventListener('click', () => sendAIMessage(aiDOM.input.value));
-aiDOM.input.addEventListener('keydown', e => {
-  if (e.key === 'Enter') sendAIMessage(aiDOM.input.value);
-});
-
-aiDOM.fileInput.addEventListener('change', async e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = async evt => {
-    const dataUrl = evt.target.result;
-    ai.photoBase64 = dataUrl;
-    addUserMsg('📸 Uploaded a photo for style analysis', dataUrl);
-    await processAIInput(null, dataUrl);
-  };
-  reader.readAsDataURL(file);
-  aiDOM.fileInput.value = '';
-});
-
-function addBotMsg(html) {
-  removeQuickReplies();
-  const d = document.createElement('div');
-  d.className = 'ai-message ai-message--bot';
-  d.innerHTML = `<div class="ai-message-avatar">✦</div><div class="ai-message-content">${html}</div>`;
-  aiDOM.body.appendChild(d);
-  aiDOM.body.scrollTop = aiDOM.body.scrollHeight;
-}
-
-function addUserMsg(text, imgSrc) {
-  removeQuickReplies();
-  const d = document.createElement('div');
-  d.className = 'ai-message ai-message--user';
-  let c = text.replace(/\n/g, '<br>');
-  if (imgSrc) c += `<img src="${imgSrc}" class="ai-uploaded-img">`;
-  d.innerHTML = `<div class="ai-message-avatar">👤</div><div class="ai-message-content">${c}</div>`;
-  aiDOM.body.appendChild(d);
-  aiDOM.body.scrollTop = aiDOM.body.scrollHeight;
-}
-
-function showTyping() {
-  const existing = document.getElementById('ai-typing-id');
-  if (existing) existing.remove();
-  const d = document.createElement('div');
-  d.className = 'ai-typing';
-  d.id = 'ai-typing-id';
-  d.innerHTML = '<div class="ai-typing-dot"></div><div class="ai-typing-dot"></div><div class="ai-typing-dot"></div>';
-  aiDOM.body.appendChild(d);
-  aiDOM.body.scrollTop = aiDOM.body.scrollHeight;
-}
-
-function rmTyping() {
-  const e = document.getElementById('ai-typing-id');
-  if (e) e.remove();
-}
-
-function removeQuickReplies() {
-  const existing = aiDOM.body.querySelectorAll('.ai-quick-replies');
-  existing.forEach(e => e.remove());
-}
-
-function renderMatchCards(ids) {
-  return ids.map(id => {
-    const p = STYLE_PROFILES[id];
-    const inf = influencers.find(i => i.id === id);
-    if (!p || !inf) return '';
-    return `<div class="ai-match-card" data-inf-id="${id}">
-      <img src="${inf.avatar}" alt="${p.name}">
-      <div class="ai-match-card-info">
-        <div class="ai-match-card-name">${p.emoji} ${p.name}</div>
-        <div class="ai-match-card-vibe">${p.vibe}</div>
-      </div>
-      <span class="ai-match-card-cta">Shop →</span>
-    </div>`;
-  }).join('');
-}
-
-function showQuickReplies(options) {
-  removeQuickReplies();
-  const container = document.createElement('div');
-  container.className = 'ai-quick-replies';
-  container.innerHTML = options.map(opt =>
-    `<button class="ai-quick-reply" data-value="${opt.replace(/"/g, '&quot;')}">${opt}</button>`
-  ).join('') + `<button class="ai-quick-reply ai-quick-reply--text" data-value="">✏️ Type my own</button>`;
-  aiDOM.body.appendChild(container);
-  aiDOM.body.scrollTop = aiDOM.body.scrollHeight;
-  container.querySelectorAll('.ai-quick-reply').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const val = btn.dataset.value;
-      if (val) {
-        sendAIMessage(val);
-      } else {
-        aiDOM.input.focus();
-        container.remove();
-      }
-    });
-  });
-}
-
-function bindMatchCardClicks() {
-  aiDOM.body.querySelectorAll('.ai-match-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const id = card.dataset.infId;
-      if (id && !selectedInfluencers.has(id)) {
-        selectedInfluencers.add(id);
-        renderInfluencers(searchInput.value);
-        renderVideos();
-        closeAIChat();
-        document.getElementById('feed-section').scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-}
-
-function findMatchingInfluencers(text, extraKeywords) {
-  const q = (text || '').toLowerCase();
-  const allKeywords = [...(extraKeywords || []), ...q.split(/\s+/)].filter(k => k.length > 2);
-  const scores = {};
-  for (const [id, profile] of Object.entries(STYLE_PROFILES)) {
-    let score = 0;
-    for (const kw of allKeywords) {
-      for (const pk of profile.keywords) {
-        if (kw.includes(pk) || pk.includes(kw)) score += 2;
-        else if (q.includes(pk)) score += 1;
-      }
-    }
-    scores[id] = score;
-  }
-  return Object.entries(scores)
-    .sort((a, b) => b[1] - a[1])
-    .filter(([, s]) => s > 0)
-    .map(([id]) => id)
-    .slice(0, 4);
-}
-
-async function processAIInput(text, imageBase64) {
-  ai.processing = true;
-  showTyping();
-
-  const userContent = imageBase64
-    ? [{ type: 'text', text: text || 'Analyze this photo and help me find matching influencers. Ask me questions about my style preferences if you need more info.' }, { type: 'image_url', image_url: { url: imageBase64 } }]
-    : text;
-
-  ai.conversation.push({ role: 'user', content: userContent });
-
-  try {
-    const resp = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: NVIDIA_MODEL,
-        messages: ai.conversation,
-        max_tokens: 512,
-        temperature: 0.3,
-      }),
-    });
-
-    if (!resp.ok) throw new Error(`API ${resp.status}`);
-    const data = await resp.json();
-    const reply = data.choices[0].message.content;
-    ai.conversation.push({ role: 'assistant', content: reply });
-    rmTyping();
-
-    // Parse JSON directive from response
-    const jsonMatch = reply.match(/\{[\s\S]*"phase"[\s\S]*\}/);
-    let phase = 'questioning';
-    let matches = [];
-    let question = '';
-
-    if (jsonMatch) {
-      try {
-        const cmd = JSON.parse(jsonMatch[0]);
-        phase = cmd.phase;
-        matches = cmd.matches || [];
-        question = cmd.question || '';
-      } catch (e) { /* fall through */ }
-    }
-
-    // Clean the JSON directive from display text
-    const displayText = reply.replace(/\{[\s\S]*"phase"[\s\S]*\}/, '').trim();
-
-    if (phase === 'recommending' && matches.length > 0) {
-      ai.phase = 'recommending';
-      ai.matches = matches;
-      let html = `<p>${displayText.replace(/\n/g, '<br>')}</p>`;
-      html += `<div style="margin-top:8px">${renderMatchCards(matches)}</div>`;
-      html += `<p style="margin-top:10px;font-size:0.78rem;color:var(--text-muted)">Click a card to shop their looks</p>`;
-      addBotMsg(html);
-      bindMatchCardClicks();
-
-      // Offer refinement options
-      setTimeout(() => showQuickReplies(['Show me more options', 'I want a different style', 'Tell me more about them', '👍 Perfect, thanks!']), 600);
-    } else {
-      ai.phase = 'questioning';
-      let html = `<p>${displayText.replace(/\n/g, '<br>')}</p>`;
-
-      // Infer quick replies from context if AI didn't provide them
-      const quickOptions = inferQuickReplies(displayText, ai.conversation.length);
-      addBotMsg(html);
-      if (quickOptions.length > 0) {
-        setTimeout(() => showQuickReplies(quickOptions), 400);
-      }
-    }
-  } catch (err) {
-    console.error('AI err:', err);
-    rmTyping();
-    handleFallback(text);
-  }
-
-  ai.processing = false;
-}
-
-function inferQuickReplies(aiText, turnCount) {
-  const lower = aiText.toLowerCase();
-  const replies = [];
-
-  if (turnCount <= 3) {
-    if (lower.includes('vibe') || lower.includes('aesthetic') || lower.includes('style')) {
-      replies.push('Casual streetwear', 'Feminine & elegant', 'Bold & edgy', 'Classic & timeless');
-    } else if (lower.includes('color') || lower.includes('palette') || lower.includes('shade')) {
-      replies.push('Neutrals', 'Earth tones', 'Bold colors', 'Monochrome');
-    } else if (lower.includes('fit') || lower.includes('silhouette') || lower.includes('cut')) {
-      replies.push('Relaxed & oversized', 'Tailored & fitted', 'Mix of both');
-    } else if (lower.includes('occasion') || lower.includes('wear') || lower.includes('outfit')) {
-      replies.push('Everyday casual', 'Work & office', 'Night out', 'Weekend');
-    } else if (lower.includes('budget') || lower.includes('price') || lower.includes('spend')) {
-      replies.push('Budget-friendly', 'Mid-range', 'Premium');
-    } else if (lower.includes('photo') || lower.includes('picture') || lower.includes('image') || lower.includes('upload')) {
-      replies = [];
-    }
-  }
-
-  if (replies.length === 0 && turnCount <= 3) {
-    replies.push('Tell me more', 'Show me options');
-  }
-
-  return replies;
-}
-
-function handleFallback(text) {
-  const query = text || (ai.photoBase64 ? 'photo upload' : 'stylish');
-  const matches = findMatchingInfluencers(query);
-  if (matches.length > 0) {
-    addBotMsg(`<p>Here are influencers I found for your style:</p>${renderMatchCards(matches)}`);
-    bindMatchCardClicks();
-    setTimeout(() => showQuickReplies(['Show me more options', 'Different style', '👍 Looks good']), 600);
-  } else {
-    addBotMsg(`<p>Try describing your style — like "cozy feminine", "streetwear", or "bold and edgy" — and I'll find your match!</p>`);
-  }
-}
 
 // ── Init ──
 renderInfluencers();

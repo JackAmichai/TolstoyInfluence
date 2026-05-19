@@ -37,6 +37,70 @@
     </div>
   </section>
 
+  <!-- ═══ How It Works (B2B) ═══ -->
+  <section class="how-section" id="how-section">
+    <div class="how-badge">For E-Commerce Brands</div>
+    <h2 class="how-title">How It Works</h2>
+    <p class="how-subtitle">Tolstoy's AI analyzes every influencer video, detects every clothing item, and matches it against your live inventory — so customers only see products they can actually buy.</p>
+
+    <div class="how-layers">
+      <div class="how-layer">
+        <div class="how-layer-num" style="background:linear-gradient(135deg,#22c55e,#16a34a);">1</div>
+        <div class="how-layer-info">
+          <div class="how-layer-label">LAYER ONE</div>
+          <h3>Smart Curation</h3>
+          <p>AI identifies relevant influencers and filters only content featuring apparel and accessories — no generic lifestyle videos. Only fashion-forward content makes it through.</p>
+        </div>
+      </div>
+      <div class="how-layer">
+        <div class="how-layer-num" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">2</div>
+        <div class="how-layer-info">
+          <div class="how-layer-label">LAYER TWO</div>
+          <h3>AI Product Detection &amp; SKU Matching</h3>
+          <p>Computer vision scans every frame to detect clothing items and accessories. Each product is matched against your catalog using three precision levels:</p>
+          <div class="how-matches">
+            <div class="how-match">
+              <span class="how-match-badge strict">STRICT MATCH</span>
+              <span>Brand + Category + Color + Size</span>
+            </div>
+            <div class="how-match">
+              <span class="how-match-badge soft">SOFT MATCH</span>
+              <span>Brand + Category + Color (different size available)</span>
+            </div>
+            <div class="how-match">
+              <span class="how-match-badge fail">FAIL</span>
+              <span>Product not in inventory — video is excluded</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-layer">
+        <div class="how-layer-num" style="background:linear-gradient(135deg,#f59e0b,#d97706);">3</div>
+        <div class="how-layer-info">
+          <div class="how-layer-label">LAYER THREE</div>
+          <h3>Human-in-the-Loop Approval</h3>
+          <p>Videos scoring above 70% confidence are reviewed by your team before going live. Every product shown is verified — if it doesn't match your inventory down to the color, it doesn't appear.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="how-example">
+      <div class="how-example-header">Real-World Example</div>
+      <div class="how-example-body">
+        <div class="how-example-video">
+          <strong>Video shows:</strong> Acne Studios — White T‑Shirt, Size M
+        </div>
+        <div class="how-example-result pass">
+          <strong>✅ Your catalog has it</strong> — Shown to customers as shoppable
+        </div>
+        <div class="how-example-result fail">
+          <strong>❌ Only Acne Studios Gray T‑Shirt in stock</strong> — Not shown (wrong color, no match)
+        </div>
+      </div>
+      <div class="how-example-footer">Expected rejection rate: <strong>15–20%</strong> by design — accuracy over volume.</div>
+    </div>
+  </section>
+
   <!-- ═══ Influencer Cards ═══ -->
   <section class="influencers-section" id="influencers-section">
     <h2>Trending Creators</h2>
@@ -67,12 +131,8 @@
   <!-- ═══ Video / Product Modal ═══ -->
   <div class="modal-backdrop" id="modal-backdrop">
     <div class="modal-content" id="modal-content">
-      <div class="modal-image" id="modal-image">
-        <button class="modal-close" id="modal-close">✕</button>
-        <img src="" alt="" id="modal-img">
-        <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
-          <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
-        </div>
+      <div class="modal-image" id="modal-media-container">
+        <!-- Video injected by JS -->
       </div>
       <div class="modal-details">
         <div class="modal-influencer" id="modal-influencer">
@@ -82,12 +142,18 @@
             <div class="modal-influencer-label">Creator</div>
           </div>
         </div>
-        <div class="modal-product-title" id="modal-product-title"></div>
-        <div class="modal-product-price" id="modal-product-price"></div>
-        <p class="modal-product-desc" id="modal-product-desc"></p>
-        <div class="modal-sizes">
+        <div class="modal-item-list-label">Items in this look</div>
+        <div class="modal-item-list" id="modal-item-list">
+          <!-- JS rendered item list -->
+        </div>
+        <div class="modal-selected-detail">
+          <div class="modal-product-title" id="modal-product-title"></div>
+          <div class="modal-product-price" id="modal-product-price"></div>
+          <p class="modal-product-desc" id="modal-product-desc"></p>
+        </div>
+        <div class="modal-sizes" id="modal-sizes">
           <label>Select Size</label>
-          <div class="size-options" id="size-options">
+          <div class="size-options">
             <button class="size-btn" data-size="XS">XS</button>
             <button class="size-btn active" data-size="S">S</button>
             <button class="size-btn" data-size="M">M</button>
@@ -95,8 +161,10 @@
             <button class="size-btn" data-size="XL">XL</button>
           </div>
         </div>
+        <div class="modal-outfit-total" id="modal-outfit-total"></div>
         <div class="modal-actions">
-          <button class="btn-add-cart" id="btn-add-cart">Add to Bag</button>
+          <button class="btn-add-cart" id="btn-add-cart">Add Item</button>
+          <button class="btn-add-all" id="btn-add-all">Add Full Outfit</button>
           <button class="btn-wishlist" id="btn-wishlist">♡</button>
         </div>
       </div>
