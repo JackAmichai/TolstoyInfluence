@@ -71,6 +71,7 @@ a { text-decoration: none; color: inherit; }
   font-size: 1.25rem;
   letter-spacing: -0.02em;
 }
+.navbar-logo-img { height: 32px; width: auto; display: block; }
 .navbar-logo svg { width: 28px; height: 28px; }
 .navbar-actions { display: flex; align-items: center; gap: 12px; }
 .btn-nav {
