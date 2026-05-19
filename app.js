@@ -332,7 +332,7 @@ document.addEventListener('keydown', (e) => {
 //   AI SHOPPER – Conversational Style Agent
 //   ═══════════════════════════════════════════
 
-const NVIDIA_MODEL = 'nvidia/neva-22b';
+const NVIDIA_MODEL = 'meta/llama-3.2-90b-vision-instruct';
 
 const STYLE_PROFILES = {
   ayiah: { name: 'Ayiah Soufi', vibe: 'Feminine · Cozy Chic · Warm Neutrals', emoji: '🧣', keywords: ['feminine', 'cozy', 'cream', 'camel', 'white', 'chic', 'classic', 'sweater', 'warm', 'soft', 'romantic', 'elegant', 'neutral', 'cable-knit'] },
