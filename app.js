@@ -332,8 +332,6 @@ document.addEventListener('keydown', (e) => {
 //   AI SHOPPER – Conversational Style Agent
 //   ═══════════════════════════════════════════
 
-const NVIDIA_API_KEY = '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';
-const NVIDIA_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 const NVIDIA_MODEL = 'nvidia/neva-22b';
 
 const STYLE_PROFILES = {
@@ -571,9 +569,9 @@ async function processAIInput(text, imageBase64) {
   ai.conversation.push({ role: 'user', content: userContent });
 
   try {
-    const resp = await fetch(NVIDIA_URL, {
+    const resp = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${NVIDIA_API_KEY}`, 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: NVIDIA_MODEL,
         messages: ai.conversation,
