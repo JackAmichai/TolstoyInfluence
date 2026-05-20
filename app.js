@@ -303,18 +303,22 @@ function renderVideos() {
     const vid = card.querySelector('.video-card-vid');
     if (!vid) return;
     card.addEventListener('mouseenter', () => { vid.play().catch(() => {}); });
-    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    card.addEventListener('mouseleave', () => { vid.pause(); });
   });
 
-  // IntersectionObserver: pause off-screen videos for performance
+  // IntersectionObserver: auto-play when entering viewport, pause when leaving
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const vid = entry.target.querySelector('.video-card-vid');
         if (!vid) return;
-        if (!entry.isIntersecting) { vid.pause(); }
+        if (entry.isIntersecting) {
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+        }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.5 });
     document.querySelectorAll('.video-card').forEach(card => observer.observe(card));
   }
 }
@@ -516,6 +520,257 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ── AI Shopper Chat ──
+const aiToggle = document.getElementById('ai-toggle');
+const aiChat = document.getElementById('ai-chat');
+const aiChatOverlay = document.getElementById('ai-chat-overlay');
+const aiChatBody = document.getElementById('ai-chat-body');
+const aiChatInput = document.getElementById('ai-chat-input');
+const aiSendBtn = document.getElementById('ai-send-btn');
+const aiChatClear = document.getElementById('ai-chat-clear');
+const aiChatClose = document.getElementById('ai-chat-close');
+const aiFileInput = document.getElementById('ai-file-input');
+
+const AI_QUICK_REPLIES = [
+  'Show me casual looks 👕',
+  'Under $100 total outfit 💸',
+  'Style like Ayiah ✨',
+  'Best trending looks 🔥',
+];
+
+function openAiChat() {
+  aiChat.classList.add('open');
+  aiChatOverlay.classList.add('active');
+  aiToggle.classList.add('hidden');
+  aiChatInput.focus();
+  // Inject quick-reply chips if not already present
+  if (!aiChatBody.querySelector('.ai-quick-replies')) {
+    injectQuickReplies();
+  }
+}
+
+function closeAiChat() {
+  aiChat.classList.remove('open');
+  aiChatOverlay.classList.remove('active');
+  aiToggle.classList.remove('hidden');
+}
+
+function injectQuickReplies() {
+  const repliesEl = document.createElement('div');
+  repliesEl.className = 'ai-quick-replies';
+  AI_QUICK_REPLIES.forEach(text => {
+    const chip = document.createElement('button');
+    chip.className = 'ai-quick-reply';
+    chip.textContent = text;
+    chip.addEventListener('click', () => {
+      repliesEl.remove();
+      sendMessage(text);
+    });
+    repliesEl.appendChild(chip);
+  });
+  aiChatBody.appendChild(repliesEl);
+  aiChatBody.scrollTop = aiChatBody.scrollHeight;
+}
+
+function addMessage(role, html) {
+  const wrap = document.createElement('div');
+  wrap.className = `ai-message ai-message--${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'ai-message-avatar';
+  avatar.textContent = role === 'bot' ? '✦' : 'U';
+  const content = document.createElement('div');
+  content.className = 'ai-message-content';
+  content.innerHTML = html;
+  wrap.appendChild(avatar);
+  wrap.appendChild(content);
+  aiChatBody.appendChild(wrap);
+  aiChatBody.scrollTop = aiChatBody.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const wrap = document.createElement('div');
+  wrap.className = 'ai-message ai-message--bot';
+  wrap.id = 'ai-typing-wrap';
+  const avatar = document.createElement('div');
+  avatar.className = 'ai-message-avatar';
+  avatar.textContent = '✦';
+  const typing = document.createElement('div');
+  typing.className = 'ai-typing';
+  for (let i = 0; i < 3; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'ai-typing-dot';
+    typing.appendChild(dot);
+  }
+  wrap.appendChild(avatar);
+  wrap.appendChild(typing);
+  aiChatBody.appendChild(wrap);
+  aiChatBody.scrollTop = aiChatBody.scrollHeight;
+  return wrap;
+}
+
+async function sendMessage(text, imageBase64 = null) {
+  if (!text.trim() && !imageBase64) return;
+  // Remove quick replies if still visible
+  const qr = aiChatBody.querySelector('.ai-quick-replies');
+  if (qr) qr.remove();
+
+  const userHtml = imageBase64
+    ? `<p>${text}</p><img src="${imageBase64}" class="ai-uploaded-img" alt="uploaded">`
+    : `<p>${text}</p>`;
+  addMessage('user', userHtml);
+  aiChatInput.value = '';
+
+  const typingEl = addTypingIndicator();
+
+  // Build messages for API
+  const systemPrompt = `You are an AI fashion stylist for Tolstoy Influence, a shoppable influencer video platform. Our creators are: Ayiah Soufi (Clean Girl · Minimal Luxe, 1.2M followers), Jack Scalise (Sharp · Smart Casual, 890K followers), Michal Blank (Power Dressing · Statement Pieces, 2.1M followers), Jacob Arabo (Street Luxe · Vacation Ready, 650K followers). Help users find their perfect look, recommend creators that match their style, and suggest shoppable outfits from our platform. Keep responses concise, engaging, and fashion-forward. Use emojis occasionally.`;
+
+  const userContent = imageBase64
+    ? [{ type: 'text', text }, { type: 'image_url', image_url: { url: imageBase64 } }]
+    : text;
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'meta/llama-3.2-90b-vision-instruct',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContent },
+        ],
+        max_tokens: 512,
+        temperature: 0.7,
+      }),
+    });
+
+    typingEl.remove();
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || 'Sorry, I couldn\'t get a response. Try again!';
+
+    // Format reply — convert **bold** and newlines
+    const formatted = reply
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('');
+
+    addMessage('bot', formatted);
+
+    // If reply mentions a creator, show match cards
+    const mentioned = influencers.filter(inf =>
+      reply.toLowerCase().includes(inf.name.toLowerCase().split(' ')[0].toLowerCase())
+    );
+    if (mentioned.length > 0) {
+      const lastMsg = aiChatBody.querySelector('.ai-message--bot:last-child .ai-message-content');
+      if (lastMsg) {
+        mentioned.slice(0, 2).forEach(inf => {
+          const card = document.createElement('div');
+          card.className = 'ai-match-card';
+          card.innerHTML = `
+            <img src="${inf.avatar}" alt="${inf.name}">
+            <div class="ai-match-card-info">
+              <div class="ai-match-card-name">${inf.name}</div>
+              <div class="ai-match-card-vibe">${inf.vibe} · ${inf.followers}</div>
+            </div>
+            <span class="ai-match-card-cta">View Looks →</span>`;
+          card.addEventListener('click', () => {
+            closeAiChat();
+            if (!selectedInfluencers.has(inf.id)) toggleInfluencer(inf.id);
+          });
+          lastMsg.appendChild(card);
+        });
+      }
+    }
+  } catch (err) {
+    typingEl.remove();
+    addMessage('bot', `<p>Hmm, I ran into an issue: <em>${err.message}</em>. Please try again!</p>`);
+    aiChatBody.querySelector('.ai-message--bot:last-child').classList.add('ai-message--error');
+  }
+}
+
+aiToggle.addEventListener('click', openAiChat);
+aiChatClose.addEventListener('click', closeAiChat);
+aiChatOverlay.addEventListener('click', closeAiChat);
+aiChatClear.addEventListener('click', () => {
+  aiChatBody.innerHTML = `
+    <div class="ai-message ai-message--bot">
+      <div class="ai-message-avatar">✦</div>
+      <div class="ai-message-content">
+        <p>Hi! I'm your <strong>AI Shopper</strong>. Upload a photo of someone whose style you love — I'll find similar influencers and their shoppable looks for you.</p>
+        <p>Or just tell me what you're looking for.</p>
+      </div>
+    </div>`;
+  injectQuickReplies();
+});
+aiSendBtn.addEventListener('click', () => sendMessage(aiChatInput.value));
+aiChatInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(aiChatInput.value); }
+});
+aiFileInput.addEventListener('change', () => {
+  const file = aiFileInput.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    sendMessage('Here\'s a photo of a style I love. Who should I follow on Tolstoy?', e.target.result);
+  };
+  reader.readAsDataURL(file);
+  aiFileInput.value = '';
+});
+
+// ── Hero CTA Button ──
+const heroScrollBtn = document.getElementById('hero-scroll-btn');
+if (heroScrollBtn) {
+  heroScrollBtn.addEventListener('click', () => {
+    document.getElementById('influencers-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+// ── Stats Counter Animation ──
+function animateCounter(el, target, suffix = '') {
+  const duration = 1800;
+  const start = performance.now();
+  const isDecimal = String(target).includes('.');
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = isDecimal
+      ? (eased * target).toFixed(1)
+      : Math.floor(eased * target);
+    el.textContent = Number(current).toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = Number(target).toLocaleString() + suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+function initStatsObserver() {
+  const statsBar = document.querySelector('.stats-bar');
+  if (!statsBar) return;
+  const statVals = statsBar.querySelectorAll('.stat-val');
+  const targets = [12, 2000, 3, 94];
+  const suffixes = ['', '+', '%', '%'];
+  let animated = false;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        statVals.forEach((el, i) => {
+          animateCounter(el, targets[i], suffixes[i]);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  observer.observe(statsBar);
+}
+
 // ── Init ──
 renderInfluencers();
 renderVideos();
+initStatsObserver();
