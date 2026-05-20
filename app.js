@@ -15,7 +15,7 @@ const videos = [
   {
     id: 'a1', influencer: 'ayiah',
     thumb: 'assets/thumbnails/ayiah_1.png',
-    video: 'https://videos.pexels.com/video-files/6567735/6567735-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/ayiah_1.mp4',
     social: '3.2k customers dressed like Ayiah this week', tag: 'trending',
     items: [
       { name: 'Cream Cable-Knit Sweater', type: 'Sweater', price: 59.99, desc: 'Cozy oversized cable-knit in soft cream. Perfect for layering.' },
@@ -26,7 +26,7 @@ const videos = [
   {
     id: 'a2', influencer: 'ayiah',
     thumb: 'assets/thumbnails/ayiah_2.png',
-    video: 'https://videos.pexels.com/video-files/6567491/6567491-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/ayiah_2.mp4',
     social: '1.8k styled this look', tag: 'trending',
     items: [
       { name: 'Camel Leather Blazer', type: 'Blazer', price: 129.99, desc: 'Structured camel leather blazer. Elevate any outfit.' },
@@ -38,7 +38,7 @@ const videos = [
   {
     id: 'a3', influencer: 'ayiah',
     thumb: 'assets/thumbnails/ayiah_3.png',
-    video: 'https://videos.pexels.com/video-files/6568057/6568057-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/ayiah_3.mp4',
     social: '4.1k saved this item', tag: 'new',
     items: [
       { name: 'White Ribbed Crop Top', type: 'Top', price: 34.99, desc: 'Fitted ribbed crop top in crisp white.' },
@@ -50,7 +50,7 @@ const videos = [
   {
     id: 'j1', influencer: 'jack',
     thumb: 'assets/thumbnails/jack_1.png',
-    video: 'https://videos.pexels.com/video-files/5538319/5538319-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jack_1.mp4',
     social: '2.5k guys bought this look', tag: 'trending',
     items: [
       { name: 'Navy Fitted Blazer', type: 'Blazer', price: 149.99, desc: 'Sharp navy blazer with modern slim fit.' },
@@ -62,7 +62,7 @@ const videos = [
   {
     id: 'j2', influencer: 'jack',
     thumb: 'assets/thumbnails/jack_2.png',
-    video: 'https://videos.pexels.com/video-files/4926944/4926944-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jack_2.mp4',
     social: '1.4k styled this week', tag: 'new',
     items: [
       { name: 'Olive Bomber Jacket', type: 'Jacket', price: 119.99, desc: 'Military-inspired olive bomber with premium hardware.' },
@@ -74,7 +74,7 @@ const videos = [
   {
     id: 'j3', influencer: 'jack',
     thumb: 'assets/thumbnails/jack_3.png',
-    video: 'https://videos.pexels.com/video-files/5538296/5538296-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jack_3.mp4',
     social: '980 saved this look', tag: 'new',
     items: [
       { name: 'Cream Cable Knit Sweater', type: 'Sweater', price: 79.99, desc: 'Heritage cable knit in warm cream.' },
@@ -86,7 +86,7 @@ const videos = [
   {
     id: 'm1', influencer: 'michal',
     thumb: 'assets/thumbnails/michal_1.png',
-    video: 'https://videos.pexels.com/video-files/6567579/6567579-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/michal_1.mp4',
     social: '5.6k hearts this week', tag: 'trending',
     items: [
       { name: 'Lavender Chunky Cardigan', type: 'Cardigan', price: 69.99, desc: 'Statement lavender cardigan in ultra-soft yarn.' },
@@ -97,7 +97,7 @@ const videos = [
   {
     id: 'm2', influencer: 'michal',
     thumb: 'assets/thumbnails/michal_2.png',
-    video: 'https://videos.pexels.com/video-files/6568199/6568199-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/michal_2.mp4',
     social: '2.3k power dressed this week', tag: 'trending',
     items: [
       { name: 'Black Power Blazer', type: 'Blazer', price: 159.99, desc: 'Double-breasted blazer with gold hardware.' },
@@ -110,7 +110,7 @@ const videos = [
   {
     id: 'm3', influencer: 'michal',
     thumb: 'assets/thumbnails/michal_3.png',
-    video: 'https://videos.pexels.com/video-files/6394054/6394054-uhd_1440_2560_30fps.mp4',
+    video: 'assets/videos/michal_3.mp4',
     social: '3.9k added to wishlists', tag: 'new',
     items: [
       { name: 'Sage Satin Slip Dress', type: 'Dress', price: 89.99, desc: 'Elegant sage green satin slip dress.' },
@@ -122,7 +122,7 @@ const videos = [
   {
     id: 'jb1', influencer: 'jacob',
     thumb: 'assets/thumbnails/jacob_1.png',
-    video: 'https://videos.pexels.com/video-files/5538319/5538319-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jacob_1.mp4',
     social: '1.7k rocked this look', tag: 'new',
     items: [
       { name: 'Tan Suede Bomber', type: 'Jacket', price: 139.99, desc: 'Premium suede bomber jacket in warm tan.' },
@@ -134,7 +134,7 @@ const videos = [
   {
     id: 'jb2', influencer: 'jacob',
     thumb: 'assets/thumbnails/jacob_2.png',
-    video: 'https://videos.pexels.com/video-files/4926944/4926944-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jacob_2.mp4',
     social: '2.1k elevated their wardrobe', tag: 'trending',
     items: [
       { name: 'Charcoal Overcoat', type: 'Coat', price: 199.99, desc: 'Tailored charcoal wool overcoat.' },
@@ -146,7 +146,7 @@ const videos = [
   {
     id: 'jb3', influencer: 'jacob',
     thumb: 'assets/thumbnails/jacob_3.png',
-    video: 'https://videos.pexels.com/video-files/5538296/5538296-uhd_1440_2560_25fps.mp4',
+    video: 'assets/videos/jacob_3.mp4',
     social: '3.4k vacation-ready', tag: 'new',
     items: [
       { name: 'Rust Linen Shirt', type: 'Shirt', price: 54.99, desc: 'Relaxed rust-orange linen button-down.' },
