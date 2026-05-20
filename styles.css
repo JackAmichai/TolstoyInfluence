@@ -1733,3 +1733,141 @@ a { text-decoration: none; color: inherit; }
   .video-card-outfit-badge { bottom: 50px; left: 10px; font-size: 0.6rem; padding: 4px 9px; }
   .price-tags { top: 10px; right: 10px; gap: 4px; }
 }
+
+/* ═══════════════════════════════════════════
+   PHONE-FIRST OPTIMIZATIONS
+   ═══════════════════════════════════════════ */
+
+/* Touch devices: price tags always visible, hide static play button */
+@media (hover: none) {
+  .price-tags { opacity: 1 !important; transform: translateX(0) !important; }
+  .price-tag { animation: none; transform: none; }
+  .play-btn { display: none; }
+  /* Keep a permanent soft gradient so "Shop the Look" is always readable */
+  .video-overlay {
+    background: linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.76) 100%) !important;
+  }
+}
+
+/* Hide PRD nav button on mobile */
+@media (max-width: 600px) {
+  .btn-nav--prd { display: none; }
+}
+
+/* Stats bar: 2×2 grid on small screens */
+@media (max-width: 600px) {
+  .stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat-item {
+    padding: 20px 12px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .stat-item:nth-child(2n) { border-right: none; }
+  .stat-item:nth-child(3),
+  .stat-item:nth-child(4) { border-bottom: none; }
+}
+
+/* Influencer grid: horizontal scroll carousel */
+@media (max-width: 600px) {
+  .influencer-grid {
+    display: flex;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 24px 12px;
+    margin: 0 -24px;
+    gap: 10px;
+  }
+  .influencer-grid::-webkit-scrollbar { display: none; }
+  .influencer-card {
+    min-width: 64vw;
+    max-width: 256px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+  /* Truncate creator name in video card badge */
+  .video-card-creator-name {
+    max-width: 88px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+}
+
+/* Modal: bottom-sheet on phone */
+@media (max-width: 600px) {
+  .modal-backdrop { align-items: flex-end; }
+  .modal-content {
+    max-width: 100%;
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+    /* Slide up from bottom instead of scale */
+    transform: translateY(56px);
+  }
+  .modal-backdrop.active .modal-content { transform: translateY(0); }
+  /* Drag-handle indicator on the video area */
+  .modal-image::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.45);
+    z-index: 10;
+  }
+  .modal-image {
+    border-radius: 20px 20px 0 0;
+    aspect-ratio: 4 / 3;
+    max-height: 44vw;
+  }
+  .modal-details {
+    padding: 16px 18px 20px;
+    max-height: none;
+  }
+  .modal-item-list { max-height: 130px; }
+  .modal-actions { flex-wrap: wrap; gap: 8px; }
+  .btn-add-cart,
+  .btn-add-all { flex: 1 1 calc(50% - 8px); min-width: 0; font-size: 0.82rem; padding: 12px 8px; }
+  /* Bigger touch targets */
+  .size-btn { width: 44px; height: 44px; }
+  .size-options { gap: 8px; flex-wrap: wrap; }
+  .feed-tab { min-height: 40px; }
+  /* iOS safe-area bottom padding */
+  .cart-drawer-footer {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  .ai-chat-footer {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Footer CTA: stack on mobile */
+@media (max-width: 600px) {
+  .footer-cta { padding: 56px 20px 60px; }
+  .footer-cta h2 { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+  .footer-cta p { font-size: 0.95rem; margin-bottom: 28px; }
+  .footer-cta-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+  .footer-cta-btn-primary,
+  .footer-cta-btn-secondary { justify-content: center; width: 100%; padding: 15px 20px; }
+  .footer { flex-direction: column; align-items: center; gap: 8px; }
+}
+
+/* ≤400px: very small phones (iPhone SE, older Android) */
+@media (max-width: 400px) {
+  .video-grid { grid-template-columns: 1fr; gap: 14px; }
+  .influencer-card { min-width: 80vw; }
+  .hero h1 { font-size: 1.5rem; }
+  .stat-val { font-size: 1.8rem; }
+  .navbar-inner { gap: 8px; }
+  .btn-nav { padding: 7px 12px; font-size: 0.8rem; }
+}

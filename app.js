@@ -770,6 +770,26 @@ function initStatsObserver() {
   observer.observe(statsBar);
 }
 
+// ── Swipe down to close modal on touch ──
+let _swipeStartY = 0;
+modalBackdrop.addEventListener('touchstart', (e) => {
+  _swipeStartY = e.touches[0].clientY;
+}, { passive: true });
+modalBackdrop.addEventListener('touchend', (e) => {
+  if (!modalBackdrop.classList.contains('active')) return;
+  const delta = e.changedTouches[0].clientY - _swipeStartY;
+  if (delta > 90) closeModal();
+}, { passive: true });
+
+// ── Tap-to-play on video cards (touch devices) ──
+document.addEventListener('touchstart', (e) => {
+  const card = e.target.closest('.video-card');
+  if (!card) return;
+  const vid = card.querySelector('.video-card-vid');
+  if (!vid) return;
+  if (vid.paused) vid.play().catch(() => {});
+}, { passive: true });
+
 // ── Init ──
 renderInfluencers();
 renderVideos();
