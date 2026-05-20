@@ -4,10 +4,10 @@
 
 // ── Data ──
 const influencers = [
-  { id: 'ayiah', name: 'Ayiah Soufi', avatar: 'assets/avatars/ayiah.png', followers: '1.2M' },
-  { id: 'jack',  name: 'Jack Scalise', avatar: 'assets/avatars/jack.png', followers: '890K' },
-  { id: 'michal', name: 'Michal Blank', avatar: 'assets/avatars/michal.png', followers: '2.1M' },
-  { id: 'jacob', name: 'Jacob Arabo', avatar: 'assets/avatars/jacob.png', followers: '650K' },
+  { id: 'ayiah', name: 'Ayiah Soufi', avatar: 'assets/avatars/ayiah.png', followers: '1.2M', vibe: 'Clean Girl · Minimal Luxe' },
+  { id: 'jack',  name: 'Jack Scalise', avatar: 'assets/avatars/jack.png', followers: '890K', vibe: 'Sharp · Smart Casual' },
+  { id: 'michal', name: 'Michal Blank', avatar: 'assets/avatars/michal.png', followers: '2.1M', vibe: 'Power Dressing · Statement Pieces' },
+  { id: 'jacob', name: 'Jacob Arabo', avatar: 'assets/avatars/jacob.png', followers: '650K', vibe: 'Street Luxe · Vacation Ready' },
 ];
 
 const videos = [
@@ -16,7 +16,7 @@ const videos = [
     id: 'a1', influencer: 'ayiah',
     thumb: 'assets/thumbnails/ayiah_1.png',
     video: 'assets/videos/ayiah_1.mp4',
-    social: '3.2k customers dressed like Ayiah this week', tag: 'trending',
+    social: '3.2k customers dressed like Ayiah this week', tag: 'trending', live: true,
     items: [
       { name: 'Cream Cable-Knit Sweater', type: 'Sweater', price: 59.99, desc: 'Cozy oversized cable-knit in soft cream. Perfect for layering.' },
       { name: 'White Wide-Leg Pants', type: 'Pants', price: 44.99, desc: 'High-waisted wide-leg trousers in crisp white cotton.' },
@@ -98,7 +98,7 @@ const videos = [
     id: 'm2', influencer: 'michal',
     thumb: 'assets/thumbnails/michal_2.png',
     video: 'assets/videos/michal_2.mp4',
-    social: '2.3k power dressed this week', tag: 'trending',
+    social: '2.3k power dressed this week', tag: 'trending', live: true,
     items: [
       { name: 'Black Power Blazer', type: 'Blazer', price: 159.99, desc: 'Double-breasted blazer with gold hardware.' },
       { name: 'White Satin Blouse', type: 'Blouse', price: 59.99, desc: 'Draped cowl-neck blouse in luxe satin.' },
@@ -186,19 +186,28 @@ function renderInfluencers(filter = '') {
   const filtered = influencers.filter(i =>
     i.name.toLowerCase().includes(filter.toLowerCase())
   );
-  influencerGrid.innerHTML = filtered.map((inf, idx) => `
-    <div class="influencer-card ${selectedInfluencers.has(inf.id) ? 'selected' : ''} fade-in-up"
+  influencerGrid.innerHTML = filtered.map((inf, idx) => {
+    const isSelected = selectedInfluencers.has(inf.id);
+    const ctaHtml = isSelected
+      ? `<span class="influencer-cta"><span class="dot"></span> Videos loaded</span>`
+      : `<span class="influencer-vibe">${inf.vibe}</span>`;
+    return `
+    <div class="influencer-card ${isSelected ? 'selected' : ''} fade-in-up"
          data-id="${inf.id}" style="animation-delay: ${idx * 0.08}s">
       <img class="influencer-avatar" src="${inf.avatar}" alt="${inf.name}">
       <div class="influencer-info">
         <div class="influencer-name">${inf.name}</div>
-        <span class="influencer-cta"><span class="dot"></span> Watch Shoppable Video</span>
+        <div class="influencer-followers">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          ${inf.followers}
+        </div>
+        ${ctaHtml}
       </div>
       <div class="check-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
   document.querySelectorAll('.influencer-card').forEach(card => {
     card.addEventListener('click', () => toggleInfluencer(card.dataset.id));
   });
@@ -209,6 +218,7 @@ function toggleInfluencer(id) {
   else selectedInfluencers.add(id);
   renderInfluencers(searchInput.value);
   renderVideos();
+  document.getElementById('feed-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ── Type Icon Helper ──
@@ -252,12 +262,14 @@ function renderVideos() {
   videoGrid.innerHTML = filtered.map((v, idx) => {
     const inf = inf_map[v.influencer];
     const outfitTotal = v.items.reduce((s, it) => s + it.price, 0).toFixed(2);
+    const liveBadge = v.live ? `<div class="live-badge"><span class="live-dot"></span>LIVE</div>` : '';
     return `
     <div class="video-card fade-in-up" data-video-id="${v.id}" style="animation-delay: ${idx * 0.07}s">
       <video src="${v.video}" poster="${v.thumb}" muted loop playsinline preload="metadata" class="video-card-vid"></video>
+      ${liveBadge}
       <div class="video-card-creator">
         <img src="${inf.avatar}" alt="${inf.name}" class="video-card-creator-avatar">
-        <span class="video-card-creator-name">${inf.name}</span>
+        <span class="video-card-creator-name">${inf.name} · ${inf.followers}</span>
       </div>
       <div class="price-tags">
         ${v.items.map((item, i) => `<span class="price-tag" style="animation-delay:${i * 0.15}s"><span class="price-tag-emoji">${getTypeIcon(item.type)}</span> ${item.type} · $${item.price.toFixed(2)}</span>`).join('')}
