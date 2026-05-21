@@ -231,6 +231,43 @@ function getTypeIcon(type) {
   return icons[type] || '👕';
 }
 
+// ── SKU Match & Inventory (deterministic, demo) ──
+function _hash(str) { let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0; return h; }
+function matchTier(item) { return _hash(item.name) % 5 === 0 ? 'soft' : 'strict'; }
+function stockForItem(item) { return 9 + (_hash(item.name) % 55); }
+function hiddenCount(v) { return _hash(v.id) % 3; } // 0–2 items auto-excluded (out of stock)
+function matchLabel(item) { return matchTier(item) === 'soft' ? 'Soft match' : 'In stock'; }
+
+function matchStatusHtml(item) {
+  if (matchTier(item) === 'soft') {
+    return `<div class="match-status match-status--soft">
+      <span class="match-status-dot"></span>
+      <div><span class="match-status-title">Soft match</span> — brand &amp; colour confirmed, exact size may vary
+        <span class="match-status-meta">Checked against live catalog · 2m ago</span></div>
+    </div>`;
+  }
+  return `<div class="match-status match-status--strict">
+    <span class="match-status-dot"></span>
+    <div><span class="match-status-title">Verified in stock</span> — exact SKU match · ${stockForItem(item)} units left
+      <span class="match-status-meta">Synced from live inventory · 2m ago</span></div>
+  </div>`;
+}
+
+function matchSummaryHtml(v) {
+  const shown = v.items.length;
+  const hidden = hiddenCount(v);
+  const detected = shown + hidden;
+  const hiddenTxt = hidden > 0
+    ? ` · <span class="ms-hidden">${hidden} hidden (out of stock)</span>`
+    : '';
+  return `<span class="ms-icon">🛡️</span> AI detected ${detected} products ·
+    <span class="ms-matched">${shown} matched to live inventory</span>${hiddenTxt}`;
+}
+
+function fmtTime(ts) {
+  return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 // ── Render Video Cards ──
 function renderVideos() {
   let filtered = videos;
@@ -360,11 +397,11 @@ function renderModalItems(v) {
   // Item list
   const listEl = document.getElementById('modal-item-list');
   listEl.innerHTML = v.items.map((it, i) => `
-    <div class="modal-item ${i === selectedItemIdx ? 'active' : ''}" data-idx="${i}">
+    <div class="modal-item match-${matchTier(it)} ${i === selectedItemIdx ? 'active' : ''}" data-idx="${i}">
       <div class="modal-item-icon">${getTypeIcon(it.type)}</div>
       <div class="modal-item-info">
         <span class="modal-item-name">${it.name}</span>
-        <span class="modal-item-type">${it.type}</span>
+        <span class="modal-item-type">${it.type} · <span class="modal-item-match">${matchLabel(it)}</span></span>
       </div>
       <span class="modal-item-price">$${it.price.toFixed(2)}</span>
     </div>
@@ -377,10 +414,18 @@ function renderModalItems(v) {
     });
   });
 
+  // Look-level inventory match summary
+  const summaryEl = document.getElementById('modal-match-summary');
+  if (summaryEl) summaryEl.innerHTML = matchSummaryHtml(v);
+
   // Details
   document.getElementById('modal-product-title').textContent = item.name;
   document.getElementById('modal-product-price').textContent = `$${item.price.toFixed(2)}`;
   document.getElementById('modal-product-desc').textContent = item.desc;
+
+  // Per-item match confidence
+  const statusEl = document.getElementById('modal-match-status');
+  if (statusEl) statusEl.innerHTML = matchStatusHtml(item);
 
   // Outfit total
   const total = v.items.reduce((s, it) => s + it.price, 0);
@@ -421,6 +466,7 @@ document.getElementById('btn-add-cart').addEventListener('click', () => {
     id: currentVideo.id + '_' + selectedItemIdx + '_' + selectedSize + '_' + Date.now(),
     product: item.name, price: item.price, type: item.type,
     size: selectedSize, thumb: currentVideo.thumb, influencer: inf.name,
+    creatorId: inf.id, videoId: currentVideo.id, ts: Date.now(),
   });
   updateCart();
   showToast(`${item.name} added to your bag!`);
@@ -434,6 +480,7 @@ document.getElementById('btn-add-all').addEventListener('click', () => {
       id: currentVideo.id + '_' + i + '_' + selectedSize + '_' + Date.now(),
       product: item.name, price: item.price, type: item.type,
       size: selectedSize, thumb: currentVideo.thumb, influencer: inf.name,
+      creatorId: inf.id, videoId: currentVideo.id, ts: Date.now(),
     });
   });
   updateCart();
@@ -470,7 +517,8 @@ function updateCart() {
       <img src="${item.thumb}" alt="${item.product}">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.product}</div>
-        <div class="cart-item-size">${item.type} · Size: ${item.size} · by ${item.influencer}</div>
+        <div class="cart-item-size">${item.type} · Size: ${item.size}</div>
+        ${item.videoId ? `<div class="cart-item-attr">🎬 ${item.influencer} · clip ${item.videoId} · ${fmtTime(item.ts)}</div>` : ''}
         <div class="cart-item-price">$${item.price.toFixed(2)}</div>
         <button class="cart-item-remove" data-cart-id="${item.id}">Remove</button>
       </div>`;
@@ -490,7 +538,35 @@ function closeCart() {
 }
 document.getElementById('cart-close').addEventListener('click', closeCart);
 cartBackdrop.addEventListener('click', (e) => { if (e.target === cartBackdrop) closeCart(); });
-document.getElementById('btn-checkout').addEventListener('click', () => showToast('🎉 Checkout coming soon!'));
+// ── Attribution Receipt (checkout) ──
+const receiptBackdrop = document.getElementById('receipt-backdrop');
+function openReceipt() {
+  if (cart.length === 0) return;
+  const total = cart.reduce((s, c) => s + c.price, 0);
+  document.getElementById('receipt-body').innerHTML =
+    cart.map(it => `
+      <div class="receipt-row">
+        <img src="${it.thumb}" alt="">
+        <div class="receipt-row-info">
+          <div class="receipt-row-name">${it.product}</div>
+          <div class="receipt-row-attr">🎬 ${it.influencer} · clip ${it.videoId || '—'} · ${it.ts ? fmtTime(it.ts) : ''}</div>
+        </div>
+        <div class="receipt-row-price">$${it.price.toFixed(2)}</div>
+      </div>`).join('') +
+    `<div class="receipt-total"><span>Attributed order total</span><span>$${total.toFixed(2)}</span></div>`;
+  closeCart();
+  receiptBackdrop.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeReceipt() {
+  receiptBackdrop.classList.remove('active');
+  document.body.style.overflow = '';
+  cart = [];
+  updateCart();
+}
+document.getElementById('btn-checkout').addEventListener('click', openReceipt);
+document.getElementById('receipt-close').addEventListener('click', closeReceipt);
+receiptBackdrop.addEventListener('click', (e) => { if (e.target === receiptBackdrop) closeReceipt(); });
 
 // ── Search ──
 searchInput.addEventListener('input', () => renderInfluencers(searchInput.value));
@@ -515,6 +591,7 @@ function showToast(msg) {
 // ── Keyboard ──
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
+    if (receiptBackdrop.classList.contains('active')) closeReceipt();
     if (modalBackdrop.classList.contains('active')) closeModal();
     if (cartBackdrop.classList.contains('active')) closeCart();
   }

@@ -21,6 +21,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <span class="cart-count" id="cart-count">0</span>
         </button>
+        <a href="dashboard.html" class="btn-nav btn-nav--outline btn-nav--dash" style="text-decoration:none;">Brand View</a>
         <a href="prd.html" class="btn-nav btn-nav--outline btn-nav--prd" style="text-decoration:none;">PRD</a>
         <a href="https://www.gotolstoy.com/contact-sales" class="btn-nav btn-nav--fill" id="create-btn" target="_blank" rel="noopener">Create yours</a>
       </div>
@@ -100,12 +101,14 @@
           </div>
         </div>
         <div class="modal-item-list-label">Items in this look</div>
+        <div class="modal-match-summary" id="modal-match-summary"></div>
         <div class="modal-item-list" id="modal-item-list">
           <!-- JS rendered item list -->
         </div>
         <div class="modal-selected-detail">
           <div class="modal-product-title" id="modal-product-title"></div>
           <div class="modal-product-price" id="modal-product-price"></div>
+          <div class="modal-match-status" id="modal-match-status"></div>
           <p class="modal-product-desc" id="modal-product-desc"></p>
         </div>
         <div class="modal-sizes" id="modal-sizes">
@@ -153,6 +156,22 @@
 
   <!-- ═══ Toast ═══ -->
   <div class="toast" id="toast"></div>
+
+  <!-- ═══ Attribution Receipt ═══ -->
+  <div class="modal-backdrop" id="receipt-backdrop" style="z-index:1002;">
+    <div class="receipt-card" id="receipt-card">
+      <div class="receipt-header">
+        <div class="receipt-check">✓</div>
+        <h3>Order Attributed</h3>
+        <p>Every item is tagged to the creator, video, and moment that drove the sale — the data layer your brand dashboard runs on.</p>
+      </div>
+      <div class="receipt-body" id="receipt-body"></div>
+      <div class="receipt-footer">
+        <a href="dashboard.html" class="receipt-dash-btn">See it in the Brand Dashboard →</a>
+        <button class="receipt-close-btn" id="receipt-close">Done</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ AI Shopper Toggle Button ═══ -->
   <button class="ai-toggle" id="ai-toggle" aria-label="Open AI Shopper">
