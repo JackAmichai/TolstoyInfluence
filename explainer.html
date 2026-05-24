@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tolstoy Influence — Explainer for Retailers</title>
+  <meta name="description" content="Animated explainer presentation: How Tolstoy Influence turns influencer content into a shoppable, inventory-verified revenue channel for retail brands.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --text: #f0f0f5;
+      --text-secondary: #a0a0b5;
+      --text-muted: #6a6a80;
+      --accent: #6366f1;
+      --accent2: #a855f7;
+      --gradient: linear-gradient(135deg, #6366f1, #a855f7);
+      --gradient-wide: linear-gradient(135deg, #4f46e5, #6366f1, #a855f7, #c084fc);
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --font: 'Inter', -apple-system, system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════
+       PRESENTATION CONTAINER
+    ═══════════════════════════════════════════ */
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 40px 60px;
+      overflow: hidden;
+    }
+
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ═══════════════════════════════════════════
+       SCENE BACKGROUNDS
+    ═══════════════════════════════════════════ */
+    .scene-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .scene-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    .scene-bg.dark-overlay::after {
+      background: linear-gradient(to bottom,
+        rgba(10, 10, 15, 0.55) 0%,
+        rgba(10, 10, 15, 0.75) 50%,
+        rgba(10, 10, 15, 0.92) 100%
+      );
+    }
+
+    .scene-bg.heavy-overlay::after {
+      background: rgba(10, 10, 15, 0.80);
+    }
+
+    .scene-bg.gradient-overlay::after {
+      background: linear-gradient(135deg,
+        rgba(10, 10, 15, 0.90) 0%,
+        rgba(99, 102, 241, 0.15) 50%,
+        rgba(10, 10, 15, 0.92) 100%
+      );
+    }
+
+    .scene-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════
+       TYPOGRAPHY
+    ═══════════════════════════════════════════ */
+    .scene-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .scene.active .scene-badge {
+      animation: fadeUp 0.8s 0.3s ease forwards;
+    }
+
+    .scene-title {
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .scene.active .scene-title {
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    .scene-title .gradient-text {
+      background: var(--gradient-wide);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .scene-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 750px;
+      margin: 0 auto 30px;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .scene.active .scene-subtitle {
+      animation: fadeUp 0.8s 0.8s ease forwards;
+    }
+
+    /* ═══════════════════════════════════════════
+       QUOTE BLOCK
+    ═══════════════════════════════════════════ */
+    .prd-quote {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin: 24px auto;
+      max-width: 780px;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .scene.active .prd-quote {
+      animation: fadeUp 0.8s 1.1s ease forwards;
+    }
+
+    .prd-quote-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .prd-quote p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .prd-quote p strong {
+      color: var(--text);
+      font-style: normal;
+    }
+
+    /* ═══════════════════════════════════════════
+       IMAGE SCENES
+    ═══════════════════════════════════════════ */
+    .scene-image-container {
+      position: relative;
+      max-width: 650px;
+      margin: 0 auto 32px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 20px 60px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: scale(0.92);
+    }
+
+    .scene.active .scene-image-container {
+      animation: scaleUp 1.2s 0.3s ease forwards;
+    }
+
+    .scene-image-container img {
+      width: 100%;
+      display: block;
+    }
+
+    .scene-image-container.ken-burns img {
+      animation: kenBurns 12s ease-in-out infinite alternate;
+    }
+
+    /* ═══════════════════════════════════════════
+       SPLIT LAYOUT
+    ═══════════════════════════════════════════ */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      text-align: left;
+      max-width: 1050px;
+      width: 100%;
+    }
+
+    .split-layout .split-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+
+    .scene.active .split-layout .split-image {
+      animation: slideRight 1s 0.3s ease forwards;
+    }
+
+    .split-layout .split-text {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+
+    .scene.active .split-layout .split-text {
+      animation: slideLeft 1s 0.5s ease forwards;
+    }
+
+    .split-layout .split-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .split-layout .split-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .split-layout .split-text p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    /* ═══════════════════════════════════════════
+       STAT COUNTERS
+    ═══════════════════════════════════════════ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 40px auto 0;
+      max-width: 900px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 28px 16px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .scene.active .stat-card {
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .scene.active .stat-card:nth-child(1) { animation-delay: 0.6s; }
+    .scene.active .stat-card:nth-child(2) { animation-delay: 0.8s; }
+    .scene.active .stat-card:nth-child(3) { animation-delay: 1.0s; }
+    .scene.active .stat-card:nth-child(4) { animation-delay: 1.2s; }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ═══════════════════════════════════════════
+       PIPELINE / HOW IT WORKS
+    ═══════════════════════════════════════════ */
+    .pipeline {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
+      margin: 40px auto 0;
+      max-width: 1000px;
+    }
+
+    .pipeline-step {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: left;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .scene.active .pipeline-step {
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .scene.active .pipeline-step:nth-child(1) { animation-delay: 0.4s; }
+    .scene.active .pipeline-step:nth-child(2) { animation-delay: 0.7s; }
+    .scene.active .pipeline-step:nth-child(3) { animation-delay: 1.0s; }
+
+    .pipeline-step::after {
+      content: '→';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: var(--accent);
+      font-weight: 800;
+      z-index: 2;
+    }
+
+    .pipeline-step:last-child::after { display: none; }
+
+    .pipeline-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .pipeline-num.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .pipeline-num.purple { background: var(--gradient); }
+    .pipeline-num.amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+    .pipeline-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pipeline-step p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ═══════════════════════════════════════════
+       BENEFIT CARDS
+    ═══════════════════════════════════════════ */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 36px auto 0;
+      max-width: 1000px;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 30px 24px;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08);
+    }
+
+    .scene.active .benefit-card {
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .scene.active .benefit-card:nth-child(1) { animation-delay: 0.5s; }
+    .scene.active .benefit-card:nth-child(2) { animation-delay: 0.7s; }
+    .scene.active .benefit-card:nth-child(3) { animation-delay: 0.9s; }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .benefit-icon.green { background: rgba(34, 197, 94, 0.12); }
+    .benefit-icon.purple { background: rgba(99, 102, 241, 0.12); }
+    .benefit-icon.amber { background: rgba(245, 158, 11, 0.12); }
+
+    .benefit-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .benefit-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       CTA SCENE
+    ═══════════════════════════════════════════ */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gradient);
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      margin-top: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+    }
+
+    .scene.active .cta-button {
+      animation: fadeUp 0.8s 1.2s ease forwards;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.35);
+    }
+
+    /* ═══════════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════════ */
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--gradient);
+      z-index: 100;
+      transition: width 0.6s ease;
+    }
+
+    /* ═══════════════════════════════════════════
+       SCENE COUNTER
+    ═══════════════════════════════════════════ */
+    .scene-counter {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      z-index: 100;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scene-counter .current {
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTROLS
+    ═══════════════════════════════════════════ */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(19, 19, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 8px 16px;
+    }
+
+    .ctrl-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: background 0.2s ease;
+    }
+
+    .ctrl-btn:hover { background: rgba(255, 255, 255, 0.12); }
+
+    .ctrl-btn.play-pause {
+      width: 42px;
+      height: 42px;
+      background: var(--gradient);
+    }
+
+    .ctrl-btn.play-pause:hover { opacity: 0.9; }
+
+    .scene-dots {
+      display: flex;
+      gap: 6px;
+      margin: 0 8px;
+    }
+
+    .scene-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .scene-dot.active {
+      background: var(--accent);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ═══════════════════════════════════════════
+       LOGO
+    ═══════════════════════════════════════════ */
+    .logo-bar {
+      position: fixed;
+      top: 24px;
+      left: 32px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-bar img {
+      height: 28px;
+      width: auto;
+    }
+
+    /* ═══════════════════════════════════════════
+       AMBIENT PARTICLES
+    ═══════════════════════════════════════════ */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(99, 102, 241, 0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════
+       TYPEWRITER
+    ═══════════════════════════════════════════ */
+    .typewriter {
+      display: inline;
+      border-right: 2px solid var(--accent);
+      animation: blink 0.8s step-end infinite;
+      white-space: normal;
+    }
+
+    /* ═══════════════════════════════════════════
+       MATCHING BADGES
+    ═══════════════════════════════════════════ */
+    .match-badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    .scene.active .match-badges {
+      animation: fadeUp 0.7s 1.3s ease forwards;
+    }
+
+    .match-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .match-badge.strict { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+    .match-badge.soft { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+    .match-badge.fail { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+
+    /* ═══════════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleUp {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.12) translate(-2%, -2%); }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .scene { padding: 24px 20px; }
+      .split-layout { grid-template-columns: 1fr; gap: 24px; }
+      .pipeline { flex-direction: column; }
+      .pipeline-step::after { display: none; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Logo ═══ -->
+  <div class="logo-bar">
+    <img src="logo.png" alt="Tolstoy">
+    <span>Influence</span>
+  </div>
+
+  <!-- ═══ Ambient Particles ═══ -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ═══ Progress Bar ═══ -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCENES
+  ═══════════════════════════════════════════════ -->
+  <div class="presentation" id="presentation">
+
+    <!-- ─── Scene 0: Title Card ─── -->
+    <div class="scene active" data-scene="0">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 30% 40%, rgba(99,102,241,0.15), transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(168,85,247,0.1), transparent 50%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">🎬 Business Explainer</div>
+        <h1 class="scene-title">
+          What if every <span class="gradient-text">influencer video</span><br>
+          could sell your products?
+        </h1>
+        <p class="scene-subtitle">
+          A new way to turn the content your audience already watches<br>
+          into a revenue channel that works on autopilot.
+        </p>
+      </div>
+    </div>
+
+    <!-- ─── Scene 1: The Dad & Teen Story ─── -->
+    <div class="scene" data-scene="1">
+      <div class="scene-bg dark-overlay" style="background-image: url('assets/explainer/scene-dad-teen.png');"></div>
+      <div class="scene-content">
+        <div class="split-layout">
+          <div class="split-image ken-burns">
+            <img src="assets/explainer/scene-dad-teen.png" alt="Father watching daughter scroll through fashion content">
+          </div>
+          <div class="split-text">
+            <h2>Every parent has seen this.</h2>
+            <p>Your teenager sits on the couch, endlessly scrolling through influencer content. Every outfit, every accessory — they know exactly what they want.</p>
+            <p style="color: var(--text); font-weight: 600; margin-top: 8px;">But what if you could capture that intent — and turn it into revenue?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 2: The Phone Scroll ─── -->
+    <div class="scene" data-scene="2">
+      <div class="scene-bg heavy-overlay" style="background-image: url('assets/explainer/scene-phone.png');"></div>
+      <div class="scene-content">
+        <div class="split-layout" style="direction: rtl;">
+          <div class="split-image ken-burns" style="direction: ltr;">
+            <img src="assets/explainer/scene-phone.png" alt="Teen scrolling fashion influencer content on phone">
+          </div>
+          <div class="split-text" style="direction: ltr;">
+            <div class="scene-badge" style="opacity:1;transform:none;">👀 THE BEHAVIOR</div>
+            <h2><span class="gradient-text">Gen Z discovers products</span> through creators — not search.</h2>
+            <p>They see it, they want it. But there's no bridge between <em>"I love that outfit"</em> and <em>"I just bought it."</em></p>
+            <p>The comments prove it: <span style="color:#a5b4fc;">"Where is the jacket from?!" "How do I buy this??"</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 3: The Problem (with PRD quote) ─── -->
+    <div class="scene" data-scene="3">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 50% 30%, rgba(239,68,68,0.08), transparent 60%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">⚠️ The Problem</div>
+        <h1 class="scene-title">
+          Billions spent on influencer content.<br>
+          <span class="gradient-text">Zero direct revenue attribution.</span>
+        </h1>
+        <div class="prd-quote">
+          <div class="prd-quote-label">📄 From the Product Requirements Document</div>
+          <p>"Brands spend millions on influencer gifting and seeding campaigns, producing thousands of video assets from creators wearing their products. But these assets <strong>live and die on social feeds</strong> — they are <strong>not captured, matched to inventory, or made shoppable</strong>. The result: brands pay for content that generates brand awareness but <strong>zero direct revenue attribution.</strong>"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 4: Market Failure ─── -->
+    <div class="scene" data-scene="4">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 40% 50%, rgba(245,158,11,0.06), transparent 50%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">🔗 Market Failure</div>
+        <h1 class="scene-title">
+          Affiliate links are <span style="color: var(--red);">broken</span>.<br>
+          Brand content is <span style="color: var(--amber);">inauthentic</span>.
+        </h1>
+        <div class="prd-quote">
+          <div class="prd-quote-label">📄 From the PRD</div>
+          <p>"Existing solutions are either <strong>creator-managed affiliate links</strong> (low coverage, manual, fragile) or <strong>brand-produced shoppable content</strong> (inauthentic, expensive to produce). Neither bridges the gap between organic creator content and live inventory at scale. <strong>No platform today can look at a creator video, identify every garment, check real-time stock, and present a buy button — automatically.</strong>"</p>
+        </div>
+        <div class="scene-image-container" style="max-width: 700px; margin-top: 28px;">
+          <img src="assets/explainer/scene-comparison.png" alt="Old way vs new way comparison">
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 5: The Solution ─── -->
+    <div class="scene" data-scene="5">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.12), transparent 55%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">✨ The Solution</div>
+        <h1 class="scene-title">
+          Introducing<br>
+          <span class="gradient-text">Tolstoy Influence</span>
+        </h1>
+        <p class="scene-subtitle">
+          AI-powered influencer content matching for commerce — automatically turning creator videos into a shoppable, inventory-verified catalog.
+        </p>
+        <div class="prd-quote" style="text-align: center; border-left: none; border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.06);">
+          <p style="font-style: normal; color: var(--text); font-weight: 600; font-size: 1.15rem;">"Instead of brands producing their own shoppable videos (costly, slow, limited scale), Influence turns every organic creator video into a <strong>shoppable asset — automatically.</strong>"</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 6: How It Works ─── -->
+    <div class="scene" data-scene="6">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 50% 80%, rgba(99,102,241,0.08), transparent 60%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">🧠 How It Works</div>
+        <h1 class="scene-title" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem);">
+          Three-layer <span class="gradient-text">AI pipeline</span>
+        </h1>
+        <p class="scene-subtitle">From raw influencer content to shoppable commerce in seconds.</p>
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="pipeline-num green">1</div>
+            <h3>Smart Curation</h3>
+            <p>AI identifies relevant influencers and filters only content featuring apparel and accessories — learning the brand's aesthetic over time.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num purple">2</div>
+            <h3>AI Detection & SKU Match</h3>
+            <p>Computer vision scans every frame. OCR extracts brand labels. Products are matched against live inventory in real-time.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-num amber">3</div>
+            <h3>Human-in-the-Loop</h3>
+            <p>Your team reviews AI-flagged videos before they go live. Only products that are in stock appear on your storefront.</p>
+          </div>
+        </div>
+        <div class="match-badges">
+          <span class="match-badge strict">✅ STRICT — Exact Brand + Category + Color + Size</span>
+          <span class="match-badge soft">⚡ SOFT — Brand + Category + Color (size differs)</span>
+          <span class="match-badge fail">❌ FAIL — Not in inventory → video excluded</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 7: AI Detection Visual ─── -->
+    <div class="scene" data-scene="7">
+      <div class="scene-bg gradient-overlay" style="background-image: url('assets/explainer/scene-ai-detection.png');"></div>
+      <div class="scene-content">
+        <div class="scene-badge">🔍 AI in Action</div>
+        <h1 class="scene-title" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem);">
+          Every product. <span class="gradient-text">Detected. Matched. Verified.</span>
+        </h1>
+        <div class="scene-image-container" style="max-width: 750px;">
+          <img src="assets/explainer/scene-ai-detection.png" alt="AI detecting products in influencer video">
+        </div>
+        <div class="prd-quote" style="margin-top: 24px;">
+          <div class="prd-quote-label">📄 From the PRD — Differentiation</div>
+          <p>"<strong>Scale</strong> — one creator with 100 videos generates 300+ product links without lifting a finger. <strong>Accuracy</strong> — SKU matching checks inventory in real-time. <strong>Experience</strong> — shoppers see products overlaid on the exact moment in the video where they appear. This is <strong>contextual commerce</strong>, not directory listing."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 8: Benefits for Retailers ─── -->
+    <div class="scene" data-scene="8">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 50% 50%, rgba(34,197,94,0.06), transparent 60%);"></div>
+      <div class="scene-content">
+        <div class="scene-badge">💰 For Your Business</div>
+        <h1 class="scene-title" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem);">
+          Three direct <span class="gradient-text">revenue drivers</span>
+        </h1>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon green">📈</div>
+            <h3>New Conversion Channel</h3>
+            <p>"Influencer content converts at <strong style="color:#22c55e;">2-3× the rate</strong> of brand-produced content because it's authentic, contextual, and trusted by followers."</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon purple">♻️</div>
+            <h3>Zero-Waste Content ROI</h3>
+            <p>"Every influencer seeding campaign already produces video assets. Instead of letting them expire on social feeds, Influence <strong style="color:#a5b4fc;">captures, matches, and monetizes them.</strong>"</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon amber">🛡️</div>
+            <h3>Inventory-Safe Commerce</h3>
+            <p>"Products that are out of stock <strong style="color:#f59e0b;">never appear</strong>. Only purchasable items are shown. This eliminates the #1 trust killer in video commerce."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 9: Metrics / Results ─── -->
+    <div class="scene" data-scene="9">
+      <div class="scene-bg heavy-overlay" style="background-image: url('assets/explainer/scene-presenter.png');"></div>
+      <div class="scene-content">
+        <div class="scene-badge">📊 The Numbers</div>
+        <h1 class="scene-title" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem);">
+          Results that <span class="gradient-text">speak for themselves</span>
+        </h1>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" data-count="6.0" data-suffix="×">0×</div>
+            <div class="stat-label">ROAS (Return on<br>Ad Spend)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="3.0" data-suffix="%">0%</div>
+            <div class="stat-label">Conversion Rate<br>(View → Purchase)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="94" data-suffix="%">0%</div>
+            <div class="stat-label">SKU Match<br>Accuracy</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" data-count="428" data-prefix="$" data-suffix="K">$0K</div>
+            <div class="stat-label">Attributed Revenue<br>(30 days)</div>
+          </div>
+        </div>
+        <div class="scene-image-container" style="max-width: 600px; margin-top: 32px;">
+          <img src="assets/explainer/scene-presenter.png" alt="Presenter showing business results">
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Scene 10: CTA ─── -->
+    <div class="scene" data-scene="10">
+      <div class="scene-bg" style="background: radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.18), transparent 55%), radial-gradient(ellipse at 30% 70%, rgba(168,85,247,0.1), transparent 50%);"></div>
+      <div class="scene-content">
+        <h1 class="scene-title" style="font-size: clamp(2.4rem, 5vw, 4.2rem);">
+          Turn every influencer video<br>
+          into a <span class="gradient-text">revenue asset.</span>
+        </h1>
+        <p class="scene-subtitle">
+          Tolstoy Influence is the bridge between the content your audience already watches and the products you sell. Automated. Inventory-verified. Shoppable.
+        </p>
+        <div class="prd-quote" style="text-align: center; border-left: none; border-color: rgba(99,102,241,0.25); max-width: 600px;">
+          <p style="font-style: normal; color: var(--text-secondary); font-size: 0.95rem;">"For shoppers: Friction-free purchase from content they already trust. No searching, no link-hunting — <strong>just watch, tap, and own the look.</strong>"</p>
+        </div>
+        <a href="index.html" class="cta-button">
+          Explore the Platform →
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ Controls ═══ -->
+  <div class="controls" id="controls">
+    <button class="ctrl-btn" id="btn-prev" title="Previous">◀</button>
+    <button class="ctrl-btn play-pause" id="btn-play" title="Play / Pause">⏸</button>
+    <button class="ctrl-btn" id="btn-next" title="Next">▶</button>
+    <div class="scene-dots" id="scene-dots"></div>
+  </div>
+
+  <div class="scene-counter" id="scene-counter">
+    <span class="current">1</span> / <span class="total">11</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPT
+  ═══════════════════════════════════════════════ -->
+  <script>
+    // ── Configuration ──
+    const SCENE_DURATION = 8000;  // ms per scene in autoplay
+    const TOTAL_SCENES = 11;
+
+    let currentScene = 0;
+    let isPlaying = true;
+    let autoplayTimer = null;
+    let countAnimated = {};
+
+    const scenes = document.querySelectorAll('.scene');
+    const progressBar = document.getElementById('progress-bar');
+    const dotsContainer = document.getElementById('scene-dots');
+    const counterCurrent = document.querySelector('.scene-counter .current');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnPlay = document.getElementById('btn-play');
+
+    // ── Create Dots ──
+    for (let i = 0; i < TOTAL_SCENES; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'scene-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToScene(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    // ── Create Particles ──
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = (8 + Math.random() * 15) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      p.style.width = (2 + Math.random() * 3) + 'px';
+      p.style.height = p.style.width;
+      p.style.opacity = 0.2 + Math.random() * 0.3;
+      particlesContainer.appendChild(p);
+    }
+
+    // ── Scene Navigation ──
+    function goToScene(index) {
+      if (index < 0 || index >= TOTAL_SCENES) return;
+
+      // Deactivate current
+      scenes[currentScene].classList.remove('active');
+
+      // Activate new
+      currentScene = index;
+      scenes[currentScene].classList.add('active');
+
+      // Update UI
+      updateUI();
+      animateCounters();
+
+      // Reset autoplay timer
+      if (isPlaying) startAutoplay();
+    }
+
+    function nextScene() {
+      if (currentScene < TOTAL_SCENES - 1) {
+        goToScene(currentScene + 1);
+      } else {
+        // Loop back to start
+        goToScene(0);
+      }
+    }
+
+    function prevScene() {
+      if (currentScene > 0) {
+        goToScene(currentScene - 1);
+      }
+    }
+
+    function updateUI() {
+      // Progress bar
+      const progress = ((currentScene + 1) / TOTAL_SCENES) * 100;
+      progressBar.style.width = progress + '%';
+
+      // Counter
+      counterCurrent.textContent = currentScene + 1;
+
+      // Dots
+      const dots = dotsContainer.querySelectorAll('.scene-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentScene);
+      });
+    }
+
+    // ── Autoplay ──
+    function startAutoplay() {
+      clearTimeout(autoplayTimer);
+      autoplayTimer = setTimeout(nextScene, SCENE_DURATION);
+    }
+
+    function stopAutoplay() {
+      clearTimeout(autoplayTimer);
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      btnPlay.textContent = isPlaying ? '⏸' : '▶';
+      if (isPlaying) {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    }
+
+    // ── Counter Animations ──
+    function animateCounters() {
+      const cards = scenes[currentScene].querySelectorAll('.stat-value[data-count]');
+      cards.forEach(card => {
+        const key = card.dataset.count + card.dataset.suffix;
+        if (countAnimated[currentScene + '-' + key]) return;
+        countAnimated[currentScene + '-' + key] = true;
+
+        const target = parseFloat(card.dataset.count);
+        const prefix = card.dataset.prefix || '';
+        const suffix = card.dataset.suffix || '';
+        const isDecimal = target % 1 !== 0;
+        const duration = 2000;
+        const startTime = Date.now();
+
+        // Delay to sync with card animation
+        setTimeout(() => {
+          function tick() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+            const current = eased * target;
+
+            if (isDecimal) {
+              card.textContent = prefix + current.toFixed(1) + suffix;
+            } else {
+              card.textContent = prefix + Math.round(current) + suffix;
+            }
+
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          tick();
+        }, 1200);
+      });
+    }
+
+    // ── Event Listeners ──
+    btnPrev.addEventListener('click', prevScene);
+    btnNext.addEventListener('click', nextScene);
+    btnPlay.addEventListener('click', togglePlay);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextScene();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevScene();
+      } else if (e.key === 'p') {
+        togglePlay();
+      }
+    });
+
+    // ── Initialize ──
+    updateUI();
+    startAutoplay();
+  </script>
+
+</body>
+</html>
