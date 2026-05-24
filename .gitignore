@@ -1,4 +1,6 @@
 .vercel
 .env
 .DS_Store
-
+.venv/
+generate_videos.py
+assets/videos/_progress.json

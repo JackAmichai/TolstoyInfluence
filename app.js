@@ -164,6 +164,8 @@ let currentVideo = null;
 let selectedItemIdx = 0;
 let selectedSize = 'S';
 let activeFilter = 'all';
+let mode = 'customer';                 // 'customer' | 'business'
+const reviewState = {};                // videoId -> { itemIdx: 'approved' | 'declined' }
 
 // ── DOM ──
 const influencerGrid = document.getElementById('influencer-grid');
@@ -266,6 +268,39 @@ function matchSummaryHtml(v) {
 
 function fmtTime(ts) {
   return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+// ── Human-in-the-loop review state (business mode) ──
+function getReview(vId, idx) { return reviewState[vId] ? reviewState[vId][idx] : undefined; }
+function setReview(vId, idx, val) {
+  if (!reviewState[vId]) reviewState[vId] = {};
+  if (val) reviewState[vId][idx] = val;
+  else delete reviewState[vId][idx];
+}
+function reviewCounts(v) {
+  let approved = 0, declined = 0;
+  v.items.forEach((_, i) => {
+    const s = getReview(v.id, i);
+    if (s === 'approved') approved++;
+    else if (s === 'declined') declined++;
+  });
+  return { approved, declined, pending: v.items.length - approved - declined, total: v.items.length };
+}
+function renderReviewBar(v) {
+  const tallyEl = document.getElementById('modal-review-tally');
+  if (!tallyEl) return;
+  const c = reviewCounts(v);
+  const shopperTxt = c.approved === 0
+    ? 'shoppers see nothing yet'
+    : `shoppers will see ${c.approved} item${c.approved > 1 ? 's' : ''}`;
+  tallyEl.innerHTML = `
+    <div class="rev-tally-bar"><span class="rev-tally-fill" style="width:${(c.approved / c.total * 100).toFixed(0)}%"></span></div>
+    <div class="rev-tally-line">
+      <span class="rev-tally-main"><strong>${c.approved} of ${c.total}</strong> approved — ${shopperTxt}</span>
+      <span class="rev-tally-sub">${c.pending} pending · ${c.declined} declined</span>
+    </div>`;
+  const approveAll = document.getElementById('btn-approve-all');
+  if (approveAll) approveAll.style.display = c.pending > 0 ? '' : 'none';
 }
 
 // ── Render Video Cards ──
@@ -394,40 +429,67 @@ function openModal(videoId) {
 
 function renderModalItems(v) {
   const item = v.items[selectedItemIdx];
+  const isBiz = mode === 'business';
+
   // Item list
   const listEl = document.getElementById('modal-item-list');
-  listEl.innerHTML = v.items.map((it, i) => `
-    <div class="modal-item match-${matchTier(it)} ${i === selectedItemIdx ? 'active' : ''}" data-idx="${i}">
+  listEl.innerHTML = v.items.map((it, i) => {
+    const matchCls = isBiz ? `match-${matchTier(it)}` : '';
+    const matchTxt = isBiz ? ` · <span class="modal-item-match">${matchLabel(it)}</span>` : '';
+    const st = isBiz ? getReview(v.id, i) : null;
+    const stateCls = st ? `rev-${st}` : '';
+    const reviewBtns = isBiz ? `
+      <div class="modal-item-review">
+        <button class="item-rev-btn item-rev-approve ${st === 'approved' ? 'active' : ''}" data-rev="approved" data-idx="${i}" aria-label="Approve item">✓</button>
+        <button class="item-rev-btn item-rev-decline ${st === 'declined' ? 'active' : ''}" data-rev="declined" data-idx="${i}" aria-label="Decline item">✕</button>
+      </div>` : '';
+    return `
+    <div class="modal-item ${matchCls} ${stateCls} ${i === selectedItemIdx ? 'active' : ''}" data-idx="${i}">
       <div class="modal-item-icon">${getTypeIcon(it.type)}</div>
       <div class="modal-item-info">
         <span class="modal-item-name">${it.name}</span>
-        <span class="modal-item-type">${it.type} · <span class="modal-item-match">${matchLabel(it)}</span></span>
+        <span class="modal-item-type">${it.type}${matchTxt}</span>
       </div>
       <span class="modal-item-price">$${it.price.toFixed(2)}</span>
-    </div>
-  `).join('');
+      ${reviewBtns}
+    </div>`;
+  }).join('');
 
+  // Row click selects item (but not when tapping an approve/decline button)
   listEl.querySelectorAll('.modal-item').forEach(el => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('.item-rev-btn')) return;
       selectedItemIdx = parseInt(el.dataset.idx);
       renderModalItems(v);
     });
   });
+  // Approve / decline (business mode)
+  listEl.querySelectorAll('.item-rev-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.dataset.idx);
+      const val = btn.dataset.rev;
+      setReview(v.id, idx, getReview(v.id, idx) === val ? null : val);
+      renderModalItems(v);
+    });
+  });
 
-  // Look-level inventory match summary
+  // Look-level inventory match summary (business only)
   const summaryEl = document.getElementById('modal-match-summary');
-  if (summaryEl) summaryEl.innerHTML = matchSummaryHtml(v);
+  if (summaryEl) summaryEl.innerHTML = isBiz ? matchSummaryHtml(v) : '';
 
   // Details
+  document.getElementById('modal-item-list-label').textContent =
+    isBiz ? 'AI-detected items' : 'Items in this look';
   document.getElementById('modal-product-title').textContent = item.name;
   document.getElementById('modal-product-price').textContent = `$${item.price.toFixed(2)}`;
   document.getElementById('modal-product-desc').textContent = item.desc;
 
-  // Per-item match confidence
+  // Per-item match confidence (business only)
   const statusEl = document.getElementById('modal-match-status');
-  if (statusEl) statusEl.innerHTML = matchStatusHtml(item);
+  if (statusEl) statusEl.innerHTML = isBiz ? matchStatusHtml(item) : '';
 
-  // Outfit total
+  // Outfit total (customer)
   const total = v.items.reduce((s, it) => s + it.price, 0);
   document.getElementById('modal-outfit-total').textContent = `Full outfit: $${total.toFixed(2)}`;
 
@@ -435,6 +497,9 @@ function renderModalItems(v) {
   document.querySelectorAll('#modal-sizes .size-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.size === selectedSize);
   });
+
+  // Review tally (business)
+  if (isBiz) renderReviewBar(v);
 }
 
 // (getTypeIcon moved above renderVideos)
@@ -867,7 +932,58 @@ document.addEventListener('touchstart', (e) => {
   if (vid.paused) vid.play().catch(() => {});
 }, { passive: true });
 
+// ── Business review actions ──
+document.getElementById('btn-approve-all').addEventListener('click', () => {
+  if (!currentVideo) return;
+  currentVideo.items.forEach((_, i) => {
+    if (!getReview(currentVideo.id, i)) setReview(currentVideo.id, i, 'approved');
+  });
+  renderModalItems(currentVideo);
+  showToast('All remaining items approved');
+});
+document.getElementById('btn-publish-look').addEventListener('click', () => {
+  if (!currentVideo) return;
+  const c = reviewCounts(currentVideo);
+  if (c.approved === 0) { showToast('Approve at least one item before publishing'); return; }
+  showToast(`✓ Look published — ${c.approved} item${c.approved !== 1 ? 's' : ''} now live to shoppers`);
+  closeModal();
+});
+
+// ── Mode: Customer vs Business ──
+const modeGate = document.getElementById('mode-gate');
+function safeGetMode() { try { return localStorage.getItem('tolstoy_mode'); } catch (e) { return null; } }
+function safeSetMode(m) { try { localStorage.setItem('tolstoy_mode', m); } catch (e) {} }
+
+function setMode(m, persist = true) {
+  mode = (m === 'business') ? 'business' : 'customer';
+  if (persist) safeSetMode(mode);
+  document.body.classList.toggle('mode-business', mode === 'business');
+  document.body.classList.toggle('mode-customer', mode === 'customer');
+  document.querySelectorAll('.mode-switch-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+  if (currentVideo) renderModalItems(currentVideo);   // re-render an open modal in the new view
+}
+
+function hideGate() { modeGate.classList.remove('active'); document.body.style.overflow = ''; }
+function showGate() { modeGate.classList.add('active'); document.body.style.overflow = 'hidden'; }
+
+modeGate.querySelectorAll('[data-mode]').forEach(el =>
+  el.addEventListener('click', () => { setMode(el.dataset.mode); hideGate(); }));
+document.querySelectorAll('.mode-switch-btn').forEach(b =>
+  b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+function initMode() {
+  const saved = safeGetMode();
+  if (saved === 'customer' || saved === 'business') {
+    setMode(saved);
+  } else {
+    setMode('customer', false);   // default look behind the gate, but don't lock it in
+    showGate();
+  }
+}
+
 // ── Init ──
+initMode();
 renderInfluencers();
 renderVideos();
 initStatsObserver();

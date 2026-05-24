@@ -693,7 +693,7 @@ a { text-decoration: none; color: inherit; }
   max-width: 940px;
   width: 95%;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   box-shadow: var(--shadow-xl);
@@ -705,10 +705,10 @@ a { text-decoration: none; color: inherit; }
 }
 .modal-image {
   position: relative;
-  aspect-ratio: 9 / 14;
   overflow: hidden;
   border-radius: var(--radius-lg) 0 0 var(--radius-lg);
   background: #000;
+  min-height: 460px;
 }
 .modal-image video {
   width: 100%;
@@ -753,7 +753,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 85vh;
+  max-height: 90vh;
 }
 .modal-influencer {
   display: flex;
@@ -786,8 +786,6 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   gap: 4px;
   margin-bottom: 16px;
-  max-height: 220px;
-  overflow-y: auto;
 }
 .modal-item {
   display: flex;
@@ -909,6 +907,13 @@ a { text-decoration: none; color: inherit; }
   margin-top: auto;
   display: flex;
   gap: 8px;
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-card);
+  padding: 14px 28px 0;
+  margin-left: -28px;
+  margin-right: -28px;
+  border-top: 1px solid var(--border-color);
 }
 .btn-add-cart {
   flex: 1;
@@ -2000,4 +2005,193 @@ a { text-decoration: none; color: inherit; }
 /* Hide Brand View nav button on very small phones */
 @media (max-width: 480px) {
   .btn-nav--dash { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOMER vs BUSINESS MODE
+   ═══════════════════════════════════════════ */
+
+/* Show / hide by mode (gate sets a body class before first paint) */
+body.mode-customer .b2b-only { display: none !important; }
+body.mode-business .customer-only { display: none !important; }
+
+/* ── Navbar mode switch pill ── */
+.mode-switch {
+  display: inline-flex;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
+}
+.mode-switch-btn {
+  padding: 6px 13px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: var(--transition);
+}
+.mode-switch-btn:hover { color: var(--text-primary); }
+.mode-switch-btn.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+body.mode-business .mode-switch-btn[data-mode="business"].active { color: #16a34a; }
+
+/* ── Business context banner ── */
+.mode-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 24px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  background: linear-gradient(90deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08));
+  border-bottom: 1px solid var(--border-color);
+}
+.mode-banner strong { color: var(--text-primary); }
+.mode-banner-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+  background: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.18);
+}
+
+/* ── Start gate overlay ── */
+.mode-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 28% 18%, #1e1b4b, #0f0c29 55%, #050416);
+}
+.mode-gate.active { display: flex; }
+.mode-gate-inner {
+  max-width: 760px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  animation: gateIn 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes gateIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.mode-gate-logo {
+  height: 48px; width: auto; margin: 0 auto 28px;
+  background: #fff; padding: 8px 16px; border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+}
+.mode-gate-title {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 900; letter-spacing: -0.03em; margin-bottom: 10px;
+}
+.mode-gate-title span {
+  background: linear-gradient(135deg, #a5b4fc, #f0abfc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.mode-gate-sub { color: rgba(255,255,255,0.7); font-size: 1rem; margin-bottom: 34px; }
+.mode-gate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; }
+.mode-gate-card {
+  display: flex; flex-direction: column; gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  color: #fff;
+  transition: var(--transition);
+}
+.mode-gate-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.1); border-color: rgba(196,181,253,0.6); }
+.mode-gate-card--biz:hover { border-color: rgba(134,239,172,0.6); }
+.mode-gate-emoji { font-size: 2rem; }
+.mode-gate-card-title { font-size: 1.2rem; font-weight: 800; }
+.mode-gate-card-desc { font-size: 0.88rem; color: rgba(255,255,255,0.72); line-height: 1.5; flex: 1; }
+.mode-gate-card-cta { font-weight: 700; font-size: 0.9rem; margin-top: 6px; color: #c4b5fd; }
+.mode-gate-card--biz .mode-gate-card-cta { color: #86efac; }
+.mode-gate-note { margin-top: 22px; font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+/* ── Per-item approve / decline (business) ── */
+.modal-item-review { display: flex; gap: 6px; flex-shrink: 0; margin-left: 4px; }
+.item-rev-btn {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 800; line-height: 1;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+.item-rev-approve:hover { border-color: #22c55e; color: #16a34a; background: rgba(34,197,94,0.1); }
+.item-rev-decline:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.1); }
+.item-rev-approve.active { background: #22c55e; border-color: #22c55e; color: #fff; }
+.item-rev-decline.active { background: #ef4444; border-color: #ef4444; color: #fff; }
+.modal-item.rev-approved { border-color: rgba(34,197,94,0.5); background: rgba(34,197,94,0.05); }
+.modal-item.rev-declined { opacity: 0.5; }
+.modal-item.rev-declined .modal-item-name { text-decoration: line-through; }
+
+/* ── Review bar (sticky footer, business) ── */
+.modal-review {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 14px 28px 24px;
+  margin: auto -28px -24px;
+}
+.rev-tally-bar { height: 6px; background: var(--bg-secondary); border-radius: 999px; overflow: hidden; }
+.rev-tally-fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #22c55e, #16a34a); transition: width 0.3s ease; }
+.rev-tally-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.rev-tally-main { font-size: 0.82rem; color: var(--text-secondary); }
+.rev-tally-main strong { color: var(--text-primary); font-weight: 800; }
+.rev-tally-sub { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+.modal-review-actions { display: flex; gap: 8px; }
+.btn-approve-all {
+  flex: 1; padding: 12px 16px; border-radius: var(--radius-full);
+  font-size: 0.85rem; font-weight: 700;
+  border: 1.5px solid var(--border-color); color: var(--text-primary);
+  transition: var(--transition);
+}
+.btn-approve-all:hover { border-color: #22c55e; color: #16a34a; background: rgba(34,197,94,0.06); }
+.btn-publish-look {
+  flex: 1; padding: 12px 16px; border-radius: var(--radius-full);
+  font-size: 0.85rem; font-weight: 700;
+  background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff;
+  transition: var(--transition);
+}
+.btn-publish-look:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(168,85,247,0.4); }
+
+/* Make the customer action bar bleed to the panel's bottom edge too */
+.modal-actions { padding-bottom: 24px; margin-bottom: -24px; }
+
+/* ── Mode UI: tablet / mobile ── */
+@media (max-width: 900px) {
+  /* Stacked modal scrolls as one sheet again */
+  .modal-content { overflow-y: auto; }
+  .modal-image { min-height: 0; }
+  .modal-details { max-height: none; overflow: visible; }
+  /* List flows with the sheet (no inner clip that would overlap content) */
+  .modal-item-list { max-height: none; overflow: visible; }
+  /* Footers flow normally (no bleed) when the whole sheet scrolls */
+  .modal-actions, .modal-review {
+    position: static;
+    margin-left: 0; margin-right: 0; margin-bottom: 0;
+  }
+}
+@media (max-width: 600px) {
+  .mode-gate-cards { grid-template-columns: 1fr; gap: 12px; }
+  .mode-gate-card { padding: 20px 20px; }
+  .mode-gate-logo { margin-bottom: 18px; }
+  .mode-switch-btn { padding: 6px 10px; font-size: 0.74rem; }
+  .mode-banner { padding: 10px 16px; font-size: 0.78rem; }
+  .modal-actions, .modal-review { padding-left: 18px; padding-right: 18px; }
+  .item-rev-btn { width: 34px; height: 34px; }
+}
+@media (max-width: 400px) {
+  /* Keep the switch compact next to the logo */
+  .mode-switch-btn { padding: 5px 8px; }
 }

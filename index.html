@@ -10,6 +10,30 @@
 </head>
 <body>
 
+  <!-- ═══ Mode Start Gate ═══ -->
+  <div class="mode-gate" id="mode-gate">
+    <div class="mode-gate-inner">
+      <img src="logo.png" alt="Tolstoy" class="mode-gate-logo">
+      <h1 class="mode-gate-title">How do you want to explore <span>Tolstoy&nbsp;Influence</span>?</h1>
+      <p class="mode-gate-sub">The same shoppable creator video — seen through two lenses.</p>
+      <div class="mode-gate-cards">
+        <button class="mode-gate-card" data-mode="customer">
+          <span class="mode-gate-emoji">🛍️</span>
+          <span class="mode-gate-card-title">I'm a Shopper</span>
+          <span class="mode-gate-card-desc">Browse creator looks and shop the exact items — a clean storefront with sizes and checkout.</span>
+          <span class="mode-gate-card-cta">Enter the store →</span>
+        </button>
+        <button class="mode-gate-card mode-gate-card--biz" data-mode="business">
+          <span class="mode-gate-emoji">🛡️</span>
+          <span class="mode-gate-card-title">I'm a Brand</span>
+          <span class="mode-gate-card-desc">See what the AI detected in every video and approve or decline each item against your live inventory.</span>
+          <span class="mode-gate-card-cta">Review detections →</span>
+        </button>
+      </div>
+      <p class="mode-gate-note">You can switch views anytime from the top bar.</p>
+    </div>
+  </div>
+
   <!-- ═══ Navbar ═══ -->
   <nav class="navbar" id="navbar">
     <div class="navbar-inner">
@@ -17,16 +41,26 @@
         <img src="logo.png" alt="Tolstoy" class="navbar-logo-img">
       </a>
       <div class="navbar-actions">
-        <button class="btn-nav btn-nav--outline cart-badge" id="cart-btn" aria-label="Open cart">
+        <div class="mode-switch" id="mode-switch" role="tablist" aria-label="Choose view">
+          <button class="mode-switch-btn" data-mode="customer" role="tab">🛍️ Shopper</button>
+          <button class="mode-switch-btn" data-mode="business" role="tab">🛡️ Business</button>
+        </div>
+        <button class="btn-nav btn-nav--outline cart-badge customer-only" id="cart-btn" aria-label="Open cart">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <span class="cart-count" id="cart-count">0</span>
         </button>
-        <a href="dashboard.html" class="btn-nav btn-nav--outline btn-nav--dash" style="text-decoration:none;">Dashboard</a>
+        <a href="dashboard.html" class="btn-nav btn-nav--outline btn-nav--dash b2b-only" style="text-decoration:none;">Dashboard</a>
         <a href="prd.html" class="btn-nav btn-nav--outline btn-nav--prd" style="text-decoration:none;">PRD</a>
         <a href="https://www.gotolstoy.com/contact-sales" class="btn-nav btn-nav--fill" id="create-btn" target="_blank" rel="noopener">Create yours</a>
       </div>
     </div>
   </nav>
+
+  <!-- ═══ Business Mode Banner ═══ -->
+  <div class="mode-banner b2b-only" id="mode-banner">
+    <span class="mode-banner-dot"></span>
+    <span><strong>Brand review mode.</strong> Open any look to see AI-detected products and approve or decline them against your live inventory — the human-in-the-loop step before items go live to shoppers.</span>
+  </div>
 
   <!-- ═══ Hero ═══ -->
   <section class="hero">
@@ -39,8 +73,8 @@
     <button class="hero-cta-btn" id="hero-scroll-btn">Explore Looks ↓</button>
   </section>
 
-  <!-- ═══ Stats Bar ═══ -->
-  <section class="stats-bar">
+  <!-- ═══ Stats Bar (B2B metrics) ═══ -->
+  <section class="stats-bar b2b-only">
     <div class="stat-item">
       <div class="stat-val">12</div>
       <div class="stat-label">Active Creators</div>
@@ -100,18 +134,18 @@
             <div class="modal-influencer-label">Creator</div>
           </div>
         </div>
-        <div class="modal-item-list-label">Items in this look</div>
-        <div class="modal-match-summary" id="modal-match-summary"></div>
+        <div class="modal-item-list-label" id="modal-item-list-label">Items in this look</div>
+        <div class="modal-match-summary b2b-only" id="modal-match-summary"></div>
         <div class="modal-item-list" id="modal-item-list">
           <!-- JS rendered item list -->
         </div>
         <div class="modal-selected-detail">
           <div class="modal-product-title" id="modal-product-title"></div>
           <div class="modal-product-price" id="modal-product-price"></div>
-          <div class="modal-match-status" id="modal-match-status"></div>
+          <div class="modal-match-status b2b-only" id="modal-match-status"></div>
           <p class="modal-product-desc" id="modal-product-desc"></p>
         </div>
-        <div class="modal-sizes" id="modal-sizes">
+        <div class="modal-sizes customer-only" id="modal-sizes">
           <label>Select Size</label>
           <div class="size-options">
             <button class="size-btn" data-size="XS">XS</button>
@@ -121,11 +155,18 @@
             <button class="size-btn" data-size="XL">XL</button>
           </div>
         </div>
-        <div class="modal-outfit-total" id="modal-outfit-total"></div>
-        <div class="modal-actions">
+        <div class="modal-outfit-total customer-only" id="modal-outfit-total"></div>
+        <div class="modal-actions customer-only">
           <button class="btn-add-cart" id="btn-add-cart">Add Item</button>
           <button class="btn-add-all" id="btn-add-all">Add Full Outfit</button>
           <button class="btn-wishlist" id="btn-wishlist">♡</button>
+        </div>
+        <div class="modal-review b2b-only" id="modal-review">
+          <div class="modal-review-tally" id="modal-review-tally"></div>
+          <div class="modal-review-actions">
+            <button class="btn-approve-all" id="btn-approve-all">Approve all remaining</button>
+            <button class="btn-publish-look" id="btn-publish-look">Publish look →</button>
+          </div>
         </div>
       </div>
     </div>
@@ -174,7 +215,7 @@
   </div>
 
   <!-- ═══ AI Shopper Toggle Button ═══ -->
-  <button class="ai-toggle" id="ai-toggle" aria-label="Open AI Shopper">
+  <button class="ai-toggle customer-only" id="ai-toggle" aria-label="Open AI Shopper">
     <svg class="ai-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M12 2a10 10 0 0 1 10 10c0 4.5-3 8.3-7 9.5V22l-4-3H4a10 10 0 0 1 0-20h8z"/>
       <path d="M8 11a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm6 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
@@ -229,7 +270,7 @@
   <!-- ═══ AI Quick-Reply Container (rendered inside chat body via JS) ═══ -->
 
   <!-- ═══ How It Works (B2B) ═══ -->
-  <section class="how-section" id="how-section">
+  <section class="how-section b2b-only" id="how-section">
     <div class="how-badge">For E-Commerce Brands</div>
     <h2 class="how-title">How It Works</h2>
     <p class="how-subtitle">Tolstoy's AI analyzes every influencer video, detects every clothing item, and matches it against your live inventory — so customers only see products they can actually buy.</p>
